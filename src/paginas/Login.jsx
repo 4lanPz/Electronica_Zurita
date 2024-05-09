@@ -43,7 +43,7 @@ export const Login = () => {
     <>
       <div className="w-full h-screen relative">
         {/* Fondo */}
-        <div className="absolute inset-0 bg-[url('images/tecnico.jpg')] bg-no-repeat bg-cover bg-center opacity-70 blur-sm"></div>
+        <div className="absolute inset-0 bg-[url('/images/tecnico.jpg')] bg-no-repeat bg-cover bg-center opacity-70 blur-sm"></div>
 
         {/* Contenido del formulario */}
         <div className="absolute inset-0 flex justify-center items-center">
