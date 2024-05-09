@@ -43,15 +43,12 @@ export const Login = () => {
     <>
       <div className="w-full h-screen relative">
         {/* Fondo */}
-        <div className="absolute inset-0 bg-[url('/public/images/tecnico.jpg')] bg-no-repeat bg-cover bg-center opacity-70 blur-sm"></div>
+        <div className="absolute inset-0 bg-[url('images/tecnico.jpg')] bg-no-repeat bg-cover bg-center opacity-70 blur-sm"></div>
 
         {/* Contenido del formulario */}
         <div className="absolute inset-0 flex justify-center items-center">
           <div className="w-auto lg:w-2/5 white p-10 rounded-xl max-w-2xl">
-            {/* Mensaje de error */}
-            {Object.keys(mensaje).length > 0 && (
-              <Mensaje className="poppins-regular">{mensaje.respuesta}</Mensaje>
-            )}
+            
 
             {/* Encabezado */}
             <div className="flex items-center justify-center mb-8">
@@ -82,7 +79,7 @@ export const Login = () => {
                   name="email"
                   value={form.email || ""}
                   onChange={handleChange}
-                  className="mt-1 poppins-regular block w-full rounded-xl border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-2 text-black"
+                  className="mt-1 poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
                 />
               </div>
 
@@ -95,20 +92,24 @@ export const Login = () => {
                   name="password"
                   value={form.password || ""}
                   onChange={handleChange}
-                  className="mt-1 poppins-regular block w-full rounded-xl border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-2 text-black"
+                  className="mt-1 poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
                 />
               </div>
 
               {/* Botón de inicio de sesión */}
               <div className="mt-4">
-                <button className="poppins-regular py-2 w-full block text-center green text-white border rounded-xl hover:scale-100 duration-300 hover:bg-emerald-900 hover:text-white mb-3">
+                <button className="poppins-regular py-2 w-full block text-center green text-white border rounded-xl hover:scale-100 duration-300 hover:bg-emerald-900 hover:text-white mb-2">
                   Iniciar sesión
                 </button>
               </div>
             </form>
+            {/* Mensaje de error */}
+            {Object.keys(mensaje).length > 0 && (
+              <Mensaje className="poppins-regular">{mensaje.respuesta}</Mensaje>
+            )}
 
             {/* Olvidaste la contraseña */}
-            <div className="mb-8">
+            <div className="mb-1">
               <Link
                 to="/forgot"
                 className="poppins-regular underline text-black hover:text-gray-700"
@@ -116,6 +117,8 @@ export const Login = () => {
                 ¿Olvidaste tu contraseña?
               </Link>
             </div>
+
+            <div className="border-black mt-4 text-xs border-b-2 py-2 opacity-20 mb-3"></div>
 
             {/* Registro */}
             <div className="flex justify-between items-center">

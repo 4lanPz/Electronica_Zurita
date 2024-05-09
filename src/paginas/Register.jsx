@@ -70,26 +70,22 @@ export const Register = () => {
   return (
     <>
       <div className="flex items-center justify-center h-screen">
-        <div className="absolute inset-0 bg-[url('/public/images/regtechnician.png')] bg-no-repeat bg-cover bg-center opacity-70 blur-sm"></div>
+        <div className="absolute inset-0 bg-[url('images/regtechnician.png')] bg-no-repeat bg-cover bg-center opacity-70 blur-sm"></div>
         <div className="white p-10 rounded-xl z-10 lg:w-2/5 sm-2/5 w-auto absolute">
-          {Object.keys(mensaje).length > 0 && (
-            <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
-          )}
+          
           <div className="flex items-center justify-center mb-5">
-              {/* Imagen */}
-              <img
-                src="/public/images/logo.png"
-                alt="Logo"
-                className="w-40 h-auto mr-3"
-              />
+            {/* Imagen */}
+            <img
+              src="/public/images/logo.png"
+              alt="Logo"
+              className="w-40 h-auto mr-3"
+            />
 
-              {/* Texto */}
-              <div className="text-center">
-                <h1 className="poppins-bold uppercase text-black">
-                  Registro
-                </h1>
-              </div>
+            {/* Texto */}
+            <div className="text-center">
+              <h1 className="poppins-bold uppercase text-black">Registro</h1>
             </div>
+          </div>
           <div className="text-center">
             {/* <small className="text-black block poppins-regular mb-2">
               Por favor ingrese la siguiente información
@@ -108,7 +104,7 @@ export const Register = () => {
                   value={form.nombre || ""}
                   onChange={handleChange}
                   placeholder="Ingresa tu nombre"
-                  className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-1.5 text-black"
+                  className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
                   required
                 />
               </div>
@@ -126,7 +122,7 @@ export const Register = () => {
                   value={form.apellido || ""}
                   onChange={handleChange}
                   placeholder="Ingresa tu apellido"
-                  className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-1.5 text-black"
+                  className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
                   required
                 />
               </div>
@@ -143,7 +139,7 @@ export const Register = () => {
                   value={form.RUC || ""}
                   onChange={handleChange}
                   placeholder="Ingresa tu RUC"
-                  className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-1.5 text-black"
+                  className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
                   required
                 />
               </div>
@@ -161,50 +157,56 @@ export const Register = () => {
                   value={form.telefono || ""}
                   onChange={handleChange}
                   placeholder="Ingresa tu teléfono"
-                  className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-1.5 text-black"
+                  className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
+                  required
+                />
+              </div>
+            </div>
+            <div className="flex flex-wrap mb-3">
+              <div className="w-1/2 pr-2">
+                <label className="mb-1 block poppins-semibold" htmlFor="email">
+                  Correo electrónico:
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={form.email || ""}
+                  onChange={handleChange}
+                  placeholder="Ingresa tu correo  "
+                  className=" poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black "
+                  required
+                />
+              </div>
+              <div className="w-1/2 pl-2">
+                <label
+                  className="mb-1 block poppins-semibold"
+                  htmlFor="password"
+                >
+                  Contraseña:
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={form.password || ""}
+                  onChange={handleChange}
+                  placeholder="********************"
+                  className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
                   required
                 />
               </div>
             </div>
 
-            <div className="mb-3">
-              <label className="mb-1 block poppins-semibold" htmlFor="email">
-                Correo electrónico:
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={form.email || ""}
-                onChange={handleChange}
-                placeholder="Ingresa tu correo  "
-                className=" poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-1.5 text-black "
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <label className="mb-1 block poppins-semibold" htmlFor="password">
-                Contraseña:
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={form.password || ""}
-                onChange={handleChange}
-                placeholder="********************"
-                className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-1.5 text-black"
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <button className="poppins-regular green text-white border py-2 w-full rounded-xl mt-2 hover:scale-105 duration-300 hover:bg-emerald-900 hover:text-white">
-                Registrarse
-              </button>
-            </div>
+            <button className="poppins-regular green text-white border py-2 w-full rounded-xl mt-3 hover:scale-105 duration-300 hover:bg-emerald-900 hover:text-white mb-0">
+              Registrarse
+            </button>
           </form>
+          {Object.keys(mensaje).length > 0 && (
+            <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
+          )}
+
+          <div className="border-black text-xs border-b-2 py-2 mt-0 opacity-20 mb-3"></div>
 
           <div className="poppins-regular flex justify-between items-center">
             <p>¿Ya tienes una cuenta?</p>

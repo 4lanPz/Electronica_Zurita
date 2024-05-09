@@ -29,48 +29,68 @@ export const Forgot = () => {
 
   return (
     <>
-      <div className="absolute inset-0 bg-[url('/public/images/techforgot.jpg')] bg-no-repeat bg-cover bg-center opacity-50"></div>
+      <div className="absolute inset-0 bg-[url('/public/images/techforgot.jpg')] bg-no-repeat bg-cover bg-center opacity-70 blur-sm"></div>
       <div className="absolute inset-0 flex justify-center items-center">
-        <div className="md:w-4/5 sm:w-full lg:w-1/3 bg-white  p-8 rounded-lg">
+        <div className="w-auto lg:w-2/5 white  p-10 rounded-xl">
           <div>
-            {Object.keys(mensaje).length > 0 && (
-              <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
-            )}
-            <h1 className="text-3xl font-semibold mb-2 text-center uppercase  text-gray-500">
-              ¡Olvidé mi contraseña!
-            </h1>
-            <small className="text-gray-400 block my-4 text-sm">
-              !Tranquilo técnico! Le ayudamos a recuperar su contraseña
-            </small>
+            
+            <div className="flex items-center justify-center mb-5">
+              {/* Imagen */}
+              <img
+                src="/public/images/logo.png"
+                alt="Logo"
+                className="w-40 h-auto mr-3"
+              />
 
+              {/* Texto */}
+              <div className="text-center">
+                <h1 className="poppins-bold uppercase text-black">
+                  !Olvidé mi
+                </h1>
+                <h1 className="poppins-bold uppercase text-black">
+                  contraseña¡
+                </h1>
+              </div>
+            </div>
+            <div className="text-center">
+              <small className="poppins-regular text-black block mt-4 ">
+                !Tranquilo técnico!
+              </small>
+              <small className="poppins-regular text-black block mb-4 ">
+                Le ayudamos a recuperar su contraseña
+              </small>
+            </div>
             <form onSubmit={handleSubmit}>
               <div className="mb-1">
-                <label className="mb-2 block text-sm font-semibold">
+                <label className="mb-1 block poppins-semibold">
                   Correo electrónico
                 </label>
                 <input
                   type="email"
                   placeholder="Ingrese su correo electrónico"
-                  className="block w-full rounded-md border border-gray-300 focus:border-purple-700 focus:outline-none focus:ring-1 focus:ring-purple-700 py-1 px-1.5 text-gray-500"
+                  className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
                   name="email"
                   onChange={handleChange}
                 />
               </div>
 
               <div className="mb-3">
-                <button className="bg-gray-600 text-slate-300 border py-2 w-full rounded-xl mt-5 hover:scale-105 duration-300 hover:bg-gray-900 hover:text-white">
+                <button className="poppins-regular green text-white border py-2 w-full rounded-xl mt-5 hover:scale-105 duration-300 hover:bg-emerald-900 hover:text-white">
                   Enviar correo de recuperación
                 </button>
               </div>
             </form>
+            {Object.keys(mensaje).length > 0 && (
+              <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
+            )}
 
-            <div className="mt-5 text-xs border-b-2 py-4 "></div>
+            <div className="border-black mt-1 text-xs border-b-2 py-2 opacity-20"></div>
 
-            <div className="mt-3 text-sm flex justify-between items-center">
+            <div className="poppins-regular mt-3 text-sm flex justify-between items-center">
               <p>¿Recordaste tu contraseña?</p>
               <Link
                 to="/"
-                className="py-2 px-5 bg-gray-600 text-slate-300 border rounded-xl hover:scale-110 duration-300 hover:bg-gray-900 hover:text-white"
+                className="poppins-regular py-2 px-5 green text-white border rounded-xl hover:scale-110 duration-300 hover:bg-emerald-900 hover:text-white"
               >
                 Iniciar sesión
               </Link>
