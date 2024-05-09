@@ -29,7 +29,7 @@ export const Forgot = () => {
 
   return (
     <>
-      <div className="absolute inset-0 bg-[url('/public/images/techforgot.jpg')] bg-no-repeat bg-cover bg-center opacity-70 blur-sm"></div>
+      <div className="absolute inset-0 bg-[url('/images/tecnico.jpg')] bg-no-repeat bg-cover bg-center opacity-70 blur-sm"></div>
       <div className="absolute inset-0 flex justify-center items-center">
         <div className="w-auto lg:w-2/5 white  p-10 rounded-xl">
           <div>
@@ -37,7 +37,7 @@ export const Forgot = () => {
             <div className="flex items-center justify-center mb-5">
               {/* Imagen */}
               <img
-                src="/public/images/logo.jpg"
+                src="/images/logo.jpg"
                 alt="Logo"
                 className="w-40 h-auto mr-3"
               />
