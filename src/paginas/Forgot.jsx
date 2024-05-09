@@ -37,7 +37,7 @@ export const Forgot = () => {
             <div className="flex items-center justify-center mb-5">
               {/* Imagen */}
               <img
-                src="/public/images/logo.png"
+                src="/public/images/logo.jpg"
                 alt="Logo"
                 className="w-40 h-auto mr-3"
               />

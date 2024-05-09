@@ -70,13 +70,13 @@ export const Register = () => {
   return (
     <>
       <div className="flex items-center justify-center h-screen">
-        <div className="absolute inset-0 bg-[url('images/regtechnician.png')] bg-no-repeat bg-cover bg-center opacity-70 blur-sm"></div>
+        <div className="absolute inset-0 bg-[url('images/regtechnician.jpg')] bg-no-repeat bg-cover bg-center opacity-70 blur-sm"></div>
         <div className="white p-10 rounded-xl z-10 lg:w-2/5 sm-2/5 w-auto absolute">
           
           <div className="flex items-center justify-center mb-5">
             {/* Imagen */}
             <img
-              src="/public/images/logo.png"
+              src="/public/images/logo.jpg"
               alt="Logo"
               className="w-40 h-auto mr-3"
             />
