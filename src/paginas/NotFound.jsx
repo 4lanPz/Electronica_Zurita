@@ -9,19 +9,17 @@ export const NotFound = () => {
       <div className="absolute inset-0 flex justify-center items-center">
         <div className="bg-white p-10 rounded-xl z-10 lg:w-2/5 sm-2/5 w-auto absolute">
           <div className="flex flex-col items-center justify-center">
-            <img
-              class="object-cover h-80 w-80 rounded-full border-4 border-solid border-black"
-              src={logoProblem}
-              alt="image description"
-            />
-
             <div className="flex flex-col items-center justify-center">
-              <p className="poppins-bold text-2xl md:text-2xl lg:text-3xl text-black mt-12">
+              <p className="poppins-bold text-2xl md:text-2xl lg:text-4xl text-black mb-5">
                 PÁGINA NO ENCONTRADA
               </p>
-
+              <img
+                class="object-cover h-80 w-80 rounded-full border-4 border-solid border-black"
+                src={logoProblem}
+                alt="image description"
+              />
               <p className="poppins-semibold md:text-lg lg:text-xl text-black mt-8">
-                Lo siento... No se ha encontrado la página que buscas.
+                Ups... No se ha encontrado la página que buscas.
               </p>
 
               <Link

@@ -91,7 +91,7 @@ export const Register = () => {
               Por favor ingrese la siguiente información
             </small> */}
             </div>
-            <form onSubmit={handleSubmit} className="mb-8">
+            <form onSubmit={handleSubmit} className="mb-2">
               <div className="flex flex-wrap mb-3">
                 <div className="w-1/2 pr-2">
                   <label

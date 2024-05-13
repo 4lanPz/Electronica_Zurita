@@ -32,7 +32,7 @@ export const Forgot = () => {
       <div className="w-full h-screen relative">
         <div className="absolute inset-0 bg-[url('/images/tecnico.jpg')] bg-no-repeat bg-cover bg-center opacity-70 blur-sm"></div>
         <div className="absolute inset-0 flex justify-center items-center">
-          <div className="w-auto lg:w-2/5 bg-whiteE  p-10 rounded-xl">
+          <div className="w-auto lg:w-2/5 bg-white p-10 rounded-xl">
             <div>
               <div className="flex items-center justify-center mb-5">
                 {/* Imagen */}
