@@ -132,16 +132,16 @@ export const Register = () => {
               </div>
               <div className="flex flex-wrap mb-3">
                 <div className="w-1/2 pr-2">
-                  <label className="mb-1 block poppins-semibold" htmlFor="RUC">
-                    RUC:
+                  <label className="mb-1 block poppins-semibold" htmlFor="direccion">
+                    Dirección:
                   </label>
                   <input
-                    type="numer"
-                    id="RUC"
-                    name="RUC"
-                    value={form.RUC || ""}
+                    type="text"
+                    id="direccion"
+                    name="direccion"
+                    value={form.direccion || ""}
                     onChange={handleChange}
-                    placeholder="Ingresa tu RUC"
+                    placeholder="Ingresa tu dirección (luego RUC)"
                     className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
                     required
                   />
