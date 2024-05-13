@@ -47,7 +47,7 @@ export const Login = () => {
 
         {/* Contenido del formulario */}
         <div className="absolute inset-0 flex justify-center items-center">
-          <div className="w-auto lg:w-2/5 white p-10 rounded-xl max-w-2xl">
+          <div className="w-auto lg:w-2/5 bg-white p-10 rounded-xl max-w-2xl">
             
 
             {/* Encabezado */}
