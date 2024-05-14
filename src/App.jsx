@@ -41,6 +41,7 @@ function App() {
             <PrivateRoute>
               <Routes>
                 <Route element={<Dashboard />}>
+                  {/* <Route index element={<Perfil />} /> */}
                   <Route index element={<Perfil />} />
                   <Route path='listar' element={<Listar />} />
                   <Route path='visualizar/:id' element={<Visualizar />} />
