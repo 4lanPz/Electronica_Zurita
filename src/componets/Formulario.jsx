@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Mensaje from "./Alertas/Mensaje";
@@ -11,18 +11,17 @@ export const Formulario = ({ paciente }) => {
     propietario: paciente?.propietario || "",
     email: paciente?.email || "",
     celular: paciente?.celular || "",
-    salida:
-      new Date(paciente?.salida).toLocaleDateString("en-CA", {
-        timeZone: "UTC",
-      }) || "",
-    convencional: paciente?.convencional || "",
-    sintomas: paciente?.sintomas || "",
   });
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Si el nombre del campo es "frecuente", convierte el valor a un booleano
+    const newValue = name === "frecuente" ? value === "true" : value;
+
     setForm({
       ...form,
-      [e.target.name]: e.target.value,
+      [name]: newValue,
     });
   };
 
@@ -42,6 +41,26 @@ export const Formulario = ({ paciente }) => {
       });
       return;
     }
+
+    useEffect(() => {
+      // Inicializar el mapa de Google Maps
+      const initializeMap = () => {
+        const map = new window.google.maps.Map(document.getElementById("map"), {
+          center: { lat: -34.397, lng: 150.644 }, // Centro predeterminado
+          zoom: 8, // Zoom predeterminado
+        });
+
+        // Manejar el evento de clic en el mapa
+        map.addListener("click", (e) => {
+          // Obtener las coordenadas de la ubicación seleccionada
+          const latLng = e.latLng.toJSON();
+          console.log("Ubicación seleccionada:", latLng);
+
+          // Aquí puedes realizar cualquier lógica adicional, como guardar las coordenadas en el estado del formulario
+        });
+      }; // Cargar el mapa de Google Maps después de que se cargue el script de Google Maps
+      window.initMap = initializeMap;
+    }, []);
 
     // Validación de formato de correo electrónico
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -114,137 +133,155 @@ export const Formulario = ({ paciente }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {Object.keys(mensaje).length > 0 && (
-        <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
-      )}
-      <div className="poppins-regular">
-        <label
-          htmlFor="nombre:"
-          className="poppins-semibold text-black uppercase"
-        >
-          Nombre cliente:{" "}
-        </label>
-        <input
-          id="nombre"
-          type="text"
-          className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
-          placeholder="nombre de la mascota"
-          name="nombre"
-          value={form.nombre}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="propietario:"
-          className="poppins-semibold text-black uppercase"
-        >
-          Nombre del propietario:{" "}
-        </label>
-        <input
-          id="propietario"
-          type="text"
-          className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
-          placeholder="nombre del propietario"
-          name="propietario"
-          value={form.propietario}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="email:"
-          className="poppins-semibold text-black uppercase"
-        >
-          Email:{" "}
-        </label>
-        <input
-          id="email"
-          type="email"
-          className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
-          placeholder="email del propietario"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="celular:"
-          className="poppins-semibold text-black uppercase"
-        >
-          Celular:{" "}
-        </label>
-        <input
-          id="celular"
-          type="number"
-          className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
-          placeholder="celular del propietario"
-          name="celular"
-          value={form.celular}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="convencional:"
-          className="poppins-semibold text-black uppercase"
-        >
-          Convencional:{" "}
-        </label>
-        <input
-          id="convencional"
-          type="number"
-          className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
-          placeholder="convencional del propietario"
-          name="convencional"
-          value={form.convencional}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="Salida:"
-          className="poppins-semibold text-black uppercase"
-        >
-          Fecha de salida:{" "}
-        </label>
-        <input
-          id="salida"
-          type="date"
-          className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
-          placeholder="salida"
-          name="salida"
-          value={form.salida}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="sintomas:"
-          className="poppins-semibold text-black uppercase"
-        >
-          Síntomas:{" "}
-        </label>
-        <textarea
-          id="sintomas"
-          type="text"
-          className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
-          placeholder="Ingrese los síntomas de la mascota"
-          name="sintomas"
-          value={form.sintomas}
-          onChange={handleChange}
-        />
-      </div>
+    <div className="">
+      <form onSubmit={handleSubmit}>
+        {Object.keys(mensaje).length > 0 && (
+          <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
+        )}
+        <div className="poppins-regular">
+          <div className="flex flex-wrap mb-3">
+            <div className="w-1/2 pr-2">
+              <label
+                htmlFor="nombre:"
+                className="poppins-semibold text-black uppercase"
+              >
+                Nombre cliente:{" "}
+              </label>
+              <input
+                id="nombre"
+                type="text"
+                className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+                placeholder="Nombre del cliente"
+                name="nombre"
+                value={form.nombre}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="w-1/2 pl-2">
+              <div>
+                <label
+                  htmlFor="propietario:"
+                  className="poppins-semibold text-black uppercase"
+                >
+                  Apellido Cliente:{" "}
+                </label>
+                <input
+                  id="propietario"
+                  type="text"
+                  className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+                  placeholder="nombre del propietario"
+                  name="propietario"
+                  value={form.propietario}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <input
+        <div>
+          <label
+            htmlFor="email:"
+            className="poppins-semibold text-black uppercase"
+          >
+            Correo Electrónico:{" "}
+          </label>
+          <input
+            id="email"
+            type="email"
+            className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+            placeholder="Correo electrónico del cliente"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="celular:"
+            className="poppins-semibold text-black uppercase"
+          >
+            Teléfono / celular:{" "}
+          </label>
+          <input
+            id="celular"
+            type="number"
+            className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+            placeholder="Teléfono / celular del cliente"
+            name="celular"
+            value={form.celular}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="cedula:"
+            className="poppins-semibold text-black uppercase"
+          >
+            Cédula:{" "}
+          </label>
+          <input
+            id="cedula"
+            type="number"
+            className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+            placeholder="Cédula del cliente"
+            name="cedula"
+            value={form.cedula}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="frecuente"
+            className="poppins-semibold text-black uppercase"
+          >
+            Cliente frecuente{" "}
+          </label>
+          <select
+            id="frecuente"
+            className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+            name="frecuente"
+            value={form.frecuente}
+            onChange={handleChange}
+          >
+            <option value="">Seleccionar</option>
+            <option value="true">Sí</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+        <div>
+          {/* Campo de entrada de dirección */}
+          <label
+            htmlFor="direccion"
+            className="poppins-semibold text-black uppercase"
+          >
+            Dirección{" "}
+          </label>
+          <input
+            id="direccion"
+            type="text"
+            className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+            placeholder="Dirección"
+            name="direccion"
+            value={form.direccion}
+            onChange={handleChange}
+          />
+        </div>
+
+        {/* Contenedor del mapa de Google Maps */}
+        <div id="map" style={{ height: "300px", marginTop: "20px" }}></div>
+
+        <button type="submit" className="btn btn-primary">
+          Confirmar
+        </button>
+        <input
         type="submit"
         className="poppins-regular bg-green-800 green w-full p-3 
         text-white uppercase rounded-xl
         hover:bg-emerald-900 cursor-pointer transition-all"
-        value={paciente?._id ? "Actualizar paciente" : "Registrar paciente"}
+        value={paciente?._id ? "Actualizar paciente" : "Registrar cliente"}
       />
-    </form>
+      </form>
+    </div>
   );
 };

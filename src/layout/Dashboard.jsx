@@ -15,8 +15,8 @@ const Dashboard = () => {
 
   return (
     <div className="md:flex md:min-h-screen">
-      <div className="xl:w-2/7 bg-gray-800 flex flex-col">
-        <div className="p-4">
+      <div className="w-auto bg-gray-800">
+        <div className="mt-4 mx-4">
           <button onClick={toggleMenu} className="text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@ const Dashboard = () => {
           </button>
         </div>
         {menuOpen && (
-          <div className="p-4">
+          <div className="mx-10 ">
             <h2 className="font-bold text-xl text-white text-center">
               Electrónica <br /> Zurita
             </h2>
@@ -57,7 +57,7 @@ const Dashboard = () => {
                   to="/dashboard/crear"
                   className={`${
                     urlActual === "/dashboard/crear"
-                      ? "text-white bg-gray-900 px-3 py-2 rounded-md text-center"
+                      ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
                       : "text-slate-600"
                   } block mt-2 hover:text-slate-600`}
                 >
@@ -69,7 +69,7 @@ const Dashboard = () => {
                   to="/dashboard/crear"
                   className={`${
                     urlActual === "/dashboard/crear"
-                      ? "text-white bg-gray-900 px-3 py-2 rounded-md text-center"
+                      ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
                       : "text-slate-600"
                   }  block mt-2 hover:text-slate-600`}
                 >
@@ -81,7 +81,7 @@ const Dashboard = () => {
                   to="/dashboard/listar"
                   className={`${
                     urlActual === "/dashboard/listar"
-                      ? "text-slate-200 bg-gray-900 px-3 py-2 rounded-md text-center"
+                      ? "text-slate-200 bg-gray-900 px-3 py-2 rounded-xl text-center"
                       : "text-slate-600"
                   }  block mt-2 hover:text-slate-600`}
                 >
@@ -93,7 +93,7 @@ const Dashboard = () => {
                   to="/dashboard"
                   className={`${
                     urlActual === "/dashboard"
-                      ? "text-slate-200 bg-gray-900 px-3 py-2 rounded-md text-center"
+                      ? "text-slate-200 bg-gray-900 px-3 py-2 rounded-xl text-center"
                       : "text-slate-600"
                   }  block mt-2 hover:text-slate-600`}
                 >
@@ -101,10 +101,10 @@ const Dashboard = () => {
                 </Link>
               </li>
             </ul>
-            <div className="p-4 mt-auto">
+            <div className="p-4 mt-10">
               <Link
                 to="/"
-                className="poppins-regular text-xl text-white text-md block hover:bg-red-900 text-center bg-red-800 px-4 py-1 rounded-lg"
+                className="poppins-regular text-xl text-white text-md block hover:bg-red-900 text-center bg-red-800 px-4 py-1 rounded-xl"
                 onClick={() => {
                   localStorage.removeItem("token");
                 }}
