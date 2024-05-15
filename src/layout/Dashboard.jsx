@@ -15,25 +15,23 @@ const Dashboard = () => {
 
   return (
     <div className="md:flex md:min-h-screen">
-      <div className="w-auto bg-gray-800">
-        <div className="mt-4 mx-4">
-          <button onClick={toggleMenu} className="text-white">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
-        </div>
+      <div className="w-auto bg-[#3D53A0]">
+        <button onClick={toggleMenu} className="my-2 mx-4 text-white">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
         {menuOpen && (
           <div className="mx-10 ">
             <h2 className="font-bold text-xl text-white text-center">
@@ -47,12 +45,20 @@ const Dashboard = () => {
               width={150}
               height={150}
             />
-            <p className="poppins-semibold text-white text-center mt-4">Bienvenido <br />Técnico</p>
+            <p className="poppins-semibold text-white text-center mt-4">
+              Bienvenido <br />
+              Técnico
+            </p>
             <p className="poppins-semibold text-white text-center ">{`${auth?.nombre}`}</p>
             <hr className="my-5 border-slate-500" />
 
             <ul className="poppins-regular">
               <li className="text-center">
+                <img
+                  src="/images/svg/cliente.jpg"
+                  alt="icono 1"
+                  className="inline-block w-4 h-4"
+                />
                 <Link
                   to="/dashboard/crearcliente"
                   className={`${
@@ -66,18 +72,6 @@ const Dashboard = () => {
               </li>
               <li className="text-center">
                 <Link
-                  to="/dashboard/crearequipo"
-                  className={`${
-                    urlActual === "/dashboard/crearequipo"
-                      ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
-                      : "text-slate-600"
-                  }  block mt-2 hover:text-slate-600`}
-                >
-                  Ingresar Equipo
-                </Link>
-              </li>
-              <li className="text-center">
-                <Link
                   to="/dashboard/listar"
                   className={`${
                     urlActual === "/dashboard/listar"
@@ -85,15 +79,40 @@ const Dashboard = () => {
                       : "text-slate-600"
                   }  block mt-2 hover:text-slate-600`}
                 >
-                  Listar Equipos
+                  Listar Clientes
                 </Link>
               </li>
               <li className="text-center">
                 <Link
-                  to="/dashboard"
+                  to="/dashboard/crearequipo"
                   className={`${
-                    urlActual === "/dashboard"
-                      ? "text-slate-200 bg-gray-900 px-3 py-2 rounded-xl text-center"
+                    urlActual === "/dashboard/crearequipo"
+                      ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
+                      : "text-slate-600"
+                  }  block mt-2 hover:text-slate-600`}
+                >
+                  Orden de trabajo
+                </Link>
+              </li>
+              <li className="text-center">
+                <Link
+                  to="/dashboard/listarreparacion"
+                  className={`${
+                    urlActual === "/dashboard/listarreparacion"
+                      ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
+                      : "text-slate-600"
+                  }  block mt-2 hover:text-slate-600`}
+                >
+                  Estados de reparación
+                </Link>
+              </li>
+
+              <li className="text-center">
+                <Link
+                  to="/dashboard/perfil"
+                  className={`${
+                    urlActual === "/dashboard/perfil"
+                      ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
                       : "text-slate-600"
                   }  block mt-2 hover:text-slate-600`}
                 >
@@ -118,9 +137,7 @@ const Dashboard = () => {
 
       <div className="flex-1 bg-gray-100 p-10">
         {/* <div className="overflow-y-scroll p-8"> */}
-        <div className="overflow-hidden">
-          {autenticado ? <Outlet /> : <Navigate to="/" />}
-        </div>
+        <div className="">{autenticado ? <Outlet /> : <Navigate to="/" />}</div>
       </div>
     </div>
   );

@@ -3,19 +3,19 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Mensaje from "./Alertas/Mensaje";
 
-export const FormularioCliente = ({ paciente }) => {
+export const FormularioCliente = ({ cliente }) => {
   const navigate = useNavigate();
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState(null);
   const [mensaje, setMensaje] = useState({});
   const [form, setForm] = useState({
-    nombre: paciente?.nombre || "",
-    apellido: paciente?.apellido || "",
-    email: paciente?.email || "",
-    celular: paciente?.celular || "",
-    cedula: paciente?.cedula || "",
-    frecuente: paciente?.frecuente || "",
-    direccion: paciente?.direccion || "",
+    nombre: cliente?.nombre || "",
+    apellido: cliente?.apellido || "",
+    email: cliente?.email || "",
+    celular: cliente?.celular || "",
+    cedula: cliente?.cedula || "",
+    frecuente: cliente?.frecuente || "",
+    direccion: cliente?.direccion || "",
   });
 
   const handleChange = (e) => {
@@ -79,12 +79,12 @@ export const FormularioCliente = ({ paciente }) => {
 
     try {
       const token = localStorage.getItem("token");
-      const url = paciente?._id
-        ? `${import.meta.env.VITE_BACKEND_URL}/paciente/actualizar/${
-            paciente._id
+      const url = cliente?._id
+        ? `${import.meta.env.VITE_BACKEND_URL}/cliente/actualizar/${
+          cliente._id
           }`
-        : `${import.meta.env.VITE_BACKEND_URL}/paciente/registro`;
-      const method = paciente?._id ? "PUT" : "POST";
+        : `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
+      const method = cliente?._id ? "PUT" : "POST";
       const options = {
         headers: {
           method,
@@ -98,7 +98,7 @@ export const FormularioCliente = ({ paciente }) => {
       });
 
       setMensaje({
-        respuesta: paciente?._id
+        respuesta: cliente?._id
           ? "Cliente actualizado"
           : "Cliente registrado con éxito",
         tipo: true,
@@ -132,16 +132,17 @@ export const FormularioCliente = ({ paciente }) => {
         {
           center: { lat: -0.180653, lng: -78.467834 },
           zoom: 10,
+          streetViewControl: false,
+          mapTypeControl: false,
         }
       );
       setMap(mapInstance);
 
       const markerInstance = new window.google.maps.Marker({
-        center: { lat: -0.180653, lng: -78.467834 },
+        position: { lat: -0.180653, lng: -78.467834 },
         map: mapInstance,
         draggable: true,
       });
-
       setMarker(markerInstance);
 
       mapInstance.addListener("click", (e) => {
@@ -183,7 +184,7 @@ export const FormularioCliente = ({ paciente }) => {
             <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
           )}
           <div className="poppins-regular">
-            <div className="flex flex-wrap mb-3">
+            <div className="flex flex-wrap">
               <div className="w-1/2 pr-2">
                 <label
                   htmlFor="nombre:"
@@ -222,7 +223,43 @@ export const FormularioCliente = ({ paciente }) => {
               </div>
             </div>
           </div>
-
+          <div className="flex flex-wrap">
+            <div className="w-1/2 pr-2">
+              <label
+                htmlFor="celular:"
+                className="poppins-semibold text-black uppercase"
+              >
+                Teléfono / celular:{" "}
+              </label>
+              <input
+                id="celular"
+                type="tel"
+                className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+                placeholder="Teléfono / celular del cliente"
+                name="celular"
+                value={form.celular}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="w-1/2 pl-2">
+              <label
+                htmlFor="cedula:"
+                className="poppins-semibold text-black uppercase"
+              >
+                Cédula:{" "}
+              </label>
+              <input
+                id="cedula"
+                type="text"
+                inputMode="numberic"
+                className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+                placeholder="Cédula del cliente"
+                name="cedula"
+                value={form.cedula}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
           <div>
             <label
               htmlFor="email:"
@@ -237,41 +274,6 @@ export const FormularioCliente = ({ paciente }) => {
               placeholder="Correo electrónico del cliente"
               name="email"
               value={form.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="celular:"
-              className="poppins-semibold text-black uppercase"
-            >
-              Teléfono / celular:{" "}
-            </label>
-            <input
-              id="celular"
-              type="tel"
-              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
-              placeholder="Teléfono / celular del cliente"
-              name="celular"
-              value={form.celular}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="cedula:"
-              className="poppins-semibold text-black uppercase"
-            >
-              Cédula:{" "}
-            </label>
-            <input
-              id="cedula"
-              type="text"
-              inputMode="numberic"
-              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
-              placeholder="Cédula del cliente"
-              name="cedula"
-              value={form.cedula}
               onChange={handleChange}
             />
           </div>
@@ -305,7 +307,7 @@ export const FormularioCliente = ({ paciente }) => {
             <input
               id="direccion"
               type="text"
-              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
               placeholder="Dirección"
               name="direccion"
               value={form.direccion}
@@ -315,8 +317,9 @@ export const FormularioCliente = ({ paciente }) => {
 
           {/* Contenedor del mapa de Google Maps */}
           <div id="map" style={{ height: "300px", marginTop: "50px" }}></div>
+
           <div className="flex justify-center p-3 mb-5">
-            <div className=" text-center poppins-regular bg-green-800 green p-2 text-white uppercase rounded-xl hover:bg-emerald-900 cursor-pointer transition-all w-1/3">
+            <div className=" text-center poppins-regular bg-[#5B72C3] green p-2 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all w-1/3">
               <button
                 type="button"
                 onClick={handleConfirmDireccion}
@@ -328,8 +331,8 @@ export const FormularioCliente = ({ paciente }) => {
           </div>
           <input
             type="submit"
-            className="poppins-regular bg-green-800 green w-full p-3 text-white uppercase rounded-xl hover:bg-emerald-900 cursor-pointer transition-all"
-            value={paciente?._id ? "Actualizar paciente" : "Registrar cliente"}
+            className="poppins-regular bg-[#5B72C3] green w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
+            value={cliente?._id ? "Actualizar cliente" : "Registrar cliente"}
           />
         </form>
       </div>

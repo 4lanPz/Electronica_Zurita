@@ -1,41 +1,53 @@
 import { useContext } from "react";
 import AuthContext from "../../context/AuthProvider";
+import Tecimage from "/images/tecprofile.jpg";
 
 export const CardPerfil = () => {
   const { auth } = useContext(AuthContext);
   return (
     <div
-      className="bg-white border border-slate-200 h-auto p-4 
+      className="w-3/6 bg-white border border-slate-200 h-auto p-4 
                         flex flex-col items-center justify-between shadow-xl rounded-lg"
     >
-      <div>
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/4715/4715329.png"
-          alt="img-client"
-          className="m-auto "
-          width={120}
-          height={120}
-        />
-      </div>
-      <div className="self-start">
-        <b>Nombre:</b>
-        <p className="inline-block ml-3">{auth.nombre}</p>
-      </div>
-      <div className="self-start">
-        <b>Apellido:</b>
-        <p className="inline-block ml-3">{auth.apellido}</p>
-      </div>
-      <div className="self-start">
-        <b>Dirección:</b>
-        <p className="inline-block ml-3">{auth.direccion}</p>
-      </div>
-      <div className="self-start">
-        <b>Teléfono:</b>
-        <p className="inline-block ml-3">{auth.telefono}</p>
-      </div>
-      <div className="self-start">
-        <b>Email:</b>
-        <p className="inline-block ml-3">{auth.email}</p>
+      <h1 className="poppins-bold font-black text-2xl text-black">
+        Datos del Técnico
+      </h1>
+      <div className="flex items-center justify-center flex-wrap md:flex-nowrap">
+        <div className="w-full md:w-1/2">
+          <img
+            src={Tecimage}
+            alt="img-técnico"
+            className="m-auto"
+            width={140}
+            height={140}
+          />
+        </div>
+        <div className="w-full ml-5">
+          <div className="">
+            <b className="poppins-semibold">Nombre técnico:</b>
+            <br />
+            <p className="poppins-regular">
+              {auth.nombre} {auth.apellido}
+            </p>
+          </div>
+          <div className="">
+            <b className="poppins-semibold">Correo electrónico:</b>
+            <br />
+            <p className="poppins-regular">{auth.email}</p>
+          </div>
+          <div className="flex items-center justify-center flex-wrap md:flex-nowrap">
+            <div className="w-1/2">
+              <b className="poppins-semibold">RUC:</b>
+              <br />
+              <p className="poppins-regular">{auth.direccion}</p>
+            </div>
+            <div className="w-1/2">
+              <b className="poppins-semibold">Télefono:</b>
+              <br />
+              <p className="poppins-regular">{auth.telefono}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

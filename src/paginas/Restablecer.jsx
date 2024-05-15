@@ -1,4 +1,3 @@
-import logoDog from '../assets/dog-hand.webp'
 import { Link } from 'react-router-dom'
 import Mensaje from '../componets/Alertas/Mensaje'
 import { useEffect, useState } from 'react'

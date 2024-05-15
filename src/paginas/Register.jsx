@@ -87,9 +87,7 @@ export const Register = () => {
               </div>
             </div>
             <div className="text-center">
-              {/* <small className="text-black block poppins-regular mb-2">
-              Por favor ingrese la siguiente información
-            </small> */}
+              
             </div>
             <form onSubmit={handleSubmit} className="mb-2">
               <div className="flex flex-wrap mb-3">
@@ -133,7 +131,7 @@ export const Register = () => {
               <div className="flex flex-wrap mb-3">
                 <div className="w-1/2 pr-2">
                   <label className="mb-1 block poppins-semibold" htmlFor="ruc">
-                    Dirección:
+                    Número de RUC:
                   </label>
                   <input
                     type="text"

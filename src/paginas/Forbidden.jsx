@@ -1,21 +1,35 @@
-import logoDog from '../assets/doglost.jpg'
+import logoProblem from "/images/problem.jpg";
 
 export const Forbidden = () => {
-    return (
-        
-
-        <div className="flex flex-col items-center justify-center">
-
-            <img class="object-cover h-80 w-80 rounded-full border-4 border-solid border-slate-600" src={logoDog} alt="image description"/>
-
+  return (
+    <div className="w-full h-screen relative">
+      <div className="absolute inset-0 bg-[url('/images/tecnico.jpg')] bg-no-repeat bg-cover bg-center opacity-70 blur-sm"></div>
+      <div className="absolute inset-0 flex justify-center items-center">
+        <div className="bg-white p-10 rounded-xl z-10 lg:w-2/5 sm-2/5 w-auto absolute">
+          <div className="flex flex-col items-center justify-center">
             <div className="flex flex-col items-center justify-center">
-                
-                <p className="text-3xl md:text-4xl lg:text-5xl text-gray-800 mt-12">Page Not Allowed</p>
-                
-                <p className="md:text-lg lg:text-xl text-gray-600 mt-8">Sorry, you are not allowed to access this page.</p>
+              <p className="poppins-bold text-2xl md:text-2xl lg:text-4xl text-black mb-5">
+                Acesso Denegado
+              </p>
+              <img
+                class="object-cover h-80 w-80 rounded-full border-4 border-solid border-black"
+                src={logoProblem}
+                alt="image description"
+              />
+              <p className="poppins-semibold md:text-lg lg:text-xl text-black mt-8">
+                Lo siento, no tienes permiso para ingresar a esta página.
+              </p>
 
-
+              <Link
+                to="/"
+                className="poppins-regular p-3 m-5 w-full text-center green text-white  border rounded-xl hover:scale-105 duration-300 hover:bg-emerald-900 hover:text-white"
+              >
+                Volver al inicio de sesión
+              </Link>
             </div>
+          </div>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};

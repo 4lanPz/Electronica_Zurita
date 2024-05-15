@@ -2,7 +2,6 @@ import './App.css'
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import Auth from './layout/Auth'
 import { Login } from './paginas/Login'
-import { LandinPage } from './paginas/LandinPage'
 import { Register } from './paginas/Register'
 import { NotFound } from './paginas/NotFound'
 import Dashboard from './layout/Dashboard'
@@ -12,6 +11,7 @@ import CrearCliente from './paginas/CrearCliente'
 import CrearEquipo from './paginas/CrearEquipo'
 import Actualizar from './paginas/Actualizar'
 import Perfil from './paginas/Perfil'
+import ListarReparacion from './paginas/ListarReparacion'
 import { Confirmar } from './paginas/Confirmar'
 import Restablecer from './paginas/Restablecer'
 import { AuthProvider } from './context/AuthProvider'
@@ -48,6 +48,8 @@ function App() {
                   } />
                   <Route path='listar' element={<Listar />} />
                   <Route path='visualizar/:id' element={<Visualizar />} />
+                  <Route path='perfil' element={<Perfil />} />
+                  <Route path='listarreparacion' element={<ListarReparacion />} />
                   <Route path='crearcliente' element={
                       <PrivateRouteWithRole>
                         <CrearCliente />
