@@ -94,12 +94,6 @@ export const Forgot = () => {
                 >
                   Iniciar sesión
                 </Link>
-                {/* <Link
-              to="/login"
-              className="py-2 px-5 bg-gray-600 text-slate-300 border rounded-xl hover:scale-110 duration-300 hover:bg-gray-900 hover:text-white"
-            >
-              Iniciar sesión
-            </Link> */}
               </div>
             </div>
           </div>

@@ -30,7 +30,6 @@ function App() {
           <Route index element={<Login/>}/>
 
           <Route path='/' element={<Auth/>}>
-            {/* <Route path='login' element={<Login/>}/> */}
             <Route path='register' element={<Register/>}/>
             <Route path='forgot' element={<Forgot/>}/>
             <Route path='confirmar/:token' element={<Confirmar/>}/>

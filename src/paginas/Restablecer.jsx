@@ -31,7 +31,7 @@ const Restablecer = () => {
             setForm({})
             setMensaje({respuesta:respuesta.data.msg,tipo:true})
 						setTimeout(() => {
-                navigate('/login');
+                navigate('/');
             }, 3000);
         } catch (error) { 
             setMensaje({respuesta:error.response.data.msg,tipo:false})

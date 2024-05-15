@@ -22,8 +22,8 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = form.password.includes("vet")
-      ? `${import.meta.env.VITE_BACKEND_URL}/paciente/login`
+    const url = form.password.includes("tec")
+      ? `${import.meta.env.VITE_BACKEND_URL}/cliente/login`
       : `${import.meta.env.VITE_BACKEND_URL}/login`;
     try {
       const respuesta = await axios.post(url, form);

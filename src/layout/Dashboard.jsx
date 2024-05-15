@@ -119,7 +119,7 @@ const Dashboard = () => {
       <div className="flex-1 bg-gray-100 p-10">
         {/* <div className="overflow-y-scroll p-8"> */}
         <div className="overflow-hidden">
-          {autenticado ? <Outlet /> : <Navigate to="/login" />}
+          {autenticado ? <Outlet /> : <Navigate to="/" />}
         </div>
       </div>
     </div>

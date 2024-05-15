@@ -50,12 +50,6 @@ export const Confirmar = () => {
             >
               Iniciar sesión
             </Link>
-            {/* <Link
-              to="/login"
-              className="poppins-regular p-3 m-5 w-full text-center green text-white  border rounded-xl hover:scale-105 duration-300 hover:bg-emerald-900 hover:text-white"
-            >
-              Iniciar sesión
-            </Link> */}
           </div>
         </div>
       </div>
