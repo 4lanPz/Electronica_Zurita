@@ -1,4 +1,4 @@
-import { Formulario } from '../componets/Formulario'
+import { FormularioCliente } from '../componets/FormularioCliente'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Mensaje from '../componets/Alertas/Mensaje';
@@ -37,7 +37,7 @@ const Actualizar = () => {
             {
                 Object.keys(paciente).length != 0 ?
                     (
-                        <Formulario paciente={paciente}/>
+                        <FormularioCliente paciente={paciente}/>
                     )
                     :
                     (

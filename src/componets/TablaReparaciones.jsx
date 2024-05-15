@@ -4,7 +4,7 @@ import TratamientosContext from "../context/TratamientosProvider";
 import AuthContext from "../context/AuthProvider";
 
 
-const TablaTratamientos = ({tratamientos}) => {
+const TablaReparaciones = ({tratamientos}) => {
 
     const { auth } = useContext(AuthContext)
     const {handleDelete, handleStatus} = useContext(TratamientosContext)
@@ -60,4 +60,4 @@ const TablaTratamientos = ({tratamientos}) => {
     )
 }
 
-export default TablaTratamientos
+export default TablaReparaciones

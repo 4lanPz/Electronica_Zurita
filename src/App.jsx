@@ -8,7 +8,8 @@ import { NotFound } from './paginas/NotFound'
 import Dashboard from './layout/Dashboard'
 import Listar from './paginas/Listar'
 import Visualizar from './paginas/Visualizar'
-import Crear from './paginas/Crear'
+import CrearCliente from './paginas/CrearCliente'
+import CrearEquipo from './paginas/CrearEquipo'
 import Actualizar from './paginas/Actualizar'
 import Perfil from './paginas/Perfil'
 import { Confirmar } from './paginas/Confirmar'
@@ -45,9 +46,14 @@ function App() {
                   <Route index element={<Perfil />} />
                   <Route path='listar' element={<Listar />} />
                   <Route path='visualizar/:id' element={<Visualizar />} />
-                  <Route path='crear' element={
+                  <Route path='crearcliente' element={
                       <PrivateRouteWithRole>
-                        <Crear />
+                        <CrearCliente />
+                      </PrivateRouteWithRole>
+                  }/>
+                  <Route path='crearequipo' element={
+                      <PrivateRouteWithRole>
+                        <CrearEquipo />
                       </PrivateRouteWithRole>
                   }/>
                   <Route path='actualizar/:id' element={<Actualizar />} />

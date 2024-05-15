@@ -54,9 +54,9 @@ const Dashboard = () => {
             <ul className="poppins-regular">
               <li className="text-center">
                 <Link
-                  to="/dashboard/crear"
+                  to="/dashboard/crearcliente"
                   className={`${
-                    urlActual === "/dashboard/crear"
+                    urlActual === "/dashboard/crearcliente"
                       ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
                       : "text-slate-600"
                   } block mt-2 hover:text-slate-600`}
@@ -66,9 +66,9 @@ const Dashboard = () => {
               </li>
               <li className="text-center">
                 <Link
-                  to="/dashboard/crear"
+                  to="/dashboard/crearequipo"
                   className={`${
-                    urlActual === "/dashboard/crear"
+                    urlActual === "/dashboard/crearequipo"
                       ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
                       : "text-slate-600"
                   }  block mt-2 hover:text-slate-600`}

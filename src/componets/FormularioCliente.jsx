@@ -3,16 +3,18 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Mensaje from "./Alertas/Mensaje";
 
-export const Formulario = ({ paciente }) => {
+export const FormularioCliente = ({ paciente }) => {
   const navigate = useNavigate();
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState(null);
   const [mensaje, setMensaje] = useState({});
   const [form, setForm] = useState({
     nombre: paciente?.nombre || "",
-    propietario: paciente?.propietario || "",
+    apellido: paciente?.apellido || "",
     email: paciente?.email || "",
     celular: paciente?.celular || "",
+    cedula: paciente?.cedula || "",
+    frecuente: paciente?.frecuente || "",
     direccion: paciente?.direccion || "",
   });
 
@@ -32,9 +34,12 @@ export const Formulario = ({ paciente }) => {
     // Validaciones básicas
     if (
       !form.nombre.trim() ||
-      !form.propietario.trim() ||
+      !form.apellido.trim() ||
       !form.email.trim() ||
-      !form.celular.trim()
+      !form.celular.trim() ||
+      !form.cedula.trim() ||
+      (form.frecuente !== true && form.frecuente !== false) ||
+      !form.direccion.trim()
     ) {
       setMensaje({
         respuesta: "Todos los campos obligatorios deben ser completados",
@@ -53,14 +58,20 @@ export const Formulario = ({ paciente }) => {
       return;
     }
 
-    //Validación de números de teléfono
-    const phoneRegex = /^\d{10}$/;
-    if (
-      !phoneRegex.test(form.celular.trim()) ||
-      (form.convencional.trim() && !phoneRegex.test(form.convencional.trim()))
-    ) {
+    //Validación de número celular
+    const celularRegex = /^\d{10}$/;
+    if (!celularRegex.test(form.celular.trim())) {
       setMensaje({
-        respuesta: "Ingrese números de teléfono válidos",
+        respuesta: "Ingrese un número de celular válido",
+        tipo: false,
+      });
+      return;
+    }
+    //Validación de cedula
+    const cedulaRegex = /^\d{10}$/;
+    if (!cedulaRegex.test(form.cedula.trim())) {
+      setMensaje({
+        respuesta: "Ingrese un número de cédula válido",
         tipo: false,
       });
       return;
@@ -69,7 +80,9 @@ export const Formulario = ({ paciente }) => {
     try {
       const token = localStorage.getItem("token");
       const url = paciente?._id
-        ? `${import.meta.env.VITE_BACKEND_URL}/paciente/actualizar/${paciente._id}`
+        ? `${import.meta.env.VITE_BACKEND_URL}/paciente/actualizar/${
+            paciente._id
+          }`
         : `${import.meta.env.VITE_BACKEND_URL}/paciente/registro`;
       const method = paciente?._id ? "PUT" : "POST";
       const options = {
@@ -236,7 +249,7 @@ export const Formulario = ({ paciente }) => {
             </label>
             <input
               id="celular"
-              type="number"
+              type="tel"
               className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
               placeholder="Teléfono / celular del cliente"
               name="celular"
@@ -253,7 +266,8 @@ export const Formulario = ({ paciente }) => {
             </label>
             <input
               id="cedula"
-              type="number"
+              type="text"
+              inputMode="numberic"
               className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
               placeholder="Cédula del cliente"
               name="cedula"
@@ -263,7 +277,7 @@ export const Formulario = ({ paciente }) => {
           </div>
           <div>
             <label
-              htmlFor="frecuente"
+              htmlFor="frecuente:"
               className="poppins-semibold text-black uppercase"
             >
               Cliente frecuente{" "}
@@ -283,7 +297,7 @@ export const Formulario = ({ paciente }) => {
           <div>
             {/* Campo de entrada de dirección */}
             <label
-              htmlFor="direccion"
+              htmlFor="direccion:"
               className="poppins-semibold text-black uppercase"
             >
               Dirección{" "}
@@ -300,7 +314,7 @@ export const Formulario = ({ paciente }) => {
           </div>
 
           {/* Contenedor del mapa de Google Maps */}
-          <div id="map" style={{ height: "300px", marginTop: "20px" }}></div>
+          <div id="map" style={{ height: "300px", marginTop: "50px" }}></div>
           <div className="flex justify-center p-3 mb-5">
             <div className=" text-center poppins-regular bg-green-800 green p-2 text-white uppercase rounded-xl hover:bg-emerald-900 cursor-pointer transition-all w-1/3">
               <button
