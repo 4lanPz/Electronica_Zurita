@@ -8,7 +8,7 @@ export const Register = () => {
   const [form, setForm] = useState({
     nombre: "",
     apellido: "",
-    direccion: "",
+    ruc: "",
     telefono: "",
     email: "",
     password: "",
@@ -132,16 +132,16 @@ export const Register = () => {
               </div>
               <div className="flex flex-wrap mb-3">
                 <div className="w-1/2 pr-2">
-                  <label className="mb-1 block poppins-semibold" htmlFor="direccion">
+                  <label className="mb-1 block poppins-semibold" htmlFor="ruc">
                     Dirección:
                   </label>
                   <input
                     type="text"
-                    id="direccion"
-                    name="direccion"
-                    value={form.direccion || ""}
+                    id="ruc"
+                    name="ruc"
+                    value={form.ruc || ""}
                     onChange={handleChange}
-                    placeholder="Ingresa tu dirección (luego RUC)"
+                    placeholder="Ingresa tu número de RUC"
                     className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
                     required
                   />

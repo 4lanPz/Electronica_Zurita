@@ -116,8 +116,9 @@ const Dashboard = () => {
         )}
       </div>
 
-      <div className="flex-1 bg-gray-100">
-        <div className="overflow-y-scroll p-8">
+      <div className="flex-1 bg-gray-100 p-10">
+        {/* <div className="overflow-y-scroll p-8"> */}
+        <div className="overflow-hidden">
           {autenticado ? <Outlet /> : <Navigate to="/login" />}
         </div>
       </div>
