@@ -49,6 +49,11 @@ function App() {
                   } />
                   <Route path='listar' element={<Listar />} />
                   <Route path='visualizar/:id' element={<Visualizar />} />
+                  <Route path='crearcliente' element={
+                      <PrivateRouteWithRole>
+                        <CrearCliente />
+                      </PrivateRouteWithRole>
+                  }/>
                   <Route path='crearequipo' element={
                       <PrivateRouteWithRole>
                         <CrearEquipo />
