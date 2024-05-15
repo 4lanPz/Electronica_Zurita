@@ -30,6 +30,7 @@ function App() {
           <Route index element={<Login/>}/>
 
           <Route path='/' element={<Auth/>}>
+            <Route path='login' element={<Login/>}/>
             <Route path='register' element={<Register/>}/>
             <Route path='forgot' element={<Forgot/>}/>
             <Route path='confirmar/:token' element={<Confirmar/>}/>
@@ -41,15 +42,13 @@ function App() {
             <PrivateRoute>
               <Routes>
                 <Route element={<Dashboard />}>
-                  {/* <Route index element={<Perfil />} /> */}
-                  <Route index element={<Perfil />} />
-                  <Route path='listar' element={<Listar />} />
-                  <Route path='visualizar/:id' element={<Visualizar />} />
-                  <Route path='crearcliente' element={
+                  <Route index element={
                       <PrivateRouteWithRole>
                         <CrearCliente />
                       </PrivateRouteWithRole>
-                  }/>
+                  } />
+                  <Route path='listar' element={<Listar />} />
+                  <Route path='visualizar/:id' element={<Visualizar />} />
                   <Route path='crearequipo' element={
                       <PrivateRouteWithRole>
                         <CrearEquipo />

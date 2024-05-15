@@ -35,7 +35,7 @@ export const Login = () => {
       setform({});
       setTimeout(() => {
         setMensaje({});
-      }, 10000);
+      }, 60000);
     }
   };
 
