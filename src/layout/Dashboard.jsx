@@ -64,7 +64,7 @@ const Dashboard = () => {
                   className={`${
                     urlActual === "/dashboard/crearcliente"
                       ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
-                      : "text-slate-600"
+                      : "text-white"
                   } block mt-2 hover:text-slate-600`}
                 >
                   Ingresar Cliente
@@ -75,8 +75,8 @@ const Dashboard = () => {
                   to="/dashboard/listar"
                   className={`${
                     urlActual === "/dashboard/listar"
-                      ? "text-slate-200 bg-gray-900 px-3 py-2 rounded-xl text-center"
-                      : "text-slate-600"
+                      ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
+                      : "text-white"
                   }  block mt-2 hover:text-slate-600`}
                 >
                   Listar Clientes
@@ -88,7 +88,7 @@ const Dashboard = () => {
                   className={`${
                     urlActual === "/dashboard/crearequipo"
                       ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
-                      : "text-slate-600"
+                      : "text-white"
                   }  block mt-2 hover:text-slate-600`}
                 >
                   Orden de trabajo
@@ -100,7 +100,7 @@ const Dashboard = () => {
                   className={`${
                     urlActual === "/dashboard/listarreparacion"
                       ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
-                      : "text-slate-600"
+                      : "text-white"
                   }  block mt-2 hover:text-slate-600`}
                 >
                   Estados de reparación
@@ -112,9 +112,9 @@ const Dashboard = () => {
                   to="/dashboard/perfil"
                   className={`${
                     urlActual === "/dashboard/perfil"
-                      ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
-                      : "text-slate-600"
-                  }  block mt-2 hover:text-slate-600`}
+                      ? "text-white bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
+                      : "text-white"
+                  }  block mt-2 hover:text-white`}
                 >
                   Perfil Técnico
                 </Link>

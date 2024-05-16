@@ -39,7 +39,7 @@ export const CardPerfil = () => {
             <div className="w-1/2">
               <b className="poppins-semibold">RUC:</b>
               <br />
-              <p className="poppins-regular">{auth.direccion}</p>
+              <p className="poppins-regular">{auth.ruc}</p>
             </div>
             <div className="w-1/2">
               <b className="poppins-semibold">Télefono:</b>
