@@ -91,12 +91,12 @@ const Tabla = () => {
                 </td>
                 <td>{cliente.direccion}</td>
                 <td className="py-2 text-center">
-                  <MdVisibility
+                  {/* <MdVisibility
                     className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
                     onClick={() =>
                       navigate(`/dashboard/visualizar/${cliente._id}`)
                     }
-                  />
+                  /> */}
                   <>
                     <MdUpdate
                       className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
