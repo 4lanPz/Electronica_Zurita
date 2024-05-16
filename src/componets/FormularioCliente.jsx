@@ -3,18 +3,18 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Mensaje from "./Alertas/Mensaje";
 
-export const FormularioCliente = () => {
+export const FormularioCliente = ({ cliente }) => {
   const navigate = useNavigate();
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState(null);
   const [mensaje, setMensaje] = useState({});
   const [form, setForm] = useState({
-    nombre: "",
-    correo: "",
-    celular: "",
-    cedula: "",
-    frecuente: "",
-    direccion: "",
+    nombre: cliente?.nombre || "", //string
+    correo: cliente?.correo || "", //email
+    celular: cliente?.celular || "", //number
+    cedula: cliente?.cedula || "", //number
+    frecuente: cliente?.frecuente || "", //booleano
+    direccion: cliente?.direccion || "", //string
   });
 
   const handleChange = (e) => {
@@ -30,7 +30,7 @@ export const FormularioCliente = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // // Validaciones básicas
+    // Validaciones básicas
     if (
       !form.nombre.trim() ||
       !form.correo.trim() ||
@@ -77,17 +77,28 @@ export const FormularioCliente = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
+      const url = cliente?._id
+        ? `${import.meta.env.VITE_BACKEND_URL}/cliente/actualizar/${
+            cliente._id
+          }`
+        : `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
+      const method = cliente?._id ? "PUT" : "POST";
       const options = {
         headers: {
+          method,
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       };
-      await axios.post(url, form, options);
+      await axios.request(url, {
+        ...options,
+        data: form,
+      });
 
       setMensaje({
-        respuesta: "Cliente registrado con éxito",
+        respuesta: cliente?._id
+          ? "Cliente actualizado"
+          : "Cliente registrado con éxito",
         tipo: true,
       });
 
@@ -175,7 +186,7 @@ export const FormularioCliente = () => {
               htmlFor="nombre:"
               className="poppins-semibold text-black uppercase"
             >
-              Nombre cliente:
+              Nombre cliente:{" "}
             </label>
             <input
               id="nombre"
@@ -194,7 +205,7 @@ export const FormularioCliente = () => {
                 htmlFor="celular:"
                 className="poppins-semibold text-black uppercase"
               >
-                Teléfono / celular:
+                Teléfono / celular:{" "}
               </label>
               <input
                 id="celular"
@@ -211,7 +222,7 @@ export const FormularioCliente = () => {
                 htmlFor="cedula:"
                 className="poppins-semibold text-black uppercase"
               >
-                Cédula:
+                Cédula:{" "}
               </label>
               <input
                 id="cedula"
@@ -230,7 +241,7 @@ export const FormularioCliente = () => {
               htmlFor="correo:"
               className="poppins-semibold text-black uppercase"
             >
-              Correo Electrónico:
+              Correo Electrónico:{" "}
             </label>
             <input
               id="correo"
@@ -247,7 +258,7 @@ export const FormularioCliente = () => {
               htmlFor="frecuente:"
               className="poppins-semibold text-black uppercase"
             >
-              Cliente frecuente
+              Cliente frecuente{" "}
             </label>
             <select
               id="frecuente"
@@ -267,7 +278,7 @@ export const FormularioCliente = () => {
               htmlFor="direccion:"
               className="poppins-semibold text-black uppercase"
             >
-              Dirección
+              Dirección{" "}
             </label>
             <input
               id="direccion"
@@ -297,7 +308,7 @@ export const FormularioCliente = () => {
           <input
             type="submit"
             className="poppins-regular bg-[#5B72C3] green w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
-            value="Registrar cliente"
+            value={cliente?._id ? "Actualizar cliente" : "Registrar cliente"}
           />
         </form>
       </div>
