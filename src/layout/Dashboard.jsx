@@ -53,7 +53,7 @@ const Dashboard = () => {
             <hr className="my-5 border-slate-500" />
 
             <ul className="poppins-regular">
-              <li className="text-center">
+              <li className="text-center inline-block">
                 <img
                   src="/images/svg/cliente.jpg"
                   alt="icono 1"
@@ -63,7 +63,7 @@ const Dashboard = () => {
                   to="/dashboard/crearcliente"
                   className={`${
                     urlActual === "/dashboard/crearcliente"
-                      ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
+                      ? "text-white bg-[#89C5BA] px-3 py-2 rounded-xl text-left"
                       : "text-white"
                   } block mt-2 hover:text-slate-600`}
                 >
@@ -75,7 +75,7 @@ const Dashboard = () => {
                   to="/dashboard/listar"
                   className={`${
                     urlActual === "/dashboard/listar"
-                      ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
+                      ? "text-white bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
                       : "text-white"
                   }  block mt-2 hover:text-slate-600`}
                 >
@@ -87,7 +87,7 @@ const Dashboard = () => {
                   to="/dashboard/crearequipo"
                   className={`${
                     urlActual === "/dashboard/crearequipo"
-                      ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
+                      ? "text-white bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
                       : "text-white"
                   }  block mt-2 hover:text-slate-600`}
                 >
@@ -99,7 +99,7 @@ const Dashboard = () => {
                   to="/dashboard/listarreparacion"
                   className={`${
                     urlActual === "/dashboard/listarreparacion"
-                      ? "text-white bg-gray-900 px-3 py-2 rounded-xl text-center"
+                      ? "text-white bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
                       : "text-white"
                   }  block mt-2 hover:text-slate-600`}
                 >
