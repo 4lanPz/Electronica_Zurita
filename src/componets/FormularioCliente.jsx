@@ -175,7 +175,7 @@ export const FormularioCliente = () => {
               htmlFor="nombre:"
               className="poppins-semibold text-black uppercase"
             >
-              Nombre cliente:{" "}
+              Nombre cliente:
             </label>
             <input
               id="nombre"
@@ -194,7 +194,7 @@ export const FormularioCliente = () => {
                 htmlFor="celular:"
                 className="poppins-semibold text-black uppercase"
               >
-                Teléfono / celular:{" "}
+                Teléfono / celular:
               </label>
               <input
                 id="celular"
@@ -211,7 +211,7 @@ export const FormularioCliente = () => {
                 htmlFor="cedula:"
                 className="poppins-semibold text-black uppercase"
               >
-                Cédula:{" "}
+                Cédula:
               </label>
               <input
                 id="cedula"
@@ -230,7 +230,7 @@ export const FormularioCliente = () => {
               htmlFor="correo:"
               className="poppins-semibold text-black uppercase"
             >
-              Correo Electrónico:{" "}
+              Correo Electrónico:
             </label>
             <input
               id="correo"
@@ -247,7 +247,7 @@ export const FormularioCliente = () => {
               htmlFor="frecuente:"
               className="poppins-semibold text-black uppercase"
             >
-              Cliente frecuente{" "}
+              Cliente frecuente
             </label>
             <select
               id="frecuente"
@@ -267,7 +267,7 @@ export const FormularioCliente = () => {
               htmlFor="direccion:"
               className="poppins-semibold text-black uppercase"
             >
-              Dirección{" "}
+              Dirección
             </label>
             <input
               id="direccion"
