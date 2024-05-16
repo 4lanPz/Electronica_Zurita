@@ -3,18 +3,18 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Mensaje from "./Alertas/Mensaje";
 
-export const FormularioCliente = ({ cliente }) => {
+export const FormularioCliente = () => {
   const navigate = useNavigate();
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState(null);
   const [mensaje, setMensaje] = useState({});
   const [form, setForm] = useState({
-    nombre: cliente?.nombre || "", //string
-    email: cliente?.email || "", //email
-    celular: cliente?.celular || "", //number
-    cedula: cliente?.cedula || "", //number
-    frecuente: cliente?.frecuente || "", //booleano
-    direccion: cliente?.direccion || "", //string
+    nombre: "",
+    email: "",
+    celular: "",
+    cedula: "",
+    frecuente: "",
+    direccion: "",
   });
 
   const handleChange = (e) => {
@@ -77,28 +77,17 @@ export const FormularioCliente = ({ cliente }) => {
 
     try {
       const token = localStorage.getItem("token");
-      const url = cliente?._id
-        ? `${import.meta.env.VITE_BACKEND_URL}/cliente/actualizar/${
-            cliente._id
-          }`
-        : `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
-      const method = cliente?._id ? "PUT" : "POST";
+      const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
       const options = {
         headers: {
-          method,
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       };
-      await axios.request(url, {
-        ...options,
-        data: form,
-      });
+      await axios.post(url, form, options);
 
       setMensaje({
-        respuesta: cliente?._id
-          ? "Cliente actualizado"
-          : "Cliente registrado con éxito",
+        respuesta: "Cliente registrado con éxito",
         tipo: true,
       });
 
@@ -308,7 +297,7 @@ export const FormularioCliente = ({ cliente }) => {
           <input
             type="submit"
             className="poppins-regular bg-[#5B72C3] green w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
-            value={cliente?._id ? "Actualizar cliente" : "Registrar cliente"}
+            value="Registrar cliente"
           />
         </form>
       </div>
