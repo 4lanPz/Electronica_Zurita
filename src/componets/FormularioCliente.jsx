@@ -47,8 +47,8 @@ export const FormularioCliente = () => {
     }
 
     // Validación de formato de correo electrónico
-    const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!correoRegex.test(form.correo.trim())) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.correo.trim())) {
       setMensaje({
         respuesta: "Ingrese un correo electrónico válido",
         tipo: false,
@@ -234,7 +234,7 @@ export const FormularioCliente = () => {
             </label>
             <input
               id="correo"
-              type="email"
+              type="text"
               className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
               placeholder="Correo electrónico del cliente"
               name="correo"
