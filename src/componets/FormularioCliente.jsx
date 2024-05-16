@@ -77,6 +77,7 @@ export const FormularioCliente = ({ cliente }) => {
     // }
 
     try {
+      
       const token = localStorage.getItem("token");
       const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
       const options = {
@@ -85,6 +86,9 @@ export const FormularioCliente = ({ cliente }) => {
           Authorization: `Bearer ${token}`,
         },
       };
+      console.log(url)
+      console.log(form)
+      console.log(options)
       await axios.post(url, form, options);
       setMensaje({
         respuesta: "Cliente registrado con exito y correo enviado",
