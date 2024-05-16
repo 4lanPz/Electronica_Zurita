@@ -11,7 +11,7 @@ const Visualizar = () => {
   const { id } = useParams();
   const { auth } = useContext(AuthContext);
   const [mensaje, setMensaje] = useState({});
-  const [paciente, setPaciente] = useState({});
+  const [cliente, setCliente] = useState({});
   const { modal, handleModal, tratamientos, setTratamientos } =
     useContext(TratamientosContext);
 
@@ -26,10 +26,10 @@ const Visualizar = () => {
   };
 
   useEffect(() => {
-    const consultarPaciente = async () => {
+    const consultarCliente = async () => {
       try {
         const token = localStorage.getItem("token");
-        const url = `${import.meta.env.VITE_BACKEND_URL}/paciente/${id}`;
+        const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/${id}`;
         const options = {
           headers: {
             "Content-Type": "application/json",
@@ -37,25 +37,22 @@ const Visualizar = () => {
           },
         };
         const respuesta = await axios.get(url, options);
-        setPaciente(respuesta.data.paciente);
+        setCliente(respuesta.data.cliente);
         setTratamientos(respuesta.data.tratamientos);
       } catch (error) {
         setMensaje({ respuesta: error.response.data.msg, tipo: false });
       }
     };
-    consultarPaciente();
+    consultarCliente();
   }, []);
 
   return (
     <>
       <div>
         <h1 className="font-black text-4xl text-gray-500">
-          Visualizar Paciente
+          Visualizar datos del Cliente
         </h1>
         <hr className="my-4" />
-        <p className="mb-8">
-          Este submódulo te permite visualizar los datos del paciente
-        </p>
         {auth.rol === "veterinario" && (
           <button
             className="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700"

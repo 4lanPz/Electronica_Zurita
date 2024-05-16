@@ -46,6 +46,7 @@ function App() {
                         <CrearCliente />
                       </PrivateRouteWithRole>
                   } />
+                  
                   <Route path='listar' element={<Listar />} />
                   <Route path='visualizar/:id' element={<Visualizar />} />
                   <Route path='perfil' element={<Perfil />} />

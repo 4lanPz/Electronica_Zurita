@@ -21,7 +21,7 @@ const Tabla = () => {
         },
       };
       const respuesta = await axios.get(url, options);
-      setClientes(respuesta.data, ...clientes);
+      setClientes(respuesta.data);
     } catch (error) {
       console.log(error);
     }
@@ -33,8 +33,8 @@ const Tabla = () => {
 
   const handleDelete = async (id) => {
     try {
-      const confirmar = confirm(
-        "Vas a eliminar a un clientes ¿Estás seguro de realizar esta acción?"
+      const confirmar = window.confirm(
+        "Vas a eliminar a un cliente. ¿Estás seguro de realizar esta acción?"
       );
       if (confirmar) {
         const token = localStorage.getItem("token");
@@ -45,14 +45,14 @@ const Tabla = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         };
-        const data = {
-          salida: new Date().toString(),
-        };
-        await axios.delete(url, { headers, data });
+        await axios.delete(url, { headers });
         listarClientes();
       }
     } catch (error) {
-      console.log(error);
+      setMensaje({
+        respuesta: error.response.data?.errors[0].msg,
+        tipo: false,
+      });
     }
   };
 
@@ -66,7 +66,6 @@ const Tabla = () => {
             <tr>
               <th className="p-2">N°</th>
               <th className="p-2">Nombre</th>
-              <th className="p-2">Apellido</th>
               <th className="p-2">Email</th>
               <th className="p-2">Celular</th>
               <th className="p-2">Cédula</th>
@@ -82,13 +81,12 @@ const Tabla = () => {
               >
                 <td>{index + 1}</td>
                 <td>{cliente.nombre}</td>
-                <td>{cliente.apellido}</td>
-                <td>{cliente.email}</td>
-                <td>{cliente.celular}</td>
+                <td>{cliente.correo}</td>
+                <td>{cliente.telefono}</td>
                 <td>{cliente.cedula}</td>
                 <td>
                   <span className="bg-blue-100 text-green-500 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-                  {cliente.frecuente ? 'Sí' : 'No'}
+                    {cliente.frecuente ? "Sí" : "No"}
                   </span>
                 </td>
                 <td>{cliente.direccion}</td>
@@ -99,23 +97,21 @@ const Tabla = () => {
                       navigate(`/dashboard/visualizar/${cliente._id}`)
                     }
                   />
-                  {auth.rol === "tecnico" && (
-                    <>
-                      <MdUpdate
-                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                        onClick={() =>
-                          navigate(`/dashboard/actualizar/${cliente._id}`)
-                        }
-                      />
+                  <>
+                    <MdUpdate
+                      className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                      onClick={() =>
+                        navigate(`/dashboard/actualizar/${cliente._id}`)
+                      }
+                    />
 
-                      <MdDeleteForever
-                        className="h-7 w-7 text-red-900 cursor-pointer inline-block"
-                        onClick={() => {
-                          handleDelete(cliente._id);
-                        }}
-                      />
-                    </>
-                  )}
+                    <MdDeleteForever
+                      className="h-7 w-7 text-red-900 cursor-pointer inline-block"
+                      onClick={() => {
+                        handleDelete(cliente._id);
+                      }}
+                    />
+                  </>
                 </td>
               </tr>
             ))}

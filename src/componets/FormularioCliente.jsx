@@ -9,12 +9,12 @@ export const FormularioCliente = ({ cliente }) => {
   const [marker, setMarker] = useState(null);
   const [mensaje, setMensaje] = useState({});
   const [form, setForm] = useState({
-    nombre: "", //string
-    correo: "", //email
-    celular: "", //number
-    cedula: "", //number
-    frecuente: "", //booleano
-    direccion: "", //string
+    nombre: cliente?.nombre || "", //string
+    correo: cliente?.correo || "", //email
+    telefono: cliente?.telefono || "", //number
+    cedula: cliente?.cedula || "", //number
+    frecuente: cliente?.frecuente || "", //booleano
+    direccion: cliente?.direccion || "", //string
   });
 
   const handleChange = (e) => {
@@ -30,77 +30,49 @@ export const FormularioCliente = ({ cliente }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validaciones básicas
-    if (
-      !form.nombre.trim() ||
-      !form.correo.trim() ||
-      !form.celular.trim() ||
-      !form.cedula.trim() ||
-      (form.frecuente !== true && form.frecuente !== false) ||
-      !form.direccion.trim()
-    ) {
-      setMensaje({
-        respuesta: "Todos los campos obligatorios deben ser completados",
-        tipo: false,
-      });
-      return;
-    }
-
-    // Validación de formato de correo electrónico
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(form.correo.trim())) {
-      setMensaje({
-        respuesta: "Ingrese un correo electrónico válido",
-        tipo: false,
-      });
-      return;
-    }
-
-    //Validación de número celular
-    const celularRegex = /^\d{10}$/;
-    if (!celularRegex.test(form.celular.trim())) {
-      setMensaje({
-        respuesta: "Ingrese un número de celular válido",
-        tipo: false,
-      });
-      return;
-    }
-    //Validación de cedula
-    const cedulaRegex = /^\d{10}$/;
-    if (!cedulaRegex.test(form.cedula.trim())) {
-      setMensaje({
-        respuesta: "Ingrese un número de cédula válido",
-        tipo: false,
-      });
-      return;
-    }
-
     try {
-      const token = localStorage.getItem("token");
-      const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
-      const options = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      await axios.post(url, form, options);
-      setMensaje({
-        respuesta: "Cliente registrado con exito y correo enviado",
-        tipo: true,
-      });
-      setTimeout(() => {
+      if (cliente?._id) {
+        const token = localStorage.getItem('token')
+        const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/actualizar/${
+          cliente._id
+        }`;
+        const options = {
+          headers: {
+            method: "PUT",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          
+        };
+        console.log(token)
+        console.log(url)
+        console.log(options)
+        console.log(cliente?._id)
+
+        await axios.put(url, form, options);
         navigate("/dashboard/listar");
-      }, 3000);
+      } else {
+        const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
+        const options = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        await axios.post(url, form, options);
+        setMensaje({
+          respuesta: "Cliente registrado con éxito y correo enviado",
+          tipo: true,
+        });
+        setTimeout(() => {
+          navigate("/dashboard/listar");
+        }, 3000);
+      }
     } catch (error) {
-      setMensaje({ respuesta: error.response.data.msg, tipo: false });
+      // setMensaje({ respuesta: error.response.data.msg, tipo: false });
       setTimeout(() => {
         setMensaje({});
-      }, 60000);
-    } finally {
-      setTimeout(() => {
-        setMensaje({});
-      }, 60000);
+      }, 3000);
     }
   };
 
@@ -189,18 +161,18 @@ export const FormularioCliente = ({ cliente }) => {
           <div className="flex flex-wrap">
             <div className="w-1/2 pr-2">
               <label
-                htmlFor="celular:"
+                htmlFor="telefono:"
                 className="poppins-semibold text-black uppercase"
               >
                 Teléfono / celular:
               </label>
               <input
-                id="celular"
+                id="telefono"
                 type="tel"
                 className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
                 placeholder="Teléfono / celular del cliente"
-                name="celular"
-                value={form.celular}
+                name="telefono"
+                value={form.telefono}
                 onChange={handleChange}
               />
             </div>

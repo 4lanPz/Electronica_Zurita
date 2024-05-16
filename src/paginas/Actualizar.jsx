@@ -34,7 +34,7 @@ const Actualizar = () => {
             <h1 className='font-black text-4xl text-gray-500'>Actualizar Datos Cliente</h1>
             <hr className='my-4' />
             {
-                Object.keys(clientee).length != 0 ?
+                Object.keys(cliente).length != 0 ?
                     (
                         <FormularioCliente cliente={cliente}/>
                     )
