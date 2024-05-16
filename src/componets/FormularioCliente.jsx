@@ -30,21 +30,21 @@ export const FormularioCliente = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validaciones básicas
-    if (
-      !form.nombre.trim() ||
-      !form.correo.trim() ||
-      !form.celular.trim() ||
-      !form.cedula.trim() ||
-      (form.frecuente !== true && form.frecuente !== false) ||
-      !form.direccion.trim()
-    ) {
-      setMensaje({
-        respuesta: "Todos los campos obligatorios deben ser completados",
-        tipo: false,
-      });
-      return;
-    }
+    // // Validaciones básicas
+    // if (
+    //   !form.nombre.trim() ||
+    //   !form.correo.trim() ||
+    //   !form.celular.trim() ||
+    //   !form.cedula.trim() ||
+    //   (form.frecuente !== true && form.frecuente !== false) ||
+    //   !form.direccion.trim()
+    // ) {
+    //   setMensaje({
+    //     respuesta: "Todos los campos obligatorios deben ser completados",
+    //     tipo: false,
+    //   });
+    //   return;
+    // }
 
     // Validación de formato de correo electrónico
     const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
