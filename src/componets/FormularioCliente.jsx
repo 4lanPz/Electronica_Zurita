@@ -9,13 +9,12 @@ export const FormularioCliente = ({ cliente }) => {
   const [marker, setMarker] = useState(null);
   const [mensaje, setMensaje] = useState({});
   const [form, setForm] = useState({
-    nombre: cliente?.nombre || "",
-    apellido: cliente?.apellido || "",
-    email: cliente?.email || "",
-    celular: cliente?.celular || "",
-    cedula: cliente?.cedula || "",
-    frecuente: cliente?.frecuente || "",
-    direccion: cliente?.direccion || "",
+    nombre: cliente?.nombre || "", //string
+    email: cliente?.email || "", //email
+    celular: cliente?.celular || "", //number
+    cedula: cliente?.cedula || "", //number
+    frecuente: cliente?.frecuente || "", //booleano
+    direccion: cliente?.direccion || "", //string
   });
 
   const handleChange = (e) => {
@@ -34,7 +33,6 @@ export const FormularioCliente = ({ cliente }) => {
     // Validaciones básicas
     if (
       !form.nombre.trim() ||
-      !form.apellido.trim() ||
       !form.email.trim() ||
       !form.celular.trim() ||
       !form.cedula.trim() ||
@@ -81,7 +79,7 @@ export const FormularioCliente = ({ cliente }) => {
       const token = localStorage.getItem("token");
       const url = cliente?._id
         ? `${import.meta.env.VITE_BACKEND_URL}/cliente/actualizar/${
-          cliente._id
+            cliente._id
           }`
         : `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
       const method = cliente?._id ? "PUT" : "POST";
@@ -105,7 +103,7 @@ export const FormularioCliente = ({ cliente }) => {
       });
 
       setTimeout(() => {
-        navigate("/dashboard/listar");
+        navigate("/dashboard/listarclientes");
       }, 3000);
     } catch (error) {
       setMensaje({
@@ -184,45 +182,23 @@ export const FormularioCliente = ({ cliente }) => {
             <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
           )}
           <div className="poppins-regular">
-            <div className="flex flex-wrap">
-              <div className="w-1/2 pr-2">
-                <label
-                  htmlFor="nombre:"
-                  className="poppins-semibold text-black uppercase"
-                >
-                  Nombre cliente:{" "}
-                </label>
-                <input
-                  id="nombre"
-                  type="text"
-                  className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
-                  placeholder="Nombre del cliente"
-                  name="nombre"
-                  value={form.nombre}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="w-1/2 pl-2">
-                <div>
-                  <label
-                    htmlFor="propietario:"
-                    className="poppins-semibold text-black uppercase"
-                  >
-                    Apellido Cliente:{" "}
-                  </label>
-                  <input
-                    id="propietario"
-                    type="text"
-                    className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
-                    placeholder="nombre del propietario"
-                    name="propietario"
-                    value={form.propietario}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-            </div>
+            <label
+              htmlFor="nombre:"
+              className="poppins-semibold text-black uppercase"
+            >
+              Nombre cliente:{" "}
+            </label>
+            <input
+              id="nombre"
+              type="text"
+              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+              placeholder="Nombre y apellido del cliente"
+              name="nombre"
+              value={form.nombre}
+              onChange={handleChange}
+            />
           </div>
+
           <div className="flex flex-wrap">
             <div className="w-1/2 pr-2">
               <label
