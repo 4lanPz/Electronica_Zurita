@@ -29,6 +29,52 @@ export const FormularioCliente = ({ cliente }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validaciones básicas
+    if (
+      !form.nombre.trim() ||
+      !form.correo.trim() ||
+      !form.celular.trim() ||
+      !form.cedula.trim() ||
+      (form.frecuente !== true && form.frecuente !== false) ||
+      !form.direccion.trim()
+    ) {
+      setMensaje({
+        respuesta: "Todos los campos obligatorios deben ser completados",
+        tipo: false,
+      });
+      return;
+    }
+
+    // Validación de formato de correo electrónico
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.correo.trim())) {
+      setMensaje({
+        respuesta: "Ingrese un correo electrónico válido",
+        tipo: false,
+      });
+      return;
+    }
+
+    //Validación de número celular
+    const celularRegex = /^\d{10}$/;
+    if (!celularRegex.test(form.celular.trim())) {
+      setMensaje({
+        respuesta: "Ingrese un número de celular válido",
+        tipo: false,
+      });
+      return;
+    }
+    //Validación de cedula
+    const cedulaRegex = /^\d{10}$/;
+    if (!cedulaRegex.test(form.cedula.trim())) {
+      setMensaje({
+        respuesta: "Ingrese un número de cédula válido",
+        tipo: false,
+      });
+      return;
+    }
+
     try {
       const token = localStorage.getItem("token");
       const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
@@ -44,17 +90,17 @@ export const FormularioCliente = ({ cliente }) => {
         tipo: true,
       });
       setTimeout(() => {
-        navigate("/dashboard/listarclientes");
+        navigate("/dashboard/listar");
       }, 3000);
     } catch (error) {
       setMensaje({ respuesta: error.response.data.msg, tipo: false });
       setTimeout(() => {
         setMensaje({});
-      }, 30000);
+      }, 60000);
     } finally {
       setTimeout(() => {
         setMensaje({});
-      }, 30000);
+      }, 60000);
     }
   };
 
@@ -249,7 +295,7 @@ export const FormularioCliente = ({ cliente }) => {
           <input
             type="submit"
             className="poppins-regular bg-[#5B72C3] green w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
-            value={"Registrar cliente"}
+            value={cliente?._id ? "Actualizar cliente" : "Registrar cliente"}
           />
         </form>
       </div>
