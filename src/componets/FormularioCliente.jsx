@@ -23,7 +23,8 @@ export const FormularioCliente = ({ cliente }) => {
 
     setForm({
       ...form,
-      [name]: newValue,
+      [name]: newValue,      
+      [e.target.name]:e.target.value
     });
   };
 
