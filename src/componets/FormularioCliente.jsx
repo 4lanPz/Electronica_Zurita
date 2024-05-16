@@ -10,7 +10,7 @@ export const FormularioCliente = () => {
   const [mensaje, setMensaje] = useState({});
   const [form, setForm] = useState({
     nombre: "",
-    email: "",
+    correo: "",
     celular: "",
     cedula: "",
     frecuente: "",
@@ -33,7 +33,7 @@ export const FormularioCliente = () => {
     // Validaciones básicas
     if (
       !form.nombre.trim() ||
-      !form.email.trim() ||
+      !form.correo.trim() ||
       !form.celular.trim() ||
       !form.cedula.trim() ||
       (form.frecuente !== true && form.frecuente !== false) ||
@@ -47,8 +47,8 @@ export const FormularioCliente = () => {
     }
 
     // Validación de formato de correo electrónico
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(form.email.trim())) {
+    const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!correoRegex.test(form.correo.trim())) {
       setMensaje({
         respuesta: "Ingrese un correo electrónico válido",
         tipo: false,
@@ -227,18 +227,18 @@ export const FormularioCliente = () => {
           </div>
           <div>
             <label
-              htmlFor="email:"
+              htmlFor="correo:"
               className="poppins-semibold text-black uppercase"
             >
               Correo Electrónico:{" "}
             </label>
             <input
-              id="email"
-              type="email"
+              id="correo"
+              type="correo"
               className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
               placeholder="Correo electrónico del cliente"
-              name="email"
-              value={form.email}
+              name="correo"
+              value={form.correo}
               onChange={handleChange}
             />
           </div>
