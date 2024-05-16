@@ -234,7 +234,7 @@ export const FormularioCliente = () => {
             </label>
             <input
               id="correo"
-              type="correo"
+              type="email"
               className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
               placeholder="Correo electrónico del cliente"
               name="correo"
