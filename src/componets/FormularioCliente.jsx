@@ -9,12 +9,12 @@ export const FormularioCliente = ({ cliente }) => {
   const [marker, setMarker] = useState(null);
   const [mensaje, setMensaje] = useState({});
   const [form, setForm] = useState({
-    nombre: cliente?.nombre || "", //string
-    correo: cliente?.correo || "", //email
-    celular: cliente?.celular || "", //number
-    cedula: cliente?.cedula || "", //number
-    frecuente: cliente?.frecuente || "", //booleano
-    direccion: cliente?.direccion || "", //string
+    nombre: "", //string
+    correo: "", //email
+    celular: "", //number
+    cedula: "", //number
+    frecuente: "", //booleano
+    direccion: "", //string
   });
 
   const handleChange = (e) => {
@@ -77,39 +77,26 @@ export const FormularioCliente = ({ cliente }) => {
 
     try {
       const token = localStorage.getItem("token");
-      const url = cliente?._id
-        ? `${import.meta.env.VITE_BACKEND_URL}/cliente/actualizar/${
-            cliente._id
-          }`
-        : `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
-      const method = cliente?._id ? "PUT" : "POST";
+      const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
       const options = {
         headers: {
-          method,
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       };
-      await axios.request(url, {
-        ...options,
-        data: form,
-      });
-
+      await axios.post(url, form, options);
       setMensaje({
-        respuesta: cliente?._id
-          ? "Cliente actualizado"
-          : "Cliente registrado con éxito",
+        respuesta: "Cliente registrado con exito y correo enviado",
         tipo: true,
       });
-
       setTimeout(() => {
         navigate("/dashboard/listarclientes");
-      }, 3000);
+      }, 60000);
     } catch (error) {
-      setMensaje({
-        respuesta: error.response?.data?.msg || "Error desconocido",
-        tipo: false,
-      });
+      setMensaje({ respuesta: error.response.data.msg, tipo: false });
+      setTimeout(() => {
+        setMensaje({});
+      }, 60000);
     } finally {
       setTimeout(() => {
         setMensaje({});
@@ -186,7 +173,7 @@ export const FormularioCliente = ({ cliente }) => {
               htmlFor="nombre:"
               className="poppins-semibold text-black uppercase"
             >
-              Nombre cliente:{" "}
+              Nombre cliente:
             </label>
             <input
               id="nombre"
@@ -205,7 +192,7 @@ export const FormularioCliente = ({ cliente }) => {
                 htmlFor="celular:"
                 className="poppins-semibold text-black uppercase"
               >
-                Teléfono / celular:{" "}
+                Teléfono / celular:
               </label>
               <input
                 id="celular"
@@ -222,7 +209,7 @@ export const FormularioCliente = ({ cliente }) => {
                 htmlFor="cedula:"
                 className="poppins-semibold text-black uppercase"
               >
-                Cédula:{" "}
+                Cédula:
               </label>
               <input
                 id="cedula"
@@ -241,7 +228,7 @@ export const FormularioCliente = ({ cliente }) => {
               htmlFor="correo:"
               className="poppins-semibold text-black uppercase"
             >
-              Correo Electrónico:{" "}
+              Correo Electrónico:
             </label>
             <input
               id="correo"
@@ -258,7 +245,7 @@ export const FormularioCliente = ({ cliente }) => {
               htmlFor="frecuente:"
               className="poppins-semibold text-black uppercase"
             >
-              Cliente frecuente{" "}
+              Cliente frecuente
             </label>
             <select
               id="frecuente"
@@ -278,7 +265,7 @@ export const FormularioCliente = ({ cliente }) => {
               htmlFor="direccion:"
               className="poppins-semibold text-black uppercase"
             >
-              Dirección{" "}
+              Dirección
             </label>
             <input
               id="direccion"
@@ -308,7 +295,7 @@ export const FormularioCliente = ({ cliente }) => {
           <input
             type="submit"
             className="poppins-regular bg-[#5B72C3] green w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
-            value={cliente?._id ? "Actualizar cliente" : "Registrar cliente"}
+            value={"Registrar cliente"}
           />
         </form>
       </div>
