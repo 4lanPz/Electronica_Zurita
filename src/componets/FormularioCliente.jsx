@@ -30,50 +30,50 @@ export const FormularioCliente = ({ cliente }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validaciones básicas
-    if (
-      !form.nombre.trim() ||
-      !form.correo.trim() ||
-      !form.celular.trim() ||
-      !form.cedula.trim() ||
-      (form.frecuente !== true && form.frecuente !== false) ||
-      !form.direccion.trim()
-    ) {
-      setMensaje({
-        respuesta: "Todos los campos obligatorios deben ser completados",
-        tipo: false,
-      });
-      return;
-    }
+    // // Validaciones básicas
+    // if (
+    //   !form.nombre.trim() ||
+    //   !form.correo.trim() ||
+    //   !form.celular.trim() ||
+    //   !form.cedula.trim() ||
+    //   (form.frecuente !== true && form.frecuente !== false) ||
+    //   !form.direccion.trim()
+    // ) {
+    //   setMensaje({
+    //     respuesta: "Todos los campos obligatorios deben ser completados",
+    //     tipo: false,
+    //   });
+    //   return;
+    // }
 
-    // Validación de formato de correo electrónico
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(form.correo.trim())) {
-      setMensaje({
-        respuesta: "Ingrese un correo electrónico válido",
-        tipo: false,
-      });
-      return;
-    }
+    // // Validación de formato de correo electrónico
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailRegex.test(form.correo.trim())) {
+    //   setMensaje({
+    //     respuesta: "Ingrese un correo electrónico válido",
+    //     tipo: false,
+    //   });
+    //   return;
+    // }
 
-    //Validación de número celular
-    const celularRegex = /^\d{10}$/;
-    if (!celularRegex.test(form.celular.trim())) {
-      setMensaje({
-        respuesta: "Ingrese un número de celular válido",
-        tipo: false,
-      });
-      return;
-    }
-    //Validación de cedula
-    const cedulaRegex = /^\d{10}$/;
-    if (!cedulaRegex.test(form.cedula.trim())) {
-      setMensaje({
-        respuesta: "Ingrese un número de cédula válido",
-        tipo: false,
-      });
-      return;
-    }
+    // //Validación de número celular
+    // const celularRegex = /^\d{10}$/;
+    // if (!celularRegex.test(form.celular.trim())) {
+    //   setMensaje({
+    //     respuesta: "Ingrese un número de celular válido",
+    //     tipo: false,
+    //   });
+    //   return;
+    // }
+    // //Validación de cedula
+    // const cedulaRegex = /^\d{10}$/;
+    // if (!cedulaRegex.test(form.cedula.trim())) {
+    //   setMensaje({
+    //     respuesta: "Ingrese un número de cédula válido",
+    //     tipo: false,
+    //   });
+    //   return;
+    // }
 
     try {
       const token = localStorage.getItem("token");
@@ -91,16 +91,16 @@ export const FormularioCliente = ({ cliente }) => {
       });
       setTimeout(() => {
         navigate("/dashboard/listarclientes");
-      }, 60000);
+      }, 3000);
     } catch (error) {
       setMensaje({ respuesta: error.response.data.msg, tipo: false });
       setTimeout(() => {
         setMensaje({});
-      }, 60000);
+      }, 30000);
     } finally {
       setTimeout(() => {
         setMensaje({});
-      }, 60000);
+      }, 30000);
     }
   };
 
