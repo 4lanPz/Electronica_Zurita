@@ -113,7 +113,7 @@ export const FormularioCliente = ({ cliente }) => {
     } finally {
       setTimeout(() => {
         setMensaje({});
-      }, 3000);
+      }, 60000);
     }
   };
 
