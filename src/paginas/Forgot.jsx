@@ -75,7 +75,7 @@ export const Forgot = () => {
                 </div>
 
                 <div className="mb-3">
-                  <button className="poppins-regular green text-white border py-2 w-full rounded-xl mt-5 hover:scale-105 duration-300 hover:bg-emerald-900 hover:text-white">
+                  <button className="poppins-regular bg-[#5267b4] text-white border py-2 w-full rounded-xl mt-5 hover:scale-105 duration-300 hover:bg-[#3D53A0] hover:text-white">
                     Enviar correo de recuperación
                   </button>
                 </div>
@@ -90,7 +90,7 @@ export const Forgot = () => {
                 <p>¿Recordaste tu contraseña?</p>
                 <Link
                   to="/"
-                  className="poppins-regular py-2 px-5 green text-white border rounded-xl hover:scale-110 duration-300 hover:bg-emerald-900 hover:text-white"
+                  className="poppins-regular py-2 px-5 bg-[#5267b4] text-white border rounded-xl hover:scale-110 duration-300 hover:bg-[#3D53A0] hover:text-white"
                 >
                   Iniciar sesión
                 </Link>

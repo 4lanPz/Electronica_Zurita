@@ -98,7 +98,7 @@ export const Login = () => {
 
               {/* Botón de inicio de sesión */}
               <div className="mt-4">
-                <button className="poppins-regular py-2 w-full block text-center green text-white border rounded-xl hover:scale-100 duration-300 hover:bg-emerald-900 hover:text-white mb-2">
+                <button className="poppins-regular py-2 w-full block text-center bg-[#5B72C3] text-white border rounded-xl hover:scale-100 duration-300 hover:bg-[#3D53A0] hover:text-white mb-2">
                   Iniciar sesión
                 </button>
               </div>
@@ -127,7 +127,7 @@ export const Login = () => {
               </p>
               <Link
                 to="/register"
-                className="poppins-regular py-2 px-5 green text-white border rounded-xl hover:scale-100 duration-300 hover:bg-emerald-900 hover:text-white"
+                className="poppins-regular py-2 px-5 bg-[#5B72C3] text-white border rounded-xl hover:scale-100 duration-300 hover:bg-[#3D53A0] hover:text-white"
               >
                 Registrarse
               </Link>
