@@ -52,6 +52,7 @@ export const FormularioCliente = ({ cliente }) => {
         await axios.put(url, form, options);
         navigate("/dashboard/listar");
       } else {
+        const token = localStorage.getItem('token')
         const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
         const options = {
           headers: {
@@ -69,7 +70,7 @@ export const FormularioCliente = ({ cliente }) => {
         }, 3000);
       }
     } catch (error) {
-      // setMensaje({ respuesta: error.response.data.msg, tipo: false });
+      setMensaje({ respuesta: error.response.data.msg, tipo: false });
       setTimeout(() => {
         setMensaje({});
       }, 3000);
