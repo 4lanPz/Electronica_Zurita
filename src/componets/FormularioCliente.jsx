@@ -60,6 +60,7 @@ export const FormularioCliente = ({ cliente }) => {
             Authorization: `Bearer ${token}`,
           },
         };
+        console.log(url, form, options);
         await axios.post(url, form, options);
         setMensaje({
           respuesta: "Cliente registrado con éxito y correo enviado",
