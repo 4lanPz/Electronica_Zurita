@@ -63,7 +63,7 @@ const Dashboard = () => {
                   to="/dashboard/crearcliente"
                   className={`${
                     urlActual === "/dashboard/crearcliente"
-                      ? "text-white bg-[#89C5BA] px-3 py-2 rounded-xl text-left"
+                      ? "text-white bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
                       : "text-white"
                   } block mt-2 hover:text-slate-600`}
                 >
