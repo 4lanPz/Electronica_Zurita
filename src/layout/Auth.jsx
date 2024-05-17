@@ -11,7 +11,7 @@ const Auth = () => {
 
     // Verificar si el token existe y tiene el rol adecuado
     if (token && rol === "tecnico") {
-        return <Navigate to='/dashboard' />;
+        return <Navigate to='/dashboard/crearcliente' />;
     }
 
     // Si el token existe pero no tiene el rol adecuado, puedes redirigir a una página de error o mostrar un mensaje

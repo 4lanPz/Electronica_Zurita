@@ -54,21 +54,27 @@ const Dashboard = () => {
 
             <ul className="poppins-regular">
               <li className="text-center inline-block">
-                <img
-                  src="/images/svg/cliente.jpg"
-                  alt="icono 1"
-                  className="inline-block w-4 h-4"
-                />
-                <Link
-                  to="/dashboard/crearcliente"
-                  className={`${
-                    urlActual === "/dashboard/crearcliente"
-                      ? "text-white bg-[#89C5BA] px-3 py-2 rounded-xl text-left"
-                      : "text-white"
-                  } block mt-2 hover:text-slate-600`}
-                >
-                  Ingresar Cliente
-                </Link>
+                <div className="flex flex-wrap mb-3">
+                  <div className="w-1/2 pr-2">
+                    <img
+                      src="/images/svg/cliente.jpg"
+                      alt="icono 1"
+                      className="inline-block w-4 h-4"
+                    />
+                  </div>
+                  <div className="w-1/2 pl-2">
+                    <Link
+                      to="/dashboard/crearcliente"
+                      className={`${
+                        urlActual === "/dashboard/crearcliente"
+                          ? "text-white bg-[#89C5BA] px-3 py-2 rounded-xl text-left"
+                          : "text-white"
+                      } block mt-2 hover:text-slate-600`}
+                    >
+                      Ingresar Cliente
+                    </Link>
+                  </div>
+                </div>
               </li>
               <li className="text-center">
                 <Link
