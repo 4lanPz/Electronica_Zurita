@@ -53,7 +53,7 @@ const Dashboard = () => {
             <hr className="my-5 border-slate-500" />
 
             <ul className="poppins-regular">
-              <li className="text-center inline-block">
+              <li className="text-center">
                 {/* <img
                   src="/images/svg/cliente.jpg"
                   alt="icono 1"
