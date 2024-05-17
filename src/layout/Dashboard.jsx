@@ -63,9 +63,9 @@ const Dashboard = () => {
                   to="/dashboard/crearcliente"
                   className={`${
                     urlActual === "/dashboard/crearcliente"
-                      ? "text-white bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-white"
-                  } block mt-2 hover:text-slate-600`}
+                      ? "text-gray-800 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
+                      : "text-gray-800"
+                  } block mt-2 hover:text-black`}
                 >
                   Ingresar Cliente
                 </Link>
@@ -75,9 +75,9 @@ const Dashboard = () => {
                   to="/dashboard/listar"
                   className={`${
                     urlActual === "/dashboard/listar"
-                      ? "text-white bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-white"
-                  }  block mt-2 hover:text-slate-600`}
+                      ? "text-gray-800 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
+                      : "text-gray-800"
+                  }  block mt-2 hover:text-black`}
                 >
                   Listar Clientes
                 </Link>
@@ -87,9 +87,9 @@ const Dashboard = () => {
                   to="/dashboard/crearequipo"
                   className={`${
                     urlActual === "/dashboard/crearequipo"
-                      ? "text-white bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-white"
-                  }  block mt-2 hover:text-slate-600`}
+                      ? "text-gray-800 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
+                      : "text-gray-800"
+                  }  block mt-2 hover:text-black`}
                 >
                   Orden de trabajo
                 </Link>
@@ -99,9 +99,9 @@ const Dashboard = () => {
                   to="/dashboard/listarreparacion"
                   className={`${
                     urlActual === "/dashboard/listarreparacion"
-                      ? "text-white bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-white"
-                  }  block mt-2 hover:text-slate-600`}
+                      ? "text-gray-800 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
+                      : "text-gray-800"
+                  }  block mt-2 hover:text-black`}
                 >
                   Estados de reparación
                 </Link>
@@ -112,9 +112,9 @@ const Dashboard = () => {
                   to="/dashboard/perfil"
                   className={`${
                     urlActual === "/dashboard/perfil"
-                      ? "text-white bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-white"
-                  }  block mt-2 hover:text-white`}
+                      ? "text-gray-800 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
+                      : "text-gray-800"
+                  }  block mt-2 hover:text-black`}
                 >
                   Perfil Técnico
                 </Link>
