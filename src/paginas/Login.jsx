@@ -120,7 +120,7 @@ export const Login = () => {
 
             <div className="border-black mt-4 text-xs border-b-2 py-2 opacity-20 mb-3"></div>
 
-            {/* Registro */}
+            {/* Registro
             <div className="flex justify-between items-center">
               <p className="poppins-regular text-black">
                 ¿No tienes una cuenta?
@@ -131,7 +131,7 @@ export const Login = () => {
               >
                 Registrarse
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

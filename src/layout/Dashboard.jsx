@@ -63,8 +63,8 @@ const Dashboard = () => {
                   to="/dashboard/crearcliente"
                   className={`${
                     urlActual === "/dashboard/crearcliente"
-                      ? "text-gray-800 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-gray-800"
+                      ? "text-gray-900 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
+                      : "text-gray-900"
                   } block mt-2 hover:text-black`}
                 >
                   Ingresar Cliente
@@ -75,8 +75,8 @@ const Dashboard = () => {
                   to="/dashboard/listar"
                   className={`${
                     urlActual === "/dashboard/listar"
-                      ? "text-gray-800 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-gray-800"
+                      ? "text-gray-900 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
+                      : "text-gray-900"
                   }  block mt-2 hover:text-black`}
                 >
                   Listar Clientes
@@ -87,8 +87,8 @@ const Dashboard = () => {
                   to="/dashboard/crearequipo"
                   className={`${
                     urlActual === "/dashboard/crearequipo"
-                      ? "text-gray-800 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-gray-800"
+                      ? "text-gray-900 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
+                      : "text-gray-900"
                   }  block mt-2 hover:text-black`}
                 >
                   Orden de trabajo
@@ -99,8 +99,8 @@ const Dashboard = () => {
                   to="/dashboard/listarreparacion"
                   className={`${
                     urlActual === "/dashboard/listarreparacion"
-                      ? "text-gray-800 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-gray-800"
+                      ? "text-gray-900 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
+                      : "text-gray-900"
                   }  block mt-2 hover:text-black`}
                 >
                   Estados de reparación
@@ -112,8 +112,8 @@ const Dashboard = () => {
                   to="/dashboard/perfil"
                   className={`${
                     urlActual === "/dashboard/perfil"
-                      ? "text-gray-800 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-gray-800"
+                      ? "text-gray-900 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
+                      : "text-gray-900"
                   }  block mt-2 hover:text-black`}
                 >
                   Perfil Técnico
