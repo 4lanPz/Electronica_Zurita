@@ -6,8 +6,7 @@ export const CardPerfil = () => {
   const { auth } = useContext(AuthContext);
   return (
     <div
-      className="w-3/6 bg-white border border-slate-200 h-auto p-4 
-                        flex flex-col items-center justify-between shadow-xl rounded-lg"
+      className="bg-white border border-slate-200 h-auto p-4 flex flex-col items-center justify-between shadow-xl rounded-lg"
     >
       <h1 className="poppins-bold font-black text-2xl text-black">
         Datos del Técnico

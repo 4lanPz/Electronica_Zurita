@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
+import flecha from "/images/flecha.jpg"
 
 const Dashboard = () => {
   const location = useLocation();
@@ -13,8 +14,14 @@ const Dashboard = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0
+    });
+  };
+
   return (
-    <div className="md:flex md:min-h-screen">
+    <div className="md:flex md:min-h-screen flex">
       <div className="w-auto bg-[#3D53A0]">
         <button onClick={toggleMenu} className="my-2 mx-4 text-white">
           <svg
@@ -130,9 +137,14 @@ const Dashboard = () => {
       </div>
 
       <div className="flex-1 bg-gray-100 p-10">
-        {/* <div className="overflow-y-scroll p-8"> */}
         <div className="">{autenticado ? <Outlet /> : <Navigate to="/" />}</div>
       </div>
+      <button
+          className="fixed bottom-3 right-3 bg-[#5B72C3] rounded-full shadow-md hover:bg-[#3D53A0] focus:outline-none p-3"
+          onClick={handleScrollToTop}
+        >
+          <img src={flecha} alt="Scroll to top" className="w-8 h-8" />
+        </button>
     </div>
   );
 };
