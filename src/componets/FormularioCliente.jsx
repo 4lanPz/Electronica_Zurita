@@ -52,11 +52,12 @@ export const FormularioCliente = ({ cliente }) => {
         await axios.put(url, form, options);
         navigate("/dashboard/listar");
       } else {
+        const token = localStorage.getItem('token')
         console.log(token)
         console.log(url)
         console.log(options)
         console.log(cliente?._id)
-        const token = localStorage.getItem('token')
+        
         const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
         const options = {
           headers: {
