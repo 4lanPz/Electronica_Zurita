@@ -33,38 +33,32 @@ const Dashboard = () => {
           </svg>
         </button>
         {menuOpen && (
-          <div className="mx-10 ">
-            <h2 className="font-bold text-xl text-white text-center">
-              Electrónica <br /> Zurita
-            </h2>
-
+          <div className="mx-10">
             <img
-              src="/images/logopag.jpg"
+              src="/images/logo_bw.jpg"
               alt="logo Electrónica Zurita"
-              className="m-auto mt-3 p-1"
+              className="m-auto mt-3 p-1 mb-3"
               width={150}
               height={150}
             />
+            <h2 className="font-bold text-3xl text-white text-center">
+              Electrónica <br /> Zurita
+            </h2>
+
             <p className="poppins-semibold text-white text-center mt-4">
-              Bienvenido <br />
               Técnico
             </p>
             <p className="poppins-semibold text-white text-center ">{`${auth?.nombre}`}</p>
-            <hr className="my-5 border-slate-500" />
+            <hr className="my-3 border-slate-500" />
 
             <ul className="poppins-regular">
               <li className="text-center">
-                {/* <img
-                  src="/images/svg/cliente.jpg"
-                  alt="icono 1"
-                  className="inline-block w-4 h-4"
-                /> */}
                 <Link
                   to="/dashboard/crearcliente"
                   className={`${
                     urlActual === "/dashboard/crearcliente"
-                      ? "text-gray-900 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-gray-900"
+                      ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
+                      : "text-white"
                   } block mt-2 hover:text-black`}
                 >
                   Ingresar Cliente
@@ -75,8 +69,8 @@ const Dashboard = () => {
                   to="/dashboard/listar"
                   className={`${
                     urlActual === "/dashboard/listar"
-                      ? "text-gray-900 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-gray-900"
+                      ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
+                      : "text-white"
                   }  block mt-2 hover:text-black`}
                 >
                   Listar Clientes
@@ -84,11 +78,11 @@ const Dashboard = () => {
               </li>
               <li className="text-center">
                 <Link
-                  to="/dashboard/crearequipo"
+                  to="/dashboard/crearorden"
                   className={`${
-                    urlActual === "/dashboard/crearequipo"
-                      ? "text-gray-900 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-gray-900"
+                    urlActual === "/dashboard/crearorden"
+                      ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
+                      : "text-white"
                   }  block mt-2 hover:text-black`}
                 >
                   Orden de trabajo
@@ -96,14 +90,14 @@ const Dashboard = () => {
               </li>
               <li className="text-center">
                 <Link
-                  to="/dashboard/listarreparacion"
+                  to="/dashboard/listarordenes"
                   className={`${
-                    urlActual === "/dashboard/listarreparacion"
-                      ? "text-gray-900 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-gray-900"
+                    urlActual === "/dashboard/listarordenes"
+                      ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
+                      : "text-white"
                   }  block mt-2 hover:text-black`}
                 >
-                  Estados de reparación
+                  Lista de Trabajos
                 </Link>
               </li>
 
@@ -112,8 +106,8 @@ const Dashboard = () => {
                   to="/dashboard/perfil"
                   className={`${
                     urlActual === "/dashboard/perfil"
-                      ? "text-gray-900 bg-[#89C5BA] px-3 py-2 rounded-xl text-center"
-                      : "text-gray-900"
+                      ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
+                      : "text-white"
                   }  block mt-2 hover:text-black`}
                 >
                   Perfil Técnico

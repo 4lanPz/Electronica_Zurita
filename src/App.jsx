@@ -8,10 +8,10 @@ import Dashboard from './layout/Dashboard'
 import Listar from './paginas/Listar'
 import Visualizar from './paginas/Visualizar'
 import CrearCliente from './paginas/CrearCliente'
-import CrearEquipo from './paginas/CrearEquipo'
+import CrearOrden from './paginas/CrearOrden'
 import Actualizar from './paginas/Actualizar'
 import Perfil from './paginas/Perfil'
-import ListarReparacion from './paginas/ListarReparacion'
+import ListarOrdenes from './paginas/ListarOrdenes'
 import { Confirmar } from './paginas/Confirmar'
 import Restablecer from './paginas/Restablecer'
 import { AuthProvider } from './context/AuthProvider'
@@ -50,15 +50,15 @@ function App() {
                   <Route path='listar' element={<Listar />} />
                   <Route path='visualizar/:id' element={<Visualizar />} />
                   <Route path='perfil' element={<Perfil />} />
-                  <Route path='listarreparacion' element={<ListarReparacion />} />
+                  <Route path='listarordenes' element={<ListarOrdenes />} />
                   <Route path='crearcliente' element={
                       <PrivateRouteWithRole>
                         <CrearCliente />
                       </PrivateRouteWithRole>
                   }/>
-                  <Route path='crearequipo' element={
+                  <Route path='crearorden' element={
                       <PrivateRouteWithRole>
-                        <CrearEquipo />
+                        <CrearOrden />
                       </PrivateRouteWithRole>
                   }/>
                   <Route path='actualizar/:id' element={<Actualizar />} />

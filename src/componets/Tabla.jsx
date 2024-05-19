@@ -1,4 +1,4 @@
-import { MdDeleteForever, MdVisibility, MdUpdate } from "react-icons/md";
+import { MdDeleteForever, MdUpdate } from "react-icons/md";
 import axios from "axios";
 import Mensaje from "./Alertas/Mensaje";
 import { useNavigate } from "react-router-dom";
@@ -56,67 +56,116 @@ const Tabla = () => {
     }
   };
 
+  const clientesFrecuentes = clientes.filter((cliente) => cliente.frecuente);
+  const clientesNoFrecuentes = clientes.filter((cliente) => !cliente.frecuente);
+
   return (
     <>
-      {clientes.length == 0 ? (
+      {clientesFrecuentes.length === 0 && clientesNoFrecuentes.length === 0 ? (
         <Mensaje tipo={"active"}>{"No existen clientes registrados"}</Mensaje>
       ) : (
-        <table className="w-full mt-5 table-auto shadow-lg  bg-white">
-          <thead className="bg-gray-800 text-slate-400">
-            <tr>
-              <th className="p-2">N°</th>
-              <th className="p-2">Nombre</th>
-              <th className="p-2">Email</th>
-              <th className="p-2">Celular</th>
-              <th className="p-2">Cédula</th>
-              <th className="p-2">Frecuente</th>
-              <th className="p-2">Dirección</th>
-            </tr>
-          </thead>
-          <tbody>
-            {clientes.map((cliente, index) => (
-              <tr
-                className="border-b hover:bg-gray-300 text-center"
-                key={cliente._id}
-              >
-                <td>{index + 1}</td>
-                <td>{cliente.nombre}</td>
-                <td>{cliente.correo}</td>
-                <td>{cliente.telefono}</td>
-                <td>{cliente.cedula}</td>
-                <td>
-                  <span className="bg-blue-100 text-green-500 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-                    {cliente.frecuente ? "Sí" : "No"}
-                  </span>
-                </td>
-                <td>{cliente.direccion}</td>
-                <td className="py-2 text-center">
-                  {/* <MdVisibility
-                    className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                    onClick={() =>
-                      navigate(`/dashboard/visualizar/${cliente._id}`)
-                    }
-                  /> */}
-                  <>
-                    <MdUpdate
-                      className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                      onClick={() =>
-                        navigate(`/dashboard/actualizar/${cliente._id}`)
-                      }
-                    />
+        <div className="flex flex-col">
+          {clientesFrecuentes.length > 0 && (
+            <div>
+              <h2 className="poppins-semibold">Clientes Frecuentes</h2>
+              <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
+                <thead className="bg-[#3D53A0] text-white">
+                  <tr className="poppins-regular">
+                    <th className="p-2">N°</th>
+                    <th className="p-2">Nombre</th>
+                    <th className="p-2">Email</th>
+                    <th className="p-2">Celular</th>
+                    <th className="p-2">Cédula</th>
+                    <th className="p-2">Dirección</th>
+                    <th className="p-2">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {clientesFrecuentes.map((cliente, index) => (
+                    <tr
+                      className="poppins-regular border-b hover:bg-gray-300 text-center"
+                      key={cliente._id}
+                    >
+                      <td>{index + 1}</td>
+                      <td>{cliente.nombre}</td>
+                      <td>{cliente.correo}</td>
+                      <td>{cliente.telefono}</td>
+                      <td>{cliente.cedula}</td>
 
-                    <MdDeleteForever
-                      className="h-7 w-7 text-red-900 cursor-pointer inline-block"
-                      onClick={() => {
-                        handleDelete(cliente._id);
-                      }}
-                    />
-                  </>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                      <td>{cliente.direccion}</td>
+                      <td className="py-2 text-center">
+                        <>
+                          <MdUpdate
+                            className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                            onClick={() =>
+                              navigate(`/dashboard/actualizar/${cliente._id}`)
+                            }
+                          />
+                          <MdDeleteForever
+                            className="h-7 w-7 text-red-900 cursor-pointer inline-block"
+                            onClick={() => {
+                              handleDelete(cliente._id);
+                            }}
+                          />
+                        </>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          <hr className="mt-4 border-black" />
+          {clientesNoFrecuentes.length > 0 && (
+            <div>
+              <h2 className="poppins-semibold mt-2">Clientes no Frecuentes</h2>
+              <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
+                <thead className="bg-[#3D53A0] text-white">
+                  <tr className="poppins-regular">
+                    <th className="p-2">N°</th>
+                    <th className="p-2">Nombre</th>
+                    <th className="p-2">Email</th>
+                    <th className="p-2">Celular</th>
+                    <th className="p-2">Cédula</th>
+                    <th className="p-2">Dirección</th>
+                    <th className="p-2">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {clientesNoFrecuentes.map((cliente, index) => (
+                    <tr
+                      className="poppins-regular border-b hover:bg-gray-300 text-center"
+                      key={cliente._id}
+                    >
+                      <td>{index + 1}</td>
+                      <td>{cliente.nombre}</td>
+                      <td>{cliente.correo}</td>
+                      <td>{cliente.telefono}</td>
+                      <td>{cliente.cedula}</td>
+                      <td>{cliente.direccion}</td>
+                      <td className="py-2 text-center">
+                        <>
+                          <MdUpdate
+                            className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                            onClick={() =>
+                              navigate(`/dashboard/actualizar/${cliente._id}`)
+                            }
+                          />
+                          <MdDeleteForever
+                            className="h-7 w-7 text-red-900 cursor-pointer inline-block"
+                            onClick={() => {
+                              handleDelete(cliente._id);
+                            }}
+                          />
+                        </>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       )}
     </>
   );

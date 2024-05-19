@@ -3,7 +3,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import TratamientosContext from "../context/TratamientosProvider";
 import ModalTratamiento from "../componets/Modals/ModalTratamiento";
-import TablaReparaciones from "../componets/TablaReparaciones";
+import TablaOrdenes from "../componets/TablaOrdenes";
 import Mensaje from "../componets/Alertas/Mensaje";
 import AuthContext from "../context/AuthProvider";
 
@@ -141,7 +141,7 @@ const Visualizar = () => {
             {tratamientos.length == 0 ? (
               <Mensaje tipo={"active"}>{"No existen registros"}</Mensaje>
             ) : (
-              <TablaReparaciones tratamientos={tratamientos} />
+              <TablaOrdenes tratamientos={tratamientos} />
             )}
           </>
         ) : (

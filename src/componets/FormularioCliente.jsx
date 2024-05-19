@@ -169,7 +169,7 @@ export const FormularioCliente = ({ cliente }) => {
               </label>
               <input
                 id="telefono"
-                type="tel"
+                type="text"
                 className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
                 placeholder="Teléfono / celular del cliente"
                 name="telefono"
