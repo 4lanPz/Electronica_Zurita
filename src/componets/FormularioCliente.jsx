@@ -11,9 +11,9 @@ export const FormularioCliente = ({ cliente }) => {
   const [form, setForm] = useState({
     nombre: cliente?.nombre || "aaaaa", // string
     correo: cliente?.correo || "aa@gmail.com", // email
-    telefono: cliente?.telefono || "0987654321", // number
-    cedula: cliente?.cedula || "0987654321", // number
-    frecuente: cliente?.frecuente || "true", // boolean
+    telefono: cliente?.telefono || 10987654321, // number
+    cedula: cliente?.cedula || 1987654321, // number
+    frecuente: cliente?.frecuente || true, // boolean
     direccion: cliente?.direccion || "aaaa", // string
   });
 
