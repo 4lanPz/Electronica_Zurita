@@ -48,8 +48,6 @@ export const Login = () => {
         {/* Contenido del formulario */}
         <div className="absolute inset-0 flex justify-center items-center">
           <div className="w-auto lg:w-2/5 bg-white p-10 rounded-xl max-w-2xl">
-            
-
             {/* Encabezado */}
             <div className="flex items-center justify-center mb-8">
               {/* Imagen */}
@@ -62,9 +60,8 @@ export const Login = () => {
               {/* Texto */}
               <div className="text-center">
                 <h1 className="poppins-bold uppercase text-black">
-                  Electrónica
+                  Electrónica <br /> Zurita
                 </h1>
-                <h1 className="poppins-bold uppercase text-black">Zurita</h1>
               </div>
             </div>
 
@@ -117,10 +114,7 @@ export const Login = () => {
                 ¿Olvidaste tu contraseña?
               </Link>
             </div>
-
             <div className="border-black mt-4 text-xs border-b-2 py-2 opacity-20 mb-3"></div>
-
-            Registro
             <div className="flex justify-between items-center">
               <p className="poppins-regular text-black">
                 ¿No tienes una cuenta?
@@ -146,4 +140,4 @@ Orden de los estilos:
 3. Padding (relleno)
 4. Bordes
 5. Margen (si es aplicable)
-*/ 
+*/
