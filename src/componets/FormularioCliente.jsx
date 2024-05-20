@@ -20,7 +20,6 @@ export const FormularioCliente = ({ cliente }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     const newValue = name === "frecuente" ? value === "true" : value;
-
     setForm({
       ...form,
       [name]: newValue,
@@ -29,53 +28,38 @@ export const FormularioCliente = ({ cliente }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      if (cliente?._id) {
-        const token = localStorage.getItem('token')
-        const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/actualizar/${
-          cliente._id
-        }`;
-        const options = {
-          headers: {
-            method: "PUT",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          
-        };
-        console.log(token)
-        console.log(url)
-        console.log(options)
-        console.log(cliente?._id)
+      const token = localStorage.getItem("token");
+      const url = cliente?._id
+        ? `${import.meta.env.VITE_BACKEND_URL}/cliente/actualizar/${cliente._id}`
+        : `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
+      const options = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
 
-        await axios.put(url, form, options);
-        navigate("/dashboard/listar");
-      } else {
-        const token = localStorage.getItem('token')
-        console.log(token)
-        console.log(url)
-        console.log(options)
-        console.log(cliente?._id)
-        
-        const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
-        const options = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        await axios.post(url, form, options);
+      const response = cliente?._id
+        ? await axios.put(url, form, options)
+        : await axios.post(url, form, options);
+
+      if (response && response.data) {
         setMensaje({
-          respuesta: "Cliente registrado con éxito y correo enviado",
+          respuesta: cliente?._id
+            ? "Cliente actualizado con éxito"
+            : "Cliente registrado con éxito y correo enviado",
           tipo: true,
         });
         setTimeout(() => {
           navigate("/dashboard/listar");
         }, 3000);
+      } else {
+        console.error("La respuesta no contiene 'data'");
       }
     } catch (error) {
-      setMensaje({ respuesta: error.response.data.msg, tipo: false });
+      const errorMsg = error.response?.data?.msg || "Error en la solicitud";
+      setMensaje({ respuesta: errorMsg, tipo: false });
       setTimeout(() => {
         setMensaje({});
       }, 3000);
@@ -121,21 +105,18 @@ export const FormularioCliente = ({ cliente }) => {
   const handleConfirmDireccion = () => {
     if (marker) {
       const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode(
-        { location: marker.getPosition() },
-        (results, status) => {
-          if (status === "OK") {
-            if (results[0]) {
-              const address = results[0].formatted_address;
-              setForm({ ...form, direccion: address });
-            } else {
-              console.error("No se encontraron resultados de geocodificación");
-            }
+      geocoder.geocode({ location: marker.getPosition() }, (results, status) => {
+        if (status === "OK") {
+          if (results[0]) {
+            const address = results[0].formatted_address;
+            setForm({ ...form, direccion: address });
           } else {
-            console.error("Error en la geocodificación inversa:", status);
+            console.error("No se encontraron resultados de geocodificación");
           }
+        } else {
+          console.error("Error en la geocodificación inversa:", status);
         }
-      );
+      });
     }
   };
 
@@ -147,10 +128,7 @@ export const FormularioCliente = ({ cliente }) => {
             <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
           )}
           <div className="poppins-regular">
-            <label
-              htmlFor="nombre:"
-              className="poppins-semibold text-black uppercase"
-            >
+            <label htmlFor="nombre:" className="poppins-semibold text-black uppercase">
               Nombre cliente:
             </label>
             <input
@@ -166,10 +144,7 @@ export const FormularioCliente = ({ cliente }) => {
 
           <div className="flex flex-wrap">
             <div className="w-1/2 pr-2">
-              <label
-                htmlFor="telefono:"
-                className="poppins-semibold text-black uppercase"
-              >
+              <label htmlFor="telefono:" className="poppins-semibold text-black uppercase">
                 Teléfono / celular:
               </label>
               <input
@@ -183,16 +158,13 @@ export const FormularioCliente = ({ cliente }) => {
               />
             </div>
             <div className="w-1/2 pl-2">
-              <label
-                htmlFor="cedula:"
-                className="poppins-semibold text-black uppercase"
-              >
+              <label htmlFor="cedula:" className="poppins-semibold text-black uppercase">
                 Cédula:
               </label>
               <input
                 id="cedula"
                 type="text"
-                inputMode="numberic"
+                inputMode="numeric"
                 className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
                 placeholder="Cédula del cliente"
                 name="cedula"
@@ -202,10 +174,7 @@ export const FormularioCliente = ({ cliente }) => {
             </div>
           </div>
           <div>
-            <label
-              htmlFor="correo:"
-              className="poppins-semibold text-black uppercase"
-            >
+            <label htmlFor="correo:" className="poppins-semibold text-black uppercase">
               Correo Electrónico:
             </label>
             <input
@@ -219,10 +188,7 @@ export const FormularioCliente = ({ cliente }) => {
             />
           </div>
           <div>
-            <label
-              htmlFor="frecuente:"
-              className="poppins-semibold text-black uppercase"
-            >
+            <label htmlFor="frecuente:" className="poppins-semibold text-black uppercase">
               Cliente frecuente
             </label>
             <select
@@ -238,11 +204,7 @@ export const FormularioCliente = ({ cliente }) => {
             </select>
           </div>
           <div>
-            {/* Campo de entrada de dirección */}
-            <label
-              htmlFor="direccion:"
-              className="poppins-semibold text-black uppercase"
-            >
+            <label htmlFor="direccion:" className="poppins-semibold text-black uppercase">
               Dirección
             </label>
             <input
@@ -256,16 +218,11 @@ export const FormularioCliente = ({ cliente }) => {
             />
           </div>
 
-          {/* Contenedor del mapa de Google Maps */}
           <div id="map" style={{ height: "300px", marginTop: "50px" }}></div>
 
           <div className="flex justify-center p-3 mb-5">
-            <div className=" text-center poppins-regular bg-[#5B72C3] green p-2 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all w-1/3">
-              <button
-                type="button"
-                onClick={handleConfirmDireccion}
-                className="btn btn-primary"
-              >
+            <div className="text-center poppins-regular bg-[#5B72C3] green p-2 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all w-1/3">
+              <button type="button" onClick={handleConfirmDireccion} className="btn btn-primary">
                 Confirmar Dirección
               </button>
             </div>
