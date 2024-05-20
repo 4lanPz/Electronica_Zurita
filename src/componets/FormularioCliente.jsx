@@ -9,12 +9,12 @@ export const FormularioCliente = ({ cliente }) => {
   const [marker, setMarker] = useState(null);
   const [mensaje, setMensaje] = useState({});
   const [form, setForm] = useState({
-    nombre: cliente?.nombre || "aaaaa", // string
-    correo: cliente?.correo || "aa@gmail.com", // email
-    telefono: cliente?.telefono || 10987654321, // number
-    cedula: cliente?.cedula || 1987654321, // number
-    frecuente: cliente?.frecuente || true, // boolean
-    direccion: cliente?.direccion || "aaaa", // string
+    nombre: cliente?.nombre || "", // string
+    correo: cliente?.correo || "", // email
+    telefono: cliente?.telefono || "", // number
+    cedula: cliente?.cedula || "", // number
+    frecuente: cliente?.frecuente || "", // boolean
+    direccion: cliente?.direccion || "", // string
   });
 
   const handleChange = (e) => {
@@ -28,7 +28,6 @@ export const FormularioCliente = ({ cliente }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form)
     try {
       const token = localStorage.getItem("token");
       const url = cliente?._id
