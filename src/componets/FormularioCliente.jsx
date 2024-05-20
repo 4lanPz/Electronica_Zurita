@@ -170,7 +170,6 @@ export const FormularioCliente = ({ cliente }) => {
               <input
                 id="cedula"
                 type="text"
-                inputMode="numeric"
                 className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
                 placeholder="Cédula del cliente"
                 name="cedula"
