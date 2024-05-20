@@ -9,12 +9,12 @@ export const FormularioCliente = ({ cliente }) => {
   const [marker, setMarker] = useState(null);
   const [mensaje, setMensaje] = useState({});
   const [form, setForm] = useState({
-    nombre: cliente?.nombre || "", // string
-    correo: cliente?.correo || "", // email
-    telefono: cliente?.telefono || "", // number
-    cedula: cliente?.cedula || "", // number
-    frecuente: cliente?.frecuente || "", // boolean
-    direccion: cliente?.direccion || "", // string
+    nombre: cliente?.nombre || "aaaaa", // string
+    correo: cliente?.correo || "aa@gmail.com", // email
+    telefono: cliente?.telefono || "0987654321", // number
+    cedula: cliente?.cedula || "0987654321", // number
+    frecuente: cliente?.frecuente || "true", // boolean
+    direccion: cliente?.direccion || "aaaa", // string
   });
 
   const handleChange = (e) => {
@@ -28,6 +28,7 @@ export const FormularioCliente = ({ cliente }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(form)
     try {
       const token = localStorage.getItem("token");
       const url = cliente?._id
@@ -40,16 +41,13 @@ export const FormularioCliente = ({ cliente }) => {
         },
       };
 
-      console.log("Datos enviados:", form); // Log para depuración
-      console.log("URL:", url); // Log para depuración
-      console.log("Options:", options); // Log para depuración
-
+      
       const response = cliente?._id
         ? await axios.put(url, form, options)
         : await axios.post(url, form, options);
 
       if (response && response.data) {
-        console.log("Respuesta del servidor:", response.data); // Log para depuración
+        
         setMensaje({
           respuesta: cliente?._id
             ? "Cliente actualizado con éxito"
@@ -63,8 +61,6 @@ export const FormularioCliente = ({ cliente }) => {
         console.error("La respuesta no contiene 'data'");
       }
     } catch (error) {
-      console.error("Error en la solicitud:", error.response?.data); // Log para depuración
-      const errorMsg = error.response?.data?.msg || "Error en la solicitud";
       setMensaje({ respuesta: errorMsg, tipo: false });
       setTimeout(() => {
         setMensaje({});
@@ -184,7 +180,7 @@ export const FormularioCliente = ({ cliente }) => {
             </label>
             <input
               id="correo"
-              type="email"
+              type="text"
               className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
               placeholder="Correo electrónico del cliente"
               name="correo"
