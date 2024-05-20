@@ -9,12 +9,12 @@ export const FormularioCliente = ({ cliente }) => {
   const [marker, setMarker] = useState(null);
   const [mensaje, setMensaje] = useState({});
   const [form, setForm] = useState({
-    nombre: cliente?.nombre || "", //string
-    correo: cliente?.correo || "", //email
-    telefono: cliente?.telefono || "", //number
-    cedula: cliente?.cedula || "", //number
-    frecuente: cliente?.frecuente || "", //booleano
-    direccion: cliente?.direccion || "", //string
+    nombre: cliente?.nombre || "", // string
+    correo: cliente?.correo || "", // email
+    telefono: cliente?.telefono || "", // number
+    cedula: cliente?.cedula || "", // number
+    frecuente: cliente?.frecuente || "", // boolean
+    direccion: cliente?.direccion || "", // string
   });
 
   const handleChange = (e) => {
@@ -31,9 +31,7 @@ export const FormularioCliente = ({ cliente }) => {
     try {
       const token = localStorage.getItem("token");
       const url = cliente?._id
-        ? `${import.meta.env.VITE_BACKEND_URL}/cliente/actualizar/${
-            cliente._id
-          }`
+        ? `${import.meta.env.VITE_BACKEND_URL}/cliente/actualizar/${cliente._id}`
         : `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
       const options = {
         headers: {
@@ -41,12 +39,17 @@ export const FormularioCliente = ({ cliente }) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      console.log("Datos enviados:", form);
+
+      console.log("Datos enviados:", form); // Log para depuración
+      console.log("URL:", url); // Log para depuración
+      console.log("Options:", options); // Log para depuración
+
       const response = cliente?._id
         ? await axios.put(url, form, options)
         : await axios.post(url, form, options);
 
       if (response && response.data) {
+        console.log("Respuesta del servidor:", response.data); // Log para depuración
         setMensaje({
           respuesta: cliente?._id
             ? "Cliente actualizado con éxito"
@@ -108,21 +111,18 @@ export const FormularioCliente = ({ cliente }) => {
   const handleConfirmDireccion = () => {
     if (marker) {
       const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode(
-        { location: marker.getPosition() },
-        (results, status) => {
-          if (status === "OK") {
-            if (results[0]) {
-              const address = results[0].formatted_address;
-              setForm({ ...form, direccion: address });
-            } else {
-              console.error("No se encontraron resultados de geocodificación");
-            }
+      geocoder.geocode({ location: marker.getPosition() }, (results, status) => {
+        if (status === "OK") {
+          if (results[0]) {
+            const address = results[0].formatted_address;
+            setForm({ ...form, direccion: address });
           } else {
-            console.error("Error en la geocodificación inversa:", status);
+            console.error("No se encontraron resultados de geocodificación");
           }
+        } else {
+          console.error("Error en la geocodificación inversa:", status);
         }
-      );
+      });
     }
   };
 
@@ -134,10 +134,7 @@ export const FormularioCliente = ({ cliente }) => {
             <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
           )}
           <div className="poppins-regular">
-            <label
-              htmlFor="nombre:"
-              className="poppins-semibold text-black uppercase"
-            >
+            <label htmlFor="nombre:" className="poppins-semibold text-black uppercase">
               Nombre cliente:
             </label>
             <input
@@ -153,10 +150,7 @@ export const FormularioCliente = ({ cliente }) => {
 
           <div className="flex flex-wrap">
             <div className="w-1/2 pr-2">
-              <label
-                htmlFor="telefono:"
-                className="poppins-semibold text-black uppercase"
-              >
+              <label htmlFor="telefono:" className="poppins-semibold text-black uppercase">
                 Teléfono / celular:
               </label>
               <input
@@ -170,10 +164,7 @@ export const FormularioCliente = ({ cliente }) => {
               />
             </div>
             <div className="w-1/2 pl-2">
-              <label
-                htmlFor="cedula:"
-                className="poppins-semibold text-black uppercase"
-              >
+              <label htmlFor="cedula:" className="poppins-semibold text-black uppercase">
                 Cédula:
               </label>
               <input
@@ -189,10 +180,7 @@ export const FormularioCliente = ({ cliente }) => {
             </div>
           </div>
           <div>
-            <label
-              htmlFor="correo:"
-              className="poppins-semibold text-black uppercase"
-            >
+            <label htmlFor="correo:" className="poppins-semibold text-black uppercase">
               Correo Electrónico:
             </label>
             <input
@@ -206,10 +194,7 @@ export const FormularioCliente = ({ cliente }) => {
             />
           </div>
           <div>
-            <label
-              htmlFor="frecuente:"
-              className="poppins-semibold text-black uppercase"
-            >
+            <label htmlFor="frecuente:" className="poppins-semibold text-black uppercase">
               Cliente frecuente
             </label>
             <select
@@ -225,10 +210,7 @@ export const FormularioCliente = ({ cliente }) => {
             </select>
           </div>
           <div>
-            <label
-              htmlFor="direccion:"
-              className="poppins-semibold text-black uppercase"
-            >
+            <label htmlFor="direccion:" className="poppins-semibold text-black uppercase">
               Dirección
             </label>
             <input
@@ -246,11 +228,7 @@ export const FormularioCliente = ({ cliente }) => {
 
           <div className="flex justify-center p-3 mb-5">
             <div className="text-center poppins-regular bg-[#5B72C3] green p-2 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all w-1/3">
-              <button
-                type="button"
-                onClick={handleConfirmDireccion}
-                className="btn btn-primary"
-              >
+              <button type="button" onClick={handleConfirmDireccion} className="btn btn-primary">
                 Confirmar Dirección
               </button>
             </div>
