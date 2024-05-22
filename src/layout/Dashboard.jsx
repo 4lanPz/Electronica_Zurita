@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
-import flecha from "/images/flecha.jpg"
+import flecha from "/images/flecha.jpg";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -16,12 +16,12 @@ const Dashboard = () => {
 
   const handleScrollToTop = () => {
     window.scrollTo({
-      top: 0
+      top: 0,
     });
   };
 
   return (
-    <div className="md:flex md:min-h-screen flex">
+    <div className="md:flex md:min-h-screen">
       <div className="w-auto bg-[#3D53A0]">
         <button onClick={toggleMenu} className="my-2 mx-4 text-white">
           <svg
@@ -124,7 +124,7 @@ const Dashboard = () => {
             <div className="p-4 mt-10">
               <Link
                 to="/"
-                className="poppins-regular text-xl text-white text-md block hover:bg-red-900 text-center bg-red-800 px-4 py-1 rounded-xl"
+                className="poppins-regular text-xl text-white text-md block text-center bg-[#9b1746] hover:text-black px-4 py-1 rounded-xl"
                 onClick={() => {
                   localStorage.removeItem("token");
                 }}
@@ -135,16 +135,19 @@ const Dashboard = () => {
           </div>
         )}
       </div>
+      <div className="flex-1 flex flex-col  h-screen bg-gray-100">
+        <div className="bg-[#3D53A0]flex md:justify-end items-center gap-5 justify-center"></div>
 
-      <div className="flex-1 bg-gray-100 p-10">
-        <div className="">{autenticado ? <Outlet /> : <Navigate to="/" />}</div>
+        {/* <div className="flex-1 bg-gray-100 p-10"> */}
+        <div className="overflow-y-scroll p-8 bg-gray-100">
+          <div className="">
+            {autenticado ? <Outlet /> : <Navigate to="/" />}
+          </div>
+        </div>
+        <div className="bg-[#3D53A0]">
+          
+        </div>
       </div>
-      <button
-          className="fixed bottom-3 right-3 bg-[#5B72C3] rounded-full shadow-md hover:bg-[#3D53A0] focus:outline-none p-3"
-          onClick={handleScrollToTop}
-        >
-          <img src={flecha} alt="Scroll to top" className="w-8 h-8" />
-        </button>
     </div>
   );
 };

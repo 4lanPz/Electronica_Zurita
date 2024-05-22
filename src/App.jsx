@@ -16,7 +16,7 @@ import { Confirmar } from './paginas/Confirmar'
 import Restablecer from './paginas/Restablecer'
 import { AuthProvider } from './context/AuthProvider'
 import { PrivateRoute } from './routes/PrivateRoutes'
-import { TratamientosProvider } from './context/TratamientosProvider'
+import { OrdenesProvider } from './context/OrdenesProvider'
 import { Forgot } from './paginas/Forgot'
 import PrivateRouteWithRole from './routes/PrivateRouteWithRole'
 
@@ -25,7 +25,7 @@ function App() {
     <>
     <BrowserRouter>
       <AuthProvider>
-      <TratamientosProvider>
+      <OrdenesProvider>
         <Routes>
           <Route index element={<Login/>}/>
 
@@ -68,7 +68,7 @@ function App() {
           } />
 
         </Routes>
-      </TratamientosProvider>
+      </OrdenesProvider>
       </AuthProvider>
     </BrowserRouter>
     </>

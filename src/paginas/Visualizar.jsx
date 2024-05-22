@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import TratamientosContext from "../context/TratamientosProvider";
-import ModalTratamiento from "../componets/Modals/ModalTratamiento";
-import TablaOrdenes from "../componets/TablaOrdenes";
+import OrdenesContext from "../context/OrdenesProvider";
+import ModalOrden from "../componets/Modals/ModalOrden";
+import TablaProformas from "../componets/TablaProformas";
 import Mensaje from "../componets/Alertas/Mensaje";
 import AuthContext from "../context/AuthProvider";
 
@@ -12,8 +12,8 @@ const Visualizar = () => {
   const { auth } = useContext(AuthContext);
   const [mensaje, setMensaje] = useState({});
   const [cliente, setCliente] = useState({});
-  const { modal, handleModal, tratamientos, setTratamientos } =
-    useContext(TratamientosContext);
+  const { modal, handleModal, ordenes, setOrdenes } =
+    useContext(OrdenesContext);
 
   const formatearFecha = (fecha) => {
     const nuevaFecha = new Date(fecha);
@@ -38,7 +38,7 @@ const Visualizar = () => {
         };
         const respuesta = await axios.get(url, options);
         setCliente(respuesta.data.cliente);
-        setTratamientos(respuesta.data.tratamientos);
+        setOrdenes(respuesta.data.ordenes);
       } catch (error) {
         setMensaje({ respuesta: error.response.data.msg, tipo: false });
       }
@@ -49,99 +49,96 @@ const Visualizar = () => {
   return (
     <>
       <div>
-        <h1 className="font-black text-4xl text-gray-500">
-          Visualizar datos del Cliente
+        <h1 className="poppins-bold text-center font-black text-4xl text-black">
+          Proforma
         </h1>
         <hr className="my-4" />
-        {auth.rol === "veterinario" && (
-          <button
-            className="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700"
-            onClick={handleModal}
-          >
-            Registrar
-          </button>
+        {Object.keys(mensaje).length > 0 && (
+          <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
         )}
+        <div className="flex items-center">
+          {auth.rol === "tecnico" && (
+            <button
+              className="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700"
+              onClick={handleModal}
+            >
+              Generar proforma
+            </button>
+          )}
+        </div>
       </div>
+      {modal && <ModalOrden idOrden={orden._id} />}
       <div>
-        {Object.keys(paciente).length != 0 ? (
+        {Object.keys(orden).length != 0 ? (
           <>
             <div className="m-5 flex justify-between">
               <div>
-                <p className="text-md text-gray-00 mt-4">
-                  <span className="text-gray-600 uppercase font-bold">
-                    * Nombre del paciente:{" "}
+                <p className="poppins-regular text-black mt-3">
+                  <span className="poppins-semibold text-black uppercase ">
+                    * Nombre del cliente:{" "}
                   </span>
-                  {paciente.nombre}
+                  {orden.nombre}
                 </p>
-                <p className="text-md text-gray-00 mt-4">
-                  <span className="text-gray-600 uppercase font-bold">
-                    * Nombre del propietario:{" "}
+                <p className="poppins-regular text-black mt-3">
+                  <span className="poppins-semibold text-black uppercase ">
+                    * Cédula:{" "}
                   </span>
-                  {paciente.propietario}
+                  {orden.propietario}
                 </p>
-                <p className="text-md text-gray-00 mt-4">
-                  <span className="text-gray-600 uppercase font-bold">
-                    * Email:{" "}
+                <p className="poppins-regular text-black mt-3">
+                  <span className="poppins-semibold text-black uppercase ">
+                    * Correo :{" "}
                   </span>
-                  {paciente.email}
+                  {orden.email}
                 </p>
-                <p className="text-md text-gray-00 mt-4">
-                  <span className="text-gray-600 uppercase font-bold">
-                    * Fecha de atención:{" "}
+                <p className="poppins-regular text-black mt-3">
+                  <span className="poppins-semibold text-black uppercase ">
+                    * Teléfono:{" "}
                   </span>
-                  {formatearFecha(paciente.ingreso)}
+                  {formatearFecha(orden.ingreso)}
                 </p>
-                <p className="text-md text-gray-00 mt-4">
-                  <span className="text-gray-600 uppercase font-bold">
+                <p className="poppins-regular text-black mt-3">
+                  <span className="poppins-semibold text-black uppercase ">
+                    * Equipo:{" "}
+                  </span>
+                  {formatearFecha(orden.ingreso)}
+                </p>
+                <p className="poppins-regular text-black mt-3">
+                  <span className="poppins-semibold text-black uppercase ">
+                    * Número de serie:{" "}
+                  </span>
+                  {formatearFecha(orden.ingreso)}
+                </p>
+                <p className="poppins-regular text-black mt-3">
+                  <span className="poppins-semibold text-black uppercase ">
                     * Fecha de salida:{" "}
                   </span>
-                  {formatearFecha(paciente.salida)}
+                  {formatearFecha(orden.salida)}
                 </p>
-                <p className="text-md text-gray-00 mt-4">
-                  <span className="text-gray-600 uppercase font-bold">
+                <p className="poppins-regular text-black mt-3">
+                  <span className="poppins-semibold text-black uppercase ">
                     * Estado:{" "}
                   </span>
                   <span className="bg-blue-100 text-green-500 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-                    {paciente.estado && "activo"}
+                    {orden.estado && "activo"}
                   </span>
                 </p>
-                <p className="text-md text-gray-00 mt-4">
-                  <span className="text-gray-600 uppercase font-bold">
-                    * Síntomas:{" "}
+                <p className="poppins-regular text-black mt-3">
+                  <span className="poppins-semibold text-black uppercase ">
+                    * Razón de ingreso:{" "}
                   </span>
-                  {paciente.sintomas}
+                  {orden.sintomas}
                 </p>
-              </div>
-              <div>
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/2138/2138440.png"
-                  alt="dogandcat"
-                  className="h-80 w-80"
-                />
               </div>
             </div>
             <hr className="my-4" />
-            {Object.keys(mensaje).length > 0 && (
-              <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
-            )}
-            <div className="flex justify-between items-center">
-              <p>
-                Este submódulo te permite visualizar los tratamientos del
-                paciente
-              </p>
-              <button
-                className="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700"
-                onClick={handleModal}
-              >
-                Registrar
-              </button>
-            </div>
-            {modal && <ModalTratamiento idPaciente={paciente._id} />}
-
-            {tratamientos.length == 0 ? (
-              <Mensaje tipo={"active"}>{"No existen registros"}</Mensaje>
+            <p className="mb-8">Proforma generada</p>
+            {ordenes.length == 0 ? (
+              <Mensaje tipo={"active"}>
+                {"No existen registros de una proforma"}
+              </Mensaje>
             ) : (
-              <TablaOrdenes tratamientos={tratamientos} />
+              <TablaProformas proformas={proformas} />
             )}
           </>
         ) : (
@@ -153,5 +150,4 @@ const Visualizar = () => {
     </>
   );
 };
-
 export default Visualizar;

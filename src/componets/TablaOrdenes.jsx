@@ -34,7 +34,7 @@ const TablaOrdenes = () => {
   const handleDelete = async (id) => {
     try {
       const confirmar = window.confirm(
-        "Vas a eliminar a un clientes ¿Estás seguro de realizar esta acción?"
+        "Vas a finalizar la orden ¿Estás seguro de realizar esta acción?"
       );
       if (confirmar) {
         const token = localStorage.getItem("token");
@@ -65,7 +65,7 @@ const TablaOrdenes = () => {
   return (
     <>
       {(clientesMantenimiento.length === 0 && clientesReparacion.length === 0 && clientesRevision.length === 0 && clientesFinalizado.length === 0) ? (
-        <Mensaje tipo={"active"}>{"No existen clientes registrados"}</Mensaje>
+        <Mensaje tipo={"active"}>{"No existen órdenes registradas"}</Mensaje>
       ) : (
         <div className="flex flex-col">
           {/* Sección de Mantenimiento */}
