@@ -5,7 +5,6 @@ import Mensaje from "./Alertas/Mensaje";
 
 export const FormularioOrden = ({ orden }) => {
   const navigate = useNavigate();
-  const [clientes, setClientes] = useState([]);
   const [mensaje, setMensaje] = useState({});
   const [clienteInfo, setClienteInfo] = useState({
     nombre: " ",
@@ -20,14 +19,16 @@ export const FormularioOrden = ({ orden }) => {
     marca: orden?.marca || "", //string
     serie: orden?.serie || "", //string
     color: orden?.color || "", //string
+    // estado: orden?.estado || "", //string
     ingreso: orden?.ingreso
       ? new Date(orden.ingreso).toLocaleDateString("en-CA", {
           timeZone: "UTC",
         })
       : "", //date
     razon: orden?.razon || "", //string
-    servicio: orden?.servicio || "mantenimiento", //string
-    estado: orden?.servicio || "pendiente", //string
+    servicio: orden?.servicio || "Mantenimiento", //string
+    estado: orden?.estado || "Pendiente", //string
+    cedula: "",
   });
 
   const handleChange = (e) => {
@@ -72,8 +73,8 @@ export const FormularioOrden = ({ orden }) => {
     try {
       const token = localStorage.getItem("token");
       const url = orden?._id
-        ? `${import.meta.env.VITE_BACKEND_URL}/cliente/actualizar/${orden._id}`
-        : `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
+        ? `${import.meta.env.VITE_BACKEND_URL}/orden/actualizar/${orden._id}`
+        : `${import.meta.env.VITE_BACKEND_URL}/orden/registro`;
 
       const method = orden?._id ? "PUT" : "POST";
 
@@ -224,17 +225,17 @@ export const FormularioOrden = ({ orden }) => {
           </div>
 
           <label
-            htmlFor="modelo"
+            htmlFor="equipo"
             className="poppins-semibold text-black uppercase"
           >
             Equipo:
             <input
-              id="modelo"
+              id="equipo"
               type="text"
               className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
               placeholder="Tipo de equipo"
-              name="modelo"
-              value={form.modelo}
+              name="equipo"
+              value={form.equipo}
               onChange={handleChange}
             />
           </label>

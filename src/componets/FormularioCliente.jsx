@@ -2,11 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Mensaje from "./Alertas/Mensaje";
+import GoogleMaps from "./GoogleMaps";
 
 export const FormularioCliente = ({ cliente }) => {
   const navigate = useNavigate();
-  const [map, setMap] = useState(null);
-  const [marker, setMarker] = useState(null);
   const [mensaje, setMensaje] = useState({});
   const [form, setForm] = useState({
     nombre: cliente?.nombre || "", // string
@@ -60,68 +59,15 @@ export const FormularioCliente = ({ cliente }) => {
         console.error("La respuesta no contiene 'data'");
       }
     } catch (error) {
-      setMensaje({ respuesta: errorMsg, tipo: false });
+      setMensaje({ respuesta: error.response.data.msg, tipo: false });
       setTimeout(() => {
         setMensaje({});
       }, 3000);
     }
   };
 
-  useEffect(() => {
-    const apiKey = import.meta.env.VITE_MAPS_API_KEY;
-    const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
-    script.async = true;
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      const mapInstance = new window.google.maps.Map(
-        document.getElementById("map"),
-        {
-          center: { lat: -0.180653, lng: -78.467834 },
-          zoom: 12,
-          streetViewControl: false,
-          mapTypeControl: false,
-        }
-      );
-      setMap(mapInstance);
-
-      const markerInstance = new window.google.maps.Marker({
-        position: { lat: -0.180653, lng: -78.467834 },
-        map: mapInstance,
-        draggable: true,
-      });
-      setMarker(markerInstance);
-
-      mapInstance.addListener("click", (e) => {
-        markerInstance.setPosition(e.latLng);
-      });
-    };
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
-  const handleConfirmDireccion = () => {
-    if (marker) {
-      const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode(
-        { location: marker.getPosition() },
-        (results, status) => {
-          if (status === "OK") {
-            if (results[0]) {
-              const address = results[0].formatted_address;
-              setForm({ ...form, direccion: address });
-            } else {
-              console.error("No se encontraron resultados de geocodificación");
-            }
-          } else {
-            console.error("Error en la geocodificación inversa:", status);
-          }
-        }
-      );
-    }
+  const setDireccion = (direccion) => {
+    setForm({ ...form, direccion });
   };
 
   return (
@@ -240,19 +186,8 @@ export const FormularioCliente = ({ cliente }) => {
             />
           </div>
 
-          <div id="map" style={{ height: "500px", marginTop: "25px" }}></div>
+          <GoogleMaps setDireccion={setDireccion} />
 
-          <div className="flex justify-center p-3 mb-5">
-            <div className="text-center poppins-regular bg-[#5B72C3] green p-2 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all w-1/3">
-              <button
-                type="button"
-                onClick={handleConfirmDireccion}
-                className="btn btn-primary"
-              >
-                Confirmar Dirección
-              </button>
-            </div>
-          </div>
           <input
             type="submit"
             className="poppins-regular bg-[#5B72C3] green w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"

@@ -8,12 +8,12 @@ import AuthContext from "../context/AuthProvider";
 const TablaOrdenes = () => {
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [clientes, setClientes] = useState([]);
+  const [ordenes, setOrdenes] = useState([]);
 
-  const listarClientes = async () => {
+  const listarOrdenes = async () => {
     try {
       const token = localStorage.getItem("token");
-      const url = `${import.meta.env.VITE_BACKEND_URL}/clientes`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/ordenes`;
       const options = {
         headers: {
           "Content-Type": "application/json",
@@ -21,14 +21,14 @@ const TablaOrdenes = () => {
         },
       };
       const respuesta = await axios.get(url, options);
-      setClientes(respuesta.data);
+      setOrdenes(respuesta.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    listarClientes();
+    listarOrdenes();
   }, []);
 
   const handleDelete = async (id) => {
@@ -49,74 +49,96 @@ const TablaOrdenes = () => {
           salida: new Date().toString(),
         };
         await axios.delete(url, { headers, data });
-        listarClientes();
+        listarOrdenes();
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  // Filtrar clientes según el estado
-  const clientesMantenimiento = clientes.filter((cliente) => cliente.estado === "Mantenimiento");
-  const clientesReparacion = clientes.filter((cliente) => cliente.estado === "Reparación");
-  const clientesRevision = clientes.filter((cliente) => cliente.estado === "Revisión");
-  const clientesFinalizado = clientes.filter((cliente) => cliente.estado === "Finalizado");
+  // Filtrar ordenes según el estado
+  const ordenesMantenimiento = ordenes.filter(
+    (orden) => orden.servicio === "Mantenimiento"
+  );
+  const ordenesReparacion = ordenes.filter(
+    (orden) => orden.servicio === "Reparación"
+  );
+  const ordenesRevision = ordenes.filter(
+    (orden) => orden.servicio === "Revisión"
+  );
+  const ordenesFinalizado = ordenes.filter(
+    (orden) => orden.servicio === "Finalizado"
+  );
 
   return (
     <>
-      {(clientesMantenimiento.length === 0 && clientesReparacion.length === 0 && clientesRevision.length === 0 && clientesFinalizado.length === 0) ? (
+      {ordenesMantenimiento.length === 0 &&
+      ordenesReparacion.length === 0 &&
+      ordenesRevision.length === 0 &&
+      ordenesFinalizado.length === 0 ? (
         <Mensaje tipo={"active"}>{"No existen órdenes registradas"}</Mensaje>
       ) : (
         <div className="flex flex-col">
           {/* Sección de Mantenimiento */}
-          {clientesMantenimiento.length > 0 && (
+          {ordenesMantenimiento.length > 0 && (
             <div>
-              <h2 className="text-xl font-semibold mb-2">Clientes en Mantenimiento</h2>
-              <table className="w-full mt-5 table-auto shadow-lg bg-white">
+              <h2 className="poppins-semibold">Mantenimiento</h2>
+              <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
                 {/* Table Header */}
-                <thead className="bg-gray-800 text-slate-400">
-                  <tr>
+                <thead className="bg-[#3D53A0] text-white">
+                  <tr className="poppins-regular">
                     {/* Ajusta las columnas según tus necesidades */}
-                    <th className="p-2">N°</th>
+                    <th className="p-2">N° Orden</th>
                     <th className="p-2">Cliente</th>
                     <th className="p-2">Cedula</th>
                     <th className="p-2">Equipo</th>
                     <th className="p-2">Fecha Ingreso</th>
-                    <th className="p-2">Servicio</th>
+                    <th className="p-2">Fecha Salida</th>
                     <th className="p-2">Estado</th>
+                    <th className="p-2">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
                   {/* Render rows for clientesMantenimiento */}
                   {clientesMantenimiento.map((cliente, index) => (
-                    <tr className="border-b hover:bg-gray-300 text-center" key={cliente._id}>
+                    <tr
+                      className="poppins-regular border-b hover:bg-gray-300 text-center"
+                      key={orden._id}
+                    >
                       {/* Ajusta las celdas según tus necesidades */}
-                      <td>{index + 1}</td>
-                      <td>{cliente.nombre}</td>
-                      <td>{cliente.email}</td>
-                      <td>{cliente.celular}</td>
-                      <td>{cliente.cedula}</td>
-                      <td>
+                      <td>{index + 1}</td> {/* numero orden */}
+                      <td>{index + 1}</td> {/* cliente nombre */}
+                      <td>{index + 1}</td> {/* cliente cedula */}
+                      <td>{orden.equipo}</td>
+                      <td>{orden.ingreso}</td>
+                      <td>{orden.salida}</td>
+                      <td>{cliente.estado}</td>
+                      {/* <td>
                         <span className="bg-blue-100 text-green-500 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-                          {cliente.frecuente ? "Sí" : "No"}
+                          {cliente.estado}
                         </span>
-                      </td>
-                      <td>{cliente.direccion}</td>
+                      </td> */}
                       <td className="py-2 text-center">
                         {/* Ajusta las acciones según tus necesidades */}
                         <MdVisibility
                           className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                          onClick={() => navigate(`/dashboard/visualizar/${cliente._id}`)}
+                          onClick={() =>
+                            navigate(`/dashboard/visualizar/${cliente._id}`)
+                          }
                         />
                         {auth.rol === "tecnico" && (
                           <>
                             <MdUpdate
                               className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                              onClick={() => navigate(`/dashboard/actualizar/${cliente._id}`)}
+                              onClick={() =>
+                                navigate(`/dashboard/actualizar/${cliente._id}`)
+                              }
                             />
                             <MdDeleteForever
                               className="h-7 w-7 text-red-900 cursor-pointer inline-block"
-                              onClick={() => { handleDelete(cliente._id); }}
+                              onClick={() => {
+                                handleDelete(cliente._id);
+                              }}
                             />
                           </>
                         )}
@@ -127,7 +149,7 @@ const TablaOrdenes = () => {
               </table>
             </div>
           )}
-
+          <hr className="mt-4 border-black" />
           {/* Agrega las secciones para Reparación, Revisión y Finalizado de manera similar */}
         </div>
       )}
