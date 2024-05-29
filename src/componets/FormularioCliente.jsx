@@ -15,6 +15,7 @@ export const FormularioCliente = ({ cliente }) => {
     frecuente: cliente?.frecuente || "", // boolean
     direccion: cliente?.direccion || "", // string
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +27,7 @@ export const FormularioCliente = ({ cliente }) => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
@@ -40,7 +42,6 @@ export const FormularioCliente = ({ cliente }) => {
           Authorization: `Bearer ${token}`,
         },
       };
-
       const response = cliente?._id
         ? await axios.put(url, form, options)
         : await axios.post(url, form, options);
@@ -56,10 +57,12 @@ export const FormularioCliente = ({ cliente }) => {
           navigate("/dashboard/listar");
         }, 3000);
       } else {
+        setLoading(false);
         console.error("La respuesta no contiene 'data'");
       }
     } catch (error) {
       setMensaje({ respuesta: error.response.data.msg, tipo: false });
+      setLoading(false);
       setTimeout(() => {
         setMensaje({});
       }, 3000);
@@ -190,8 +193,17 @@ export const FormularioCliente = ({ cliente }) => {
 
           <input
             type="submit"
-            className="poppins-regular bg-[#5B72C3] green w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
-            value={cliente?._id ? "Actualizar cliente" : "Registrar cliente"}
+            className={`poppins-regular bg-[#5B72C3] green w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            value={
+              loading
+                ? "Cargando..."
+                : cliente?._id
+                ? "Actualizar cliente"
+                : "Registrar cliente"
+            }
+            disabled={loading}
           />
         </form>
       </div>

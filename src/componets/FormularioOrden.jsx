@@ -12,6 +12,7 @@ export const FormularioOrden = ({ orden }) => {
     cedula: " ",
     telefono: " ",
   });
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     clienteId: orden?.clienteId || "", //string
     equipo: orden?.equipo || "", //string
@@ -39,6 +40,7 @@ export const FormularioOrden = ({ orden }) => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     // Validaciones básicas
@@ -54,11 +56,11 @@ export const FormularioOrden = ({ orden }) => {
         respuesta: "Todos los campos obligatorios deben ser completados",
         tipo: false,
       });
+      setLoading(false);
       return;
     }
 
     try {
-      console.log(form)
       const token = localStorage.getItem("token");
       const url = orden?._id
         ? `${import.meta.env.VITE_BACKEND_URL}/orden/actualizar/${orden._id}`
@@ -86,7 +88,7 @@ export const FormularioOrden = ({ orden }) => {
           : "Orden generada con éxito",
         tipo: true,
       });
-
+      setLoading(false);
       setTimeout(() => {
         navigate("/dashboard/listarordenes");
       }, 3000);
@@ -95,14 +97,17 @@ export const FormularioOrden = ({ orden }) => {
         respuesta: error.response?.data?.msg || "Error desconocido",
         tipo: false,
       });
+      setLoading(false);
     } finally {
       setTimeout(() => {
         setMensaje({});
       }, 3000);
+      setLoading(false);
     }
   };
 
   const handleBuscarCliente = async () => {
+    setLoading(true);
     try {
       const token = localStorage.getItem("token");
       const url = `${import.meta.env.VITE_BACKEND_URL}/clientes/cedula/${
@@ -133,6 +138,7 @@ export const FormularioOrden = ({ orden }) => {
           respuesta: "Cliente encontrado",
           tipo: true,
         });
+        setLoading(false);
         setTimeout(() => {
           setMensaje({});
         }, 5000);
@@ -142,6 +148,7 @@ export const FormularioOrden = ({ orden }) => {
         respuesta: "No se ha encontrado un cliente con ese número de cédula",
         tipo: false,
       });
+      setLoading(false);
       setTimeout(() => {
         setMensaje({});
       }, 5000);
@@ -172,15 +179,16 @@ export const FormularioOrden = ({ orden }) => {
                 ></input>
               </label>
               <div className="flex justify-center p-3">
-                <div className=" text-center poppins-regular bg-[#5B72C3] green p-2 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all w-2/3">
-                  <button
-                    type="button"
-                    onClick={handleBuscarCliente}
-                    className="btn btn-primary"
-                  >
-                    Buscar Cliente
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={handleBuscarCliente}
+                  className={`poppins-regular bg-[#5B72C3] green p-2 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all w-2/3 ${
+                    loading ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                  disabled={loading}
+                >
+                  {loading ? "Buscando Cliente..." : "Buscar Cliente"}
+                </button>
               </div>
             </div>
             <div className="w-1/2 pl-2">
@@ -350,8 +358,11 @@ export const FormularioOrden = ({ orden }) => {
 
           <input
             type="submit"
-            className="poppins-regular bg-[#5B72C3] green w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
+            className={`poppins-regular bg-[#5B72C3] green w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
             value={orden?._id ? "Actualizar Orden" : "Registrar Orden"}
+            disabled={loading}
           />
         </form>
       </div>

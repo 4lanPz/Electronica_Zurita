@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Mensaje from "../componets/Alertas/Mensaje";
@@ -7,30 +7,36 @@ import AuthContext from "../context/AuthProvider";
 
 export const Login = () => {
   const navigate = useNavigate();
-
   const { setAuth, setEstado } = useContext(AuthContext);
   const [mensaje, setMensaje] = useState({});
-
   const [form, setform] = useState({
     email: "",
     password: "",
   });
-
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    // Función para eliminar todos los tokens almacenados en el almacenamiento local
+    const clearLocalStorage = () => {
+      localStorage.removeItem("token");
+    };
+    // Llamar a la función al cargar la página de inicio de sesión
+    clearLocalStorage();
+  }, []);
   const handleChange = (e) => {
     setform({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
-    const url = form.password.includes("tec")
-      ? `${import.meta.env.VITE_BACKEND_URL}/cliente/login`
-      : `${import.meta.env.VITE_BACKEND_URL}/login`;
+    const url = `${import.meta.env.VITE_BACKEND_URL}/login`;
     try {
       const respuesta = await axios.post(url, form);
       localStorage.setItem("token", respuesta.data.token);
       setAuth(respuesta.data);
       navigate("/dashboard/crearcliente");
     } catch (error) {
+      setLoading(false);
       setMensaje({ respuesta: error.response.data.msg, tipo: false });
       setform({});
       setTimeout(() => {
@@ -95,8 +101,14 @@ export const Login = () => {
 
               {/* Botón de inicio de sesión */}
               <div className="mt-4">
-                <button className="poppins-regular py-2 w-full block text-center bg-[#5B72C3] text-white border rounded-xl hover:scale-100 duration-300 hover:bg-[#3D53A0] hover:text-white mb-2">
-                  Iniciar sesión
+                <button
+                  type="submit"
+                  className={`poppins-regular py-2 w-full block text-center bg-[#5B72C3] text-white border rounded-xl hover:scale-100 duration-300 hover:bg-[#3D53A0] hover:text-white mb-2 ${
+                    loading ? "animate-pulse" : ""
+                  }`}
+                  disabled={loading} // Deshabilitar el botón mientras carga
+                >
+                  {loading ? "Cargando..." : "Iniciar sesión"}
                 </button>
               </div>
             </form>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Mensaje from "../componets/Alertas/Mensaje";
 
@@ -13,7 +13,7 @@ export const Register = () => {
     email: "",
     password: "",
   });
-
+  const [loading, setLoading] = useState(false);
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -22,6 +22,7 @@ export const Register = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     // Validaciones mejoradas
@@ -29,6 +30,7 @@ export const Register = () => {
 
     // Verificar si el correo electrónico es válido
     if (!form.email || !emailRegex.test(form.email)) {
+      setLoading(false);
       setMensaje({
         respuesta: "Por favor, ingresa un correo electrónico válido",
         tipo: false,
@@ -38,6 +40,7 @@ export const Register = () => {
 
     // Verificar si la contraseña tiene al menos 6 caracteres (puedes ajustar el mínimo según tus necesidades)
     if (!form.password || form.password.length < 6) {
+      setLoading(false);
       setMensaje({
         respuesta: "La contraseña debe tener al menos 6 caracteres",
         tipo: false,
@@ -47,6 +50,7 @@ export const Register = () => {
 
     // Verificar si el teléfono tiene exactamente 10 dígitos
     if (!form.telefono || !/^\d{10}$/.test(form.telefono)) {
+      setLoading(false);
       setMensaje({
         respuesta: "El teléfono debe tener exactamente 10 dígitos",
         tipo: false,
@@ -59,11 +63,13 @@ export const Register = () => {
       const respuesta = await axios.post(url, form);
       setMensaje({ respuesta: respuesta.data.msg, tipo: true });
       setForm({});
+      setLoading(false);
     } catch (error) {
       setMensaje({
         respuesta: error.response.data?.errors[0].msg,
         tipo: false,
       });
+      setLoading(false);
     }
   };
 
@@ -86,9 +92,7 @@ export const Register = () => {
                 <h1 className="poppins-bold uppercase text-black">Registro</h1>
               </div>
             </div>
-            <div className="text-center">
-              
-            </div>
+            <div className="text-center"></div>
             <form onSubmit={handleSubmit} className="mb-2">
               <div className="flex flex-wrap mb-3">
                 <div className="w-1/2 pr-2">
@@ -202,8 +206,14 @@ export const Register = () => {
                 </div>
               </div>
 
-              <button className="poppins-regular bg-[#5267b4] text-white border py-2 w-full rounded-xl mt-3 duration-300 hover:bg-[#3D53A0] hover:text-white mb-0">
-                Registrarse
+              <button
+                className={`poppins-regular bg-[#5267b4] text-white border py-2 w-full rounded-xl mt-3 duration-300 hover:bg-[#3D53A0] hover:text-white mb-0 ${
+                  loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                onClick={handleSubmit}
+                disabled={loading}
+              >
+                {loading ? "Cargando..." : "Registrarse"}
               </button>
             </form>
             {Object.keys(mensaje).length > 0 && (

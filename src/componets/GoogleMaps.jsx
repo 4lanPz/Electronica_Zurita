@@ -3,14 +3,13 @@ import { useEffect, useState } from "react";
 const GoogleMaps = ({ setDireccion }) => {
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState(null);
-  
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const apiKey = import.meta.env.VITE_MAPS_API_KEY;
     const scriptId = "google-maps-script";
 
     const initializeMap = () => {
-      
       if (!window.google || !window.google.maps) {
         console.error("Google Maps API not loaded");
         return;
@@ -26,7 +25,6 @@ const GoogleMaps = ({ setDireccion }) => {
         }
       );
       setMap(mapInstance);
-      
 
       const markerClass =
         window.google.maps.marker?.AdvancedMarkerElement ||
@@ -85,16 +83,19 @@ const GoogleMaps = ({ setDireccion }) => {
             if (results[0]) {
               const address = results[0].formatted_address;
               setDireccion(address);
+              setLoading(false);
             } else {
               console.error("No se encontraron resultados de geocodificación");
+              setLoading(false);
             }
           } else {
             console.error("Error en la geocodificación inversa:", status);
+            setLoading(false);
           }
         }
       );
     }
-  };  
+  };
 
   return (
     <div>
@@ -105,8 +106,9 @@ const GoogleMaps = ({ setDireccion }) => {
             type="button"
             onClick={handleConfirmDireccion}
             className="btn btn-primary"
+            disabled={loading}
           >
-            Confirmar Dirección
+            {loading ? "Cargando..." : "Confirmar Dirección"}
           </button>
         </div>
       </div>
