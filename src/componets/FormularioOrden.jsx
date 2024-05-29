@@ -57,25 +57,12 @@ export const FormularioOrden = ({ orden }) => {
       return;
     }
 
-    // // Validación de fecha de ingreso
-    // const fechaIngreso = new Date(form.ingreso);
-    // const fechaActual = new Date();
-
-    // if (fechaIngreso < fechaActual) {
-    //   setMensaje({
-    //     respuesta:
-    //       "La fecha de ingreso debe ser igual o posterior a la fecha actual",
-    //     tipo: false,
-    //   });
-    //   return;
-    // }
-
     try {
       console.log(form)
       const token = localStorage.getItem("token");
       const url = orden?._id
         ? `${import.meta.env.VITE_BACKEND_URL}/orden/actualizar/${orden._id}`
-        : `${import.meta.env.VITE_BACKEND_URL}/ordenes/registrar`;
+        : `${import.meta.env.VITE_BACKEND_URL}/orden/registro`;
 
       const method = orden?._id ? "PUT" : "POST";
 
@@ -356,7 +343,7 @@ export const FormularioOrden = ({ orden }) => {
             >
               <option value="">Seleccionar servicio</option>
               <option value="mantenimiento">Mantenimiento</option>
-              <option value="meparación">Reparación</option>
+              <option value="reparación">Reparación</option>
               <option value="revisión">Revisión</option>
             </select>
           </label>
