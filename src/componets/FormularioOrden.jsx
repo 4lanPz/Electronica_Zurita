@@ -57,18 +57,18 @@ export const FormularioOrden = ({ orden }) => {
       return;
     }
 
-    // Validación de fecha de ingreso
-    const fechaIngreso = new Date(form.ingreso);
-    const fechaActual = new Date();
+    // // Validación de fecha de ingreso
+    // const fechaIngreso = new Date(form.ingreso);
+    // const fechaActual = new Date();
 
-    if (fechaIngreso < fechaActual) {
-      setMensaje({
-        respuesta:
-          "La fecha de ingreso debe ser igual o posterior a la fecha actual",
-        tipo: false,
-      });
-      return;
-    }
+    // if (fechaIngreso < fechaActual) {
+    //   setMensaje({
+    //     respuesta:
+    //       "La fecha de ingreso debe ser igual o posterior a la fecha actual",
+    //     tipo: false,
+    //   });
+    //   return;
+    // }
 
     try {
       console.log(form)
