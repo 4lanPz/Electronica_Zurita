@@ -60,79 +60,79 @@ const Visualizar = () => {
   return (
     <>
       <div>
-        <h1 className="poppins-bold text-4xl text-black">Generar Proforma</h1>
+        <h1 className="poppins-bold text-4xl text-black text-center">Generar Proforma</h1>
         <hr className="my-4" />
-        <p className="poppins-regular text-black">Datos de la orden</p>
+        <p className="poppins-semibold text-black text-center">Datos de la orden</p>
         {Object.keys(mensaje).length > 0 && (
           <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
         )}
-        <div>
-          <div className="m-5 flex justify-between">
+        <div className="w-full flex flex-col justify-center items-center">
+          <div className="poppins-regular m-2">
             <div>
-              <p className="text-md text-gray-00 mt-4">
-                <span className="text-gray-600 uppercase font-bold">
+              <p className="mt-3">
+                <span className="text-black uppercase font-bold">
                   * Nombre del orden:{" "}
                 </span>
                 {orden.numOrden}
               </p>
-              <p className="text-md text-gray-00 mt-4">
-                <span className="text-gray-600 uppercase font-bold">
+              <p className="mt-3">
+                <span className="text-black uppercase font-bold">
                   * Equipo:{" "}
                 </span>
                 {orden.equipo}
               </p>
-              <p className="text-md text-gray-00 mt-4">
-                <span className="text-gray-600 uppercase font-bold">
+              <p className="mt-3">
+                <span className="text-black uppercase font-bold">
                   * Modelo:{" "}
                 </span>
                 {orden.modelo}
               </p>
-              <p className="text-md text-gray-00 mt-4">
-                <span className="text-gray-600 uppercase font-bold">
+              <p className="mt-3">
+                <span className="text-black uppercase font-bold">
                   * Marca:{" "}
                 </span>
                 {orden.marca}
               </p>
-              <p className="text-md text-gray-00 mt-4">
-                <span className="text-gray-600 uppercase font-bold">
+              <p className="mt-3">
+                <span className="text-black uppercase font-bold">
                   * Serie:{" "}
                 </span>
                 {orden.serie}
               </p>
-              <p className="text-md text-gray-00 mt-4">
-                <span className="text-gray-600 uppercase font-bold">
+              <p className="mt-3">
+                <span className="text-black uppercase font-bold">
                   * Color:{" "}
                 </span>
                 {orden.color}
               </p>
-              <p className="text-md text-gray-00 mt-4">
-                <span className="text-gray-600 uppercase font-bold">
+              <p className="mt-3">
+                <span className="text-black uppercase font-bold">
                   * Fecha de ingreso:{" "}
                 </span>
                 {new Date(orden.ingreso).toLocaleDateString()}
               </p>
-              <p className="text-md text-gray-00 mt-4">
-                <span className="text-gray-600 uppercase font-bold">
+              <p className="mt-3">
+                <span className="text-black uppercase font-bold">
                   * Razón:{" "}
                 </span>
                 {orden.razon}
               </p>
-              <p className="text-md text-gray-00 mt-4">
-                <span className="text-gray-600 uppercase font-bold">
+              <p className="mt-3">
+                <span className="text-black uppercase font-bold">
                   * Fecha de salida:{" "}
                 </span>
                 {orden.salida
                   ? new Date(orden.salida).toLocaleDateString()
                   : "N/A"}
               </p>
-              <p className="text-md text-gray-00 mt-4">
-                <span className="text-gray-600 uppercase font-bold">
+              <p className="mt-3">
+                <span className="text-black uppercase font-bold">
                   * Servicio:{" "}
                 </span>
                 {orden.servicio}
               </p>
-              <p className="text-md text-gray-00 mt-4">
-                <span className="text-gray-600 uppercase font-bold">
+              <p className="mt-3">
+                <span className="text-black uppercase font-bold">
                   * Estado:{" "}
                 </span>
                 {orden.estado}
@@ -140,7 +140,7 @@ const Visualizar = () => {
             </div>
           </div>
           <button
-            className="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700"
+            className="mt-4 px-5 py-2 bg-[#5B72C3] text-white rounded-lg hover:bg-[#3D53A0] cursor-pointer transition-all"
             onClick={handleModal}
           >
             GENERAR PROFORMA

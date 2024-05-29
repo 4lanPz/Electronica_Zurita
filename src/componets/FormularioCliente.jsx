@@ -193,7 +193,7 @@ export const FormularioCliente = ({ cliente }) => {
 
           <input
             type="submit"
-            className={`poppins-regular bg-[#5B72C3] green w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all ${
+            className={`poppins-regular bg-[#5B72C3] w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all ${
               loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
             value={
