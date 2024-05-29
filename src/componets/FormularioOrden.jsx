@@ -26,8 +26,8 @@ export const FormularioOrden = ({ orden }) => {
         })
       : "", //date
     razon: orden?.razon || "", //string
-    servicio: orden?.servicio || "Mantenimiento", //string
-    estado: orden?.estado || "Pendiente", //string
+    servicio: orden?.servicio || "mantenimiento", //string
+    estado: orden?.estado || "pendiente", //string
     cedula: "",
   });
 
@@ -74,29 +74,34 @@ export const FormularioOrden = ({ orden }) => {
       const token = localStorage.getItem("token");
       const url = orden?._id
         ? `${import.meta.env.VITE_BACKEND_URL}/orden/actualizar/${orden._id}`
-        : `${import.meta.env.VITE_BACKEND_URL}/orden/registro`;
+        : `${import.meta.env.VITE_BACKEND_URL}/ordenes`;
 
       const method = orden?._id ? "PUT" : "POST";
 
       const options = {
-        method,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       };
 
-      await axios(url, { ...form }, options);
+      const response = await axios({
+        url,
+        method,
+        data: form,
+        ...options,
+      });
+
       setMensaje({
         respuesta: orden?._id
           ? "Orden Actualizada"
-          : "Orgen generada con exito",
+          : "Orden generada con éxito",
         tipo: true,
       });
 
       setTimeout(() => {
         navigate("/dashboard/listarordenes");
-      }, 30000);
+      }, 3000);
     } catch (error) {
       setMensaje({
         respuesta: error.response?.data?.msg || "Error desconocido",
@@ -105,7 +110,7 @@ export const FormularioOrden = ({ orden }) => {
     } finally {
       setTimeout(() => {
         setMensaje({});
-      }, 30000);
+      }, 3000);
     }
   };
 
@@ -349,9 +354,9 @@ export const FormularioOrden = ({ orden }) => {
               onChange={handleChange}
             >
               <option value="">Seleccionar servicio</option>
-              <option value="false">Mantenimiento</option>
-              <option value="true">Reparación</option>
-              <option value="false">Revisión</option>
+              <option value="mantenimiento">Mantenimiento</option>
+              <option value="meparación">Reparación</option>
+              <option value="revisión">Revisión</option>
             </select>
           </label>
 
