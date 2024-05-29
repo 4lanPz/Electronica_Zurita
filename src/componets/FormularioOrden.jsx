@@ -57,20 +57,21 @@ export const FormularioOrden = ({ orden }) => {
       return;
     }
 
-    // // Validación de fecha de ingreso
-    // const fechaIngreso = new Date(form.ingreso);
-    // const fechaActual = new Date();
+    // Validación de fecha de ingreso
+    const fechaIngreso = new Date(form.ingreso);
+    const fechaActual = new Date();
 
-    // if (fechaIngreso < fechaActual) {
-    //   setMensaje({
-    //     respuesta:
-    //       "La fecha de ingreso debe ser igual o posterior a la fecha actual",
-    //     tipo: false,
-    //   });
-    //   return;
-    // }
+    if (fechaIngreso < fechaActual) {
+      setMensaje({
+        respuesta:
+          "La fecha de ingreso debe ser igual o posterior a la fecha actual",
+        tipo: false,
+      });
+      return;
+    }
 
     try {
+      console.log(form)
       const token = localStorage.getItem("token");
       const url = orden?._id
         ? `${import.meta.env.VITE_BACKEND_URL}/orden/actualizar/${orden._id}`
