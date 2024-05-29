@@ -1,35 +1,23 @@
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import OrdenesContext from "../context/OrdenesProvider";
-import ModalOrden from "../componets/Modals/ModalOrden";
-import TablaProformas from "../componets/TablaProformas";
+import axios from "axios";
 import Mensaje from "../componets/Alertas/Mensaje";
-import AuthContext from "../context/AuthProvider";
+import ModalOrden from "../componets/Modals/ModalOrden"; // Cambiar el nombre del modal si es necesario
+import OrdenesContext from "../context/OrdenesProvider"; // Cambiar el contexto a OrdenesProvider si lo has renombrado
 
 const Visualizar = () => {
   const { id } = useParams();
-  const { auth } = useContext(AuthContext);
+  const [orden, setOrden] = useState({});
   const [mensaje, setMensaje] = useState({});
-  const [cliente, setCliente] = useState({});
-  const { modal, handleModal, ordenes, setOrdenes } =
-    useContext(OrdenesContext);
-
-  const formatearFecha = (fecha) => {
-    const nuevaFecha = new Date(fecha);
-    nuevaFecha.setMinutes(
-      nuevaFecha.getMinutes() + nuevaFecha.getTimezoneOffset()
-    );
-    return new Intl.DateTimeFormat("es-EC", { dateStyle: "long" }).format(
-      nuevaFecha
-    );
-  };
+  const { modal, handleModal, actualizarOrden } = useContext(OrdenesContext); // Añadir la función para actualizar orden si existe en el contexto
 
   useEffect(() => {
-    const consultarCliente = async () => {
+    const consultarOrden = async () => {
       try {
         const token = localStorage.getItem("token");
-        const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/${id}`;
+        const url = `${
+          import.meta.env.VITE_BACKEND_URL
+        }/orden/visualizar/${id}`;
         const options = {
           headers: {
             "Content-Type": "application/json",
@@ -37,117 +25,131 @@ const Visualizar = () => {
           },
         };
         const respuesta = await axios.get(url, options);
-        setCliente(respuesta.data.cliente);
-        setOrdenes(respuesta.data.ordenes);
+        setOrden(respuesta.data.ordenes); // Accede a la propiedad "ordenes" en la respuesta
       } catch (error) {
         setMensaje({ respuesta: error.response.data.msg, tipo: false });
       }
     };
-    consultarCliente();
+    consultarOrden();
   }, []);
+
+  // Función para manejar la actualización del orden
+  const handleSubmit = async (datos) => {
+    try {
+      // Realizar la petición para actualizar el orden
+      const token = localStorage.getItem("token");
+      const url = `${import.meta.env.VITE_BACKEND_URL}/orden/${id}`;
+      const options = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      await axios.put(url, datos, options);
+      // Actualizar la información del orden en el estado local
+      setOrden((prevOrden) => ({ ...prevOrden, ...datos }));
+      // Cerrar el modal
+      handleModal();
+      // Mostrar mensaje de éxito
+      setMensaje({ respuesta: "Orden actualizado exitosamente", tipo: true });
+    } catch (error) {
+      setMensaje({ respuesta: error.response.data.msg, tipo: false });
+    }
+  };
 
   return (
     <>
       <div>
-        <h1 className="poppins-bold text-center font-black text-4xl text-black">
-          Proforma
-        </h1>
+        <h1 className="poppins-bold text-4xl text-black">Generar Proforma</h1>
         <hr className="my-4" />
+        <p className="poppins-regular text-black">Datos de la orden</p>
         {Object.keys(mensaje).length > 0 && (
           <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
         )}
-        <div className="flex items-center">
-          {auth.rol === "tecnico" && (
-            <button
-              className="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700"
-              onClick={handleModal}
-            >
-              Generar proforma
-            </button>
-          )}
-        </div>
-      </div>
-      {modal && <ModalOrden idOrden={orden._id} />}
-      <div>
-        {Object.keys(orden).length != 0 ? (
-          <>
-            <div className="m-5 flex justify-between">
-              <div>
-                <p className="poppins-regular text-black mt-3">
-                  <span className="poppins-semibold text-black uppercase ">
-                    * Nombre del cliente:{" "}
-                  </span>
-                  {orden.nombre}
-                </p>
-                <p className="poppins-regular text-black mt-3">
-                  <span className="poppins-semibold text-black uppercase ">
-                    * Cédula:{" "}
-                  </span>
-                  {orden.propietario}
-                </p>
-                <p className="poppins-regular text-black mt-3">
-                  <span className="poppins-semibold text-black uppercase ">
-                    * Correo :{" "}
-                  </span>
-                  {orden.email}
-                </p>
-                <p className="poppins-regular text-black mt-3">
-                  <span className="poppins-semibold text-black uppercase ">
-                    * Teléfono:{" "}
-                  </span>
-                  {formatearFecha(orden.ingreso)}
-                </p>
-                <p className="poppins-regular text-black mt-3">
-                  <span className="poppins-semibold text-black uppercase ">
-                    * Equipo:{" "}
-                  </span>
-                  {formatearFecha(orden.ingreso)}
-                </p>
-                <p className="poppins-regular text-black mt-3">
-                  <span className="poppins-semibold text-black uppercase ">
-                    * Número de serie:{" "}
-                  </span>
-                  {formatearFecha(orden.ingreso)}
-                </p>
-                <p className="poppins-regular text-black mt-3">
-                  <span className="poppins-semibold text-black uppercase ">
-                    * Fecha de salida:{" "}
-                  </span>
-                  {formatearFecha(orden.salida)}
-                </p>
-                <p className="poppins-regular text-black mt-3">
-                  <span className="poppins-semibold text-black uppercase ">
-                    * Estado:{" "}
-                  </span>
-                  <span className="bg-blue-100 text-green-500 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
-                    {orden.estado && "activo"}
-                  </span>
-                </p>
-                <p className="poppins-regular text-black mt-3">
-                  <span className="poppins-semibold text-black uppercase ">
-                    * Razón de ingreso:{" "}
-                  </span>
-                  {orden.sintomas}
-                </p>
-              </div>
+        <div>
+          <div className="m-5 flex justify-between">
+            <div>
+              <p className="text-md text-gray-00 mt-4">
+                <span className="text-gray-600 uppercase font-bold">
+                  * Nombre del orden:{" "}
+                </span>
+                {orden.numOrden}
+              </p>
+              <p className="text-md text-gray-00 mt-4">
+                <span className="text-gray-600 uppercase font-bold">
+                  * Equipo:{" "}
+                </span>
+                {orden.equipo}
+              </p>
+              <p className="text-md text-gray-00 mt-4">
+                <span className="text-gray-600 uppercase font-bold">
+                  * Modelo:{" "}
+                </span>
+                {orden.modelo}
+              </p>
+              <p className="text-md text-gray-00 mt-4">
+                <span className="text-gray-600 uppercase font-bold">
+                  * Marca:{" "}
+                </span>
+                {orden.marca}
+              </p>
+              <p className="text-md text-gray-00 mt-4">
+                <span className="text-gray-600 uppercase font-bold">
+                  * Serie:{" "}
+                </span>
+                {orden.serie}
+              </p>
+              <p className="text-md text-gray-00 mt-4">
+                <span className="text-gray-600 uppercase font-bold">
+                  * Color:{" "}
+                </span>
+                {orden.color}
+              </p>
+              <p className="text-md text-gray-00 mt-4">
+                <span className="text-gray-600 uppercase font-bold">
+                  * Fecha de ingreso:{" "}
+                </span>
+                {new Date(orden.ingreso).toLocaleDateString()}
+              </p>
+              <p className="text-md text-gray-00 mt-4">
+                <span className="text-gray-600 uppercase font-bold">
+                  * Razón:{" "}
+                </span>
+                {orden.razon}
+              </p>
+              <p className="text-md text-gray-00 mt-4">
+                <span className="text-gray-600 uppercase font-bold">
+                  * Fecha de salida:{" "}
+                </span>
+                {orden.salida
+                  ? new Date(orden.salida).toLocaleDateString()
+                  : "N/A"}
+              </p>
+              <p className="text-md text-gray-00 mt-4">
+                <span className="text-gray-600 uppercase font-bold">
+                  * Servicio:{" "}
+                </span>
+                {orden.servicio}
+              </p>
+              <p className="text-md text-gray-00 mt-4">
+                <span className="text-gray-600 uppercase font-bold">
+                  * Estado:{" "}
+                </span>
+                {orden.estado}
+              </p>
             </div>
-            <hr className="my-4" />
-            <p className="mb-8">Proforma generada</p>
-            {ordenes.length == 0 ? (
-              <Mensaje tipo={"active"}>
-                {"No existen registros de una proforma"}
-              </Mensaje>
-            ) : (
-              <TablaProformas proformas={proformas} />
-            )}
-          </>
-        ) : (
-          Object.keys(mensaje).length > 0 && (
-            <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
-          )
-        )}
+          </div>
+          <button
+            className="px-5 py-2 bg-green-800 text-white rounded-lg hover:bg-green-700"
+            onClick={handleModal}
+          >
+            GENERAR PROFORMA
+          </button>
+          {modal && <ModalOrden orden={orden} onSubmit={handleSubmit} />}
+        </div>
       </div>
     </>
   );
 };
+
 export default Visualizar;

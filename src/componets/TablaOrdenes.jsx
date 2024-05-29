@@ -9,7 +9,6 @@ const TablaOrdenes = () => {
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
   const [ordenes, setOrdenes] = useState([]);
-
   const listarOrdenes = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -38,9 +37,7 @@ const TablaOrdenes = () => {
       );
       if (confirmar) {
         const token = localStorage.getItem("token");
-        const url = `${
-          import.meta.env.VITE_BACKEND_URL
-        }/cliente/eliminar/${id}`;
+        const url = `${import.meta.env.VITE_BACKEND_URL}/orden/eliminar/${id}`;
         const headers = {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -115,22 +112,12 @@ const TablaOrdenes = () => {
                           navigate(`/dashboard/visualizar/${orden._id}`)
                         }
                       />
-                      {auth.rol === "tecnico" && (
-                        <>
-                          <MdUpdate
-                            className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                            onClick={() =>
-                              navigate(`/dashboard/actualizar/${orden._id}`)
-                            }
-                          />
-                          <MdDeleteForever
-                            className="h-7 w-7 text-red-900 cursor-pointer inline-block"
-                            onClick={() => {
-                              handleDelete(orden._id);
-                            }}
-                          />
-                        </>
-                      )}
+                      <MdDeleteForever
+                        className="h-7 w-7 text-red-900 cursor-pointer inline-block"
+                        onClick={() => {
+                          handleDelete(orden._id);
+                        }}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -185,22 +172,12 @@ const TablaOrdenes = () => {
                           navigate(`/dashboard/visualizar/${orden._id}`)
                         }
                       />
-                      {auth.rol === "tecnico" && (
-                        <>
-                          <MdUpdate
-                            className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                            onClick={() =>
-                              navigate(`/dashboard/actualizar/${orden._id}`)
-                            }
-                          />
-                          <MdDeleteForever
-                            className="h-7 w-7 text-red-900 cursor-pointer inline-block"
-                            onClick={() => {
-                              handleDelete(orden._id);
-                            }}
-                          />
-                        </>
-                      )}
+                      <MdDeleteForever
+                        className="h-7 w-7 text-red-900 cursor-pointer inline-block"
+                        onClick={() => {
+                          handleDelete(orden._id);
+                        }}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -255,22 +232,12 @@ const TablaOrdenes = () => {
                           navigate(`/dashboard/visualizar/${orden._id}`)
                         }
                       />
-                      {auth.rol === "tecnico" && (
-                        <>
-                          <MdUpdate
-                            className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                            onClick={() =>
-                              navigate(`/dashboard/actualizar/${orden._id}`)
-                            }
-                          />
-                          <MdDeleteForever
-                            className="h-7 w-7 text-red-900 cursor-pointer inline-block"
-                            onClick={() => {
-                              handleDelete(orden._id);
-                            }}
-                          />
-                        </>
-                      )}
+                      <MdDeleteForever
+                        className="h-7 w-7 text-red-900 cursor-pointer inline-block"
+                        onClick={() => {
+                          handleDelete(orden._id);
+                        }}
+                      />
                     </td>
                   </tr>
                 ))}

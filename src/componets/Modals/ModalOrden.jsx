@@ -1,14 +1,14 @@
 import { useContext, useState } from "react";
 import OrdenesContext from "../../context/OrdenesProvider";
 
-const ModalOrden = ({ idOrden}) => {
+const ModalOrden = ({ idOrden, clienteInfo}) => {
   const { setModal, handleModal, registrarOrdenes } =
     useContext(OrdenesContext);
 
   const [form, setform] = useState({
-    nombre: "",
-    cedula: "",
-    telefono: "",
+    // nombre: "",
+    // cedula: "",
+    // telefono: "",
     equipo: "",
     fecha: "",
     modelo: "",
