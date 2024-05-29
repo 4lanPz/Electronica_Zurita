@@ -74,7 +74,7 @@ export const FormularioOrden = ({ orden }) => {
       const token = localStorage.getItem("token");
       const url = orden?._id
         ? `${import.meta.env.VITE_BACKEND_URL}/orden/actualizar/${orden._id}`
-        : `${import.meta.env.VITE_BACKEND_URL}/ordenes`;
+        : `${import.meta.env.VITE_BACKEND_URL}/ordenes/registrar`;
 
       const method = orden?._id ? "PUT" : "POST";
 
