@@ -51,10 +51,7 @@ function App() {
                         <Route path="listar" element={<Listar />} />
                         <Route path="visualizar/:id" element={<Visualizar />} />
                         <Route path="perfil" element={<Perfil />} />
-                        <Route
-                          path="listarordenes"
-                          element={<ListarOrdenes />}
-                        />
+                        <Route path="listarordenes" element={<ListarOrdenes />}/>
                         <Route
                           path="crearcliente"
                           element={

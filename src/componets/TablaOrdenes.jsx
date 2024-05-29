@@ -57,7 +57,6 @@ const TablaOrdenes = () => {
   };
 
   // Filtrar ordenes según el estado
-  
   const ordenesMantenimiento = ordenes.filter(
     (orden) => orden.servicio === "mantenimiento"
   );
@@ -73,212 +72,287 @@ const TablaOrdenes = () => {
 
   return (
     <>
-      {ordenesMantenimiento.length === 0 &&
-      ordenesReparacion.length === 0 &&
-      ordenesRevision.length === 0 &&
-      ordenesFinalizado.length === 0 ? (
-        <Mensaje tipo={"active"}>{"No existen órdenes registradas"}</Mensaje>
-      ) : (
-        <div className="flex flex-col">
-          {/* Sección de Mantenimiento */}
-          {ordenesMantenimiento.length > 0 && (
-            <div>
-              <h2 className="poppins-semibold">Mantenimiento</h2>
-              <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
-                {/* Table Header */}
-                <thead className="bg-[#3D53A0] text-white">
-                  <tr className="poppins-regular">
-                    <th className="p-2">N° Orden</th>
-                    <th className="p-2">Cliente</th>
-                    <th className="p-2">Cedula</th>
-                    <th className="p-2">Equipo</th>
-                    <th className="p-2">Fecha Ingreso</th>
-                    <th className="p-2">Fecha Salida</th>
-                    <th className="p-2">Estado</th>
-                    <th className="p-2">Acciones</th>
+      <div className="flex flex-col">
+        {/* Sección de Mantenimiento */}
+        {ordenesMantenimiento.length > 0 ? (
+          <div>
+            <h2 className="poppins-semibold">Mantenimiento</h2>
+            <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
+              {/* Table Header */}
+              <thead className="bg-[#3D53A0] text-white">
+                <tr className="poppins-regular">
+                  <th className="p-2">N° Orden</th>
+                  <th className="p-2">Cliente</th>
+                  <th className="p-2">Cedula</th>
+                  <th className="p-2">Equipo</th>
+                  <th className="p-2">Fecha Ingreso</th>
+                  <th className="p-2">Fecha Salida</th>
+                  <th className="p-2">Estado</th>
+                  <th className="p-2">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ordenesMantenimiento.map((orden) => (
+                  <tr
+                    className="poppins-regular border-b hover:bg-gray-300 text-center"
+                    key={orden._id}
+                  >
+                    <td>{orden.numOrden}</td>
+                    <td>{orden.cliente?.nombre}</td>
+                    <td>{orden.cliente?.cedula}</td>
+                    <td>{orden.equipo}</td>
+                    <td>{new Date(orden.ingreso).toLocaleDateString()}</td>
+                    <td>
+                      {orden.salida
+                        ? new Date(orden.salida).toLocaleDateString()
+                        : "N/A"}
+                    </td>
+                    <td>{orden.estado}</td>
+                    <td className="py-2 text-center">
+                      <MdVisibility
+                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                        onClick={() =>
+                          navigate(`/dashboard/visualizar/${orden._id}`)
+                        }
+                      />
+                      {auth.rol === "tecnico" && (
+                        <>
+                          <MdUpdate
+                            className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                            onClick={() =>
+                              navigate(`/dashboard/actualizar/${orden._id}`)
+                            }
+                          />
+                          <MdDeleteForever
+                            className="h-7 w-7 text-red-900 cursor-pointer inline-block"
+                            onClick={() => {
+                              handleDelete(orden._id);
+                            }}
+                          />
+                        </>
+                      )}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {ordenesMantenimiento.map((orden, index) => (
-                    <tr
-                      className="poppins-regular border-b hover:bg-gray-300 text-center"
-                      key={orden._id}
-                    >
-                      <td>{orden.numOrden}</td>
-                      <td>{orden.cliente?.nombre}</td>
-                      <td>{orden.cliente?.cedula}</td>
-                      <td>{orden.equipo}</td>
-                      <td>{new Date(orden.ingreso).toLocaleDateString()}</td>
-                      <td>
-                        {orden.salida
-                          ? new Date(orden.salida).toLocaleDateString()
-                          : "N/A"}
-                      </td>
-                      <td>{orden.estado}</td>
-                      <td className="py-2 text-center">
-                        <MdVisibility
-                          className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                          onClick={() =>
-                            navigate(`/dashboard/visualizar/${orden._id}`)
-                          }
-                        />
-                        {auth.rol === "tecnico" && (
-                          <>
-                            <MdUpdate
-                              className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                              onClick={() =>
-                                navigate(`/dashboard/actualizar/${orden._id}`)
-                              }
-                            />
-                            <MdDeleteForever
-                              className="h-7 w-7 text-red-900 cursor-pointer inline-block"
-                              onClick={() => {
-                                handleDelete(orden._id);
-                              }}
-                            />
-                          </>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <Mensaje tipo={"active"}>
+            {"No existen órdenes de mantenimiento registradas"}
+          </Mensaje>
+        )}
 
-          {/* reparacion */}
-          <hr className="mt-4 border-black" />
-          {ordenesReparacion.length > 0 && (
-            <div>
-              <h2 className="poppins-semibold">Reparación</h2>
-              <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
-                {/* Table Header */}
-                <thead className="bg-[#3D53A0] text-white">
-                  <tr className="poppins-regular">
-                    <th className="p-2">N° Orden</th>
-                    <th className="p-2">Cliente</th>
-                    <th className="p-2">Cedula</th>
-                    <th className="p-2">Equipo</th>
-                    <th className="p-2">Fecha Ingreso</th>
-                    <th className="p-2">Fecha Salida</th>
-                    <th className="p-2">Estado</th>
-                    <th className="p-2">Acciones</th>
+        {/* Sección de Reparación */}
+        <hr className="mt-4 border-black" />
+        {ordenesReparacion.length > 0 ? (
+          <div>
+            <h2 className="poppins-semibold">Reparación</h2>
+            <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
+              <thead className="bg-[#3D53A0] text-white">
+                <tr className="poppins-regular">
+                  <th className="p-2">N° Orden</th>
+                  <th className="p-2">Cliente</th>
+                  <th className="p-2">Cedula</th>
+                  <th className="p-2">Equipo</th>
+                  <th className="p-2">Fecha Ingreso</th>
+                  <th className="p-2">Fecha Salida</th>
+                  <th className="p-2">Estado</th>
+                  <th className="p-2">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ordenesReparacion.map((orden) => (
+                  <tr
+                    className="poppins-regular border-b hover:bg-gray-300 text-center"
+                    key={orden._id}
+                  >
+                    <td>{orden.numOrden}</td>
+                    <td>{orden.cliente?.nombre}</td>
+                    <td>{orden.cliente?.cedula}</td>
+                    <td>{orden.equipo}</td>
+                    <td>{new Date(orden.ingreso).toLocaleDateString()}</td>
+                    <td>
+                      {orden.salida
+                        ? new Date(orden.salida).toLocaleDateString()
+                        : "N/A"}
+                    </td>
+                    <td>{orden.estado}</td>
+                    <td className="py-2 text-center">
+                      <MdVisibility
+                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                        onClick={() =>
+                          navigate(`/dashboard/visualizar/${orden._id}`)
+                        }
+                      />
+                      {auth.rol === "tecnico" && (
+                        <>
+                          <MdUpdate
+                            className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                            onClick={() =>
+                              navigate(`/dashboard/actualizar/${orden._id}`)
+                            }
+                          />
+                          <MdDeleteForever
+                            className="h-7 w-7 text-red-900 cursor-pointer inline-block"
+                            onClick={() => {
+                              handleDelete(orden._id);
+                            }}
+                          />
+                        </>
+                      )}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {ordenesMantenimiento.map((orden, index) => (
-                    <tr
-                      className="poppins-regular border-b hover:bg-gray-300 text-center"
-                      key={orden._id}
-                    >
-                      <td>{orden.numOrden}</td>
-                      <td>{orden.cliente?.nombre}</td>
-                      <td>{orden.cliente?.cedula}</td>
-                      <td>{orden.equipo}</td>
-                      <td>{new Date(orden.ingreso).toLocaleDateString()}</td>
-                      <td>
-                        {orden.salida
-                          ? new Date(orden.salida).toLocaleDateString()
-                          : "N/A"}
-                      </td>
-                      <td>{orden.estado}</td>
-                      <td className="py-2 text-center">
-                        <MdVisibility
-                          className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                          onClick={() =>
-                            navigate(`/dashboard/visualizar/${orden._id}`)
-                          }
-                        />
-                        {auth.rol === "tecnico" && (
-                          <>
-                            <MdUpdate
-                              className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                              onClick={() =>
-                                navigate(`/dashboard/actualizar/${orden._id}`)
-                              }
-                            />
-                            <MdDeleteForever
-                              className="h-7 w-7 text-red-900 cursor-pointer inline-block"
-                              onClick={() => {
-                                handleDelete(orden._id);
-                              }}
-                            />
-                          </>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-          <hr className="mt-4 border-black" />
-          {ordenesRevision.length > 0 && (
-            <div>
-              <h2 className="poppins-semibold">Revisión</h2>
-              <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
-                {/* Table Header */}
-                <thead className="bg-[#3D53A0] text-white">
-                  <tr className="poppins-regular">
-                    <th className="p-2">N° Orden</th>
-                    <th className="p-2">Cliente</th>
-                    <th className="p-2">Cedula</th>
-                    <th className="p-2">Equipo</th>
-                    <th className="p-2">Fecha Ingreso</th>
-                    <th className="p-2">Fecha Salida</th>
-                    <th className="p-2">Estado</th>
-                    <th className="p-2">Acciones</th>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <Mensaje tipo={"active"}>
+            {"No existen órdenes de reparación registradas"}
+          </Mensaje>
+        )}
+
+        {/* Sección de Revisión */}
+        <hr className="mt-4 border-black" />
+        {ordenesRevision.length > 0 ? (
+          <div>
+            <h2 className="poppins-semibold">Revisión</h2>
+            <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
+              <thead className="bg-[#3D53A0] text-white">
+                <tr className="poppins-regular">
+                  <th className="p-2">N° Orden</th>
+                  <th className="p-2">Cliente</th>
+                  <th className="p-2">Cedula</th>
+                  <th className="p-2">Equipo</th>
+                  <th className="p-2">Fecha Ingreso</th>
+                  <th className="p-2">Fecha Salida</th>
+                  <th className="p-2">Estado</th>
+                  <th className="p-2">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ordenesRevision.map((orden) => (
+                  <tr
+                    className="poppins-regular border-b hover:bg-gray-300 text-center"
+                    key={orden._id}
+                  >
+                    <td>{orden.numOrden}</td>
+                    <td>{orden.cliente?.nombre}</td>
+                    <td>{orden.cliente?.cedula}</td>
+                    <td>{orden.equipo}</td>
+                    <td>{new Date(orden.ingreso).toLocaleDateString()}</td>
+                    <td>
+                      {orden.salida
+                        ? new Date(orden.salida).toLocaleDateString()
+                        : "N/A"}
+                    </td>
+                    <td>{orden.estado}</td>
+                    <td className="py-2 text-center">
+                      <MdVisibility
+                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                        onClick={() =>
+                          navigate(`/dashboard/visualizar/${orden._id}`)
+                        }
+                      />
+                      {auth.rol === "tecnico" && (
+                        <>
+                          <MdUpdate
+                            className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                            onClick={() =>
+                              navigate(`/dashboard/actualizar/${orden._id}`)
+                            }
+                          />
+                          <MdDeleteForever
+                            className="h-7 w-7 text-red-900 cursor-pointer inline-block"
+                            onClick={() => {
+                              handleDelete(orden._id);
+                            }}
+                          />
+                        </>
+                      )}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {ordenesMantenimiento.map((orden, index) => (
-                    <tr
-                      className="poppins-regular border-b hover:bg-gray-300 text-center"
-                      key={orden._id}
-                    >
-                      <td>{orden.numOrden}</td>
-                      <td>{orden.cliente?.nombre}</td>
-                      <td>{orden.cliente?.cedula}</td>
-                      <td>{orden.equipo}</td>
-                      <td>{new Date(orden.ingreso).toLocaleDateString()}</td>
-                      <td>
-                        {orden.salida
-                          ? new Date(orden.salida).toLocaleDateString()
-                          : "N/A"}
-                      </td>
-                      <td>{orden.estado}</td>
-                      <td className="py-2 text-center">
-                        <MdVisibility
-                          className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                          onClick={() =>
-                            navigate(`/dashboard/visualizar/${orden._id}`)
-                          }
-                        />
-                        {auth.rol === "tecnico" && (
-                          <>
-                            <MdUpdate
-                              className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                              onClick={() =>
-                                navigate(`/dashboard/actualizar/${orden._id}`)
-                              }
-                            />
-                            <MdDeleteForever
-                              className="h-7 w-7 text-red-900 cursor-pointer inline-block"
-                              onClick={() => {
-                                handleDelete(orden._id);
-                              }}
-                            />
-                          </>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      )}
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <Mensaje tipo={"active"}>
+            {"No existen órdenes de revisión registradas"}
+          </Mensaje>
+        )}
+
+        {/* Sección de Órdenes Finalizadas */}
+        <hr className="mt-4 border-black" />
+        {ordenesFinalizado.length > 0 ? (
+          <div>
+            <h2 className="poppins-semibold">Finalizado</h2>
+            <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
+              <thead className="bg-[#3D53A0] text-white">
+                <tr className="poppins-regular">
+                  <th className="p-2">N° Orden</th>
+                  <th className="p-2">Cliente</th>
+                  <th className="p-2">Cedula</th>
+                  <th className="p-2">Equipo</th>
+                  <th className="p-2">Fecha Ingreso</th>
+                  <th className="p-2">Fecha Salida</th>
+                  <th className="p-2">Estado</th>
+                  <th className="p-2">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ordenesFinalizado.map((orden) => (
+                  <tr
+                    className="poppins-regular border-b hover:bg-gray-300 text-center"
+                    key={orden._id}
+                  >
+                    <td>{orden.numOrden}</td>
+                    <td>{orden.cliente?.nombre}</td>
+                    <td>{orden.cliente?.cedula}</td>
+                    <td>{orden.equipo}</td>
+                    <td>{new Date(orden.ingreso).toLocaleDateString()}</td>
+                    <td>
+                      {orden.salida
+                        ? new Date(orden.salida).toLocaleDateString()
+                        : "N/A"}
+                    </td>
+                    <td>{orden.estado}</td>
+                    <td className="py-2 text-center">
+                      <MdVisibility
+                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                        onClick={() =>
+                          navigate(`/dashboard/visualizar/${orden._id}`)
+                        }
+                      />
+                      {auth.rol === "tecnico" && (
+                        <>
+                          <MdUpdate
+                            className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                            onClick={() =>
+                              navigate(`/dashboard/actualizar/${orden._id}`)
+                            }
+                          />
+                          <MdDeleteForever
+                            className="h-7 w-7 text-red-900 cursor-pointer inline-block"
+                            onClick={() => {
+                              handleDelete(orden._id);
+                            }}
+                          />
+                        </>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <Mensaje tipo={"active"}>
+            {"No existen órdenes finalizadas registradas"}
+          </Mensaje>
+        )}
+      </div>
     </>
   );
 };
