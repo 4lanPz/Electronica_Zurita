@@ -37,15 +37,18 @@ const TablaOrdenes = () => {
       );
       if (confirmar) {
         const token = localStorage.getItem("token");
-        const url = `${import.meta.env.VITE_BACKEND_URL}/orden/eliminar/${id}`;
+        const url = `${
+          import.meta.env.VITE_BACKEND_URL
+        }/ordenes/finalizar/${id}`;
         const headers = {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         };
         const data = {
-          salida: new Date().toString(),
+          id,
         };
-        await axios.delete(url, { headers, data });
+        console.log(data);
+        await axios.put(url, data, { headers });
         listarOrdenes();
       }
     } catch (error) {
@@ -55,13 +58,14 @@ const TablaOrdenes = () => {
 
   // Filtrar ordenes según el estado
   const ordenesMantenimiento = ordenes.filter(
-    (orden) => orden.servicio === "mantenimiento"
+    (orden) =>
+      orden.servicio === "mantenimiento" && orden.estado !== "finalizado"
   );
   const ordenesReparacion = ordenes.filter(
-    (orden) => orden.servicio === "reparación"
+    (orden) => orden.servicio === "reparación" && orden.estado !== "finalizado"
   );
   const ordenesRevision = ordenes.filter(
-    (orden) => orden.servicio === "revisión"
+    (orden) => orden.servicio === "revisión" && orden.estado !== "finalizado"
   );
   const ordenesFinalizado = ordenes.filter(
     (orden) => orden.estado === "finalizado"

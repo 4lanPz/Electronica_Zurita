@@ -59,93 +59,100 @@ const Visualizar = () => {
 
   return (
     <>
-      <div>
-        <h1 className="poppins-bold text-4xl text-black text-center">Generar Proforma</h1>
+      <div className="">
+        <h1 className="poppins-bold text-4xl text-black text-center">
+          Generar Proforma
+        </h1>
         <hr className="my-4" />
-        <p className="poppins-semibold text-black text-center">Datos de la orden</p>
+
         {Object.keys(mensaje).length > 0 && (
           <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
         )}
-        <div className="w-full flex flex-col justify-center items-center">
-          <div className="poppins-regular m-2">
-            <div>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Nombre del orden:{" "}
-                </span>
-                {orden.numOrden}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Equipo:{" "}
-                </span>
-                {orden.equipo}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Modelo:{" "}
-                </span>
-                {orden.modelo}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Marca:{" "}
-                </span>
-                {orden.marca}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Serie:{" "}
-                </span>
-                {orden.serie}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Color:{" "}
-                </span>
-                {orden.color}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Fecha de ingreso:{" "}
-                </span>
-                {new Date(orden.ingreso).toLocaleDateString()}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Razón:{" "}
-                </span>
-                {orden.razon}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Fecha de salida:{" "}
-                </span>
-                {orden.salida
-                  ? new Date(orden.salida).toLocaleDateString()
-                  : "N/A"}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Servicio:{" "}
-                </span>
-                {orden.servicio}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Estado:{" "}
-                </span>
-                {orden.estado}
-              </p>
+        <div className="w-full h-full flex flex-col justify-center items-center">
+          <div className=" border-black border-2 p-10 rounded-xl w-2/5">
+            <p className="poppins-semibold text-black text-center mb-8 text-xl">
+              Datos de la orden
+            </p>
+            <div className="poppins-regular m-2">
+              <div>
+                <p className="mt-3">
+                  <span className="text-black uppercase font-bold">
+                    * Nombre del orden:{" "}
+                  </span>
+                  {orden.numOrden}
+                </p>
+                <p className="mt-3">
+                  <span className="text-black uppercase font-bold">
+                    * Equipo:{" "}
+                  </span>
+                  {orden.equipo}
+                </p>
+                <p className="mt-3">
+                  <span className="text-black uppercase font-bold">
+                    * Modelo:{" "}
+                  </span>
+                  {orden.modelo}
+                </p>
+                <p className="mt-3">
+                  <span className="text-black uppercase font-bold">
+                    * Marca:{" "}
+                  </span>
+                  {orden.marca}
+                </p>
+                <p className="mt-3">
+                  <span className="text-black uppercase font-bold">
+                    * Serie:{" "}
+                  </span>
+                  {orden.serie}
+                </p>
+                <p className="mt-3">
+                  <span className="text-black uppercase font-bold">
+                    * Color:{" "}
+                  </span>
+                  {orden.color}
+                </p>
+                <p className="mt-3">
+                  <span className="text-black uppercase font-bold">
+                    * Fecha de ingreso:{" "}
+                  </span>
+                  {new Date(orden.ingreso).toLocaleDateString()}
+                </p>
+                <p className="mt-3">
+                  <span className="text-black uppercase font-bold">
+                    * Razón:{" "}
+                  </span>
+                  {orden.razon}
+                </p>
+                <p className="mt-3">
+                  <span className="text-black uppercase font-bold">
+                    * Fecha de salida:{" "}
+                  </span>
+                  {orden.salida
+                    ? new Date(orden.salida).toLocaleDateString()
+                    : "N/A"}
+                </p>
+                <p className="mt-3">
+                  <span className="text-black uppercase font-bold">
+                    * Servicio:{" "}
+                  </span>
+                  {orden.servicio}
+                </p>
+                <p className="mt-3">
+                  <span className="text-black uppercase font-bold">
+                    * Estado:{" "}
+                  </span>
+                  {orden.estado}
+                </p>
+              </div>
             </div>
+            <button
+              className="mt-4 px-5 py-2 bg-[#5B72C3] text-white rounded-lg hover:bg-[#3D53A0] cursor-pointer transition-all w-full"
+              onClick={handleModal}
+            >
+              GENERAR PROFORMA
+            </button>
+            {modal && <ModalOrden orden={orden} onSubmit={handleSubmit} />}
           </div>
-          <button
-            className="mt-4 px-5 py-2 bg-[#5B72C3] text-white rounded-lg hover:bg-[#3D53A0] cursor-pointer transition-all"
-            onClick={handleModal}
-          >
-            GENERAR PROFORMA
-          </button>
-          {modal && <ModalOrden orden={orden} onSubmit={handleSubmit} />}
         </div>
       </div>
     </>
