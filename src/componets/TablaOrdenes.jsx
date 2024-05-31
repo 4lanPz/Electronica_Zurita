@@ -59,16 +59,16 @@ const TablaOrdenes = () => {
   // Filtrar ordenes según el estado
   const ordenesMantenimiento = ordenes.filter(
     (orden) =>
-      orden.servicio === "mantenimiento" && orden.estado !== "finalizado"
+      orden.servicio === "Mantenimiento" && orden.estado !== "Finalizado"
   );
   const ordenesReparacion = ordenes.filter(
-    (orden) => orden.servicio === "reparación" && orden.estado !== "finalizado"
+    (orden) => orden.servicio === "Reparación" && orden.estado !== "Finalizado"
   );
   const ordenesRevision = ordenes.filter(
-    (orden) => orden.servicio === "revisión" && orden.estado !== "finalizado"
+    (orden) => orden.servicio === "Revisión" && orden.estado !== "Finalizado"
   );
   const ordenesFinalizado = ordenes.filter(
-    (orden) => orden.estado === "finalizado"
+    (orden) => orden.estado === "Finalizado"
   );
 
   return (
