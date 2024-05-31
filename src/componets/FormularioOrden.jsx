@@ -20,7 +20,6 @@ export const FormularioOrden = ({ orden }) => {
     marca: orden?.marca || "", //string
     serie: orden?.serie || "", //string
     color: orden?.color || "", //string
-    // estado: orden?.estado || "", //string
     ingreso: orden?.ingreso
       ? new Date(orden.ingreso).toLocaleDateString("en-CA", {
           timeZone: "UTC",
@@ -28,7 +27,7 @@ export const FormularioOrden = ({ orden }) => {
       : "", //date
     razon: orden?.razon || "", //string
     servicio: orden?.servicio || "mantenimiento", //string
-    estado: orden?.estado || "pendiente", //string
+    estado: orden?.estado || "Pendiente", //string
     cedula: "",
   });
 
@@ -350,9 +349,9 @@ export const FormularioOrden = ({ orden }) => {
               onChange={handleChange}
             >
               <option value="">Seleccionar servicio</option>
-              <option value="mantenimiento">Mantenimiento</option>
-              <option value="reparación">Reparación</option>
-              <option value="revisión">Revisión</option>
+              <option value="Mantenimiento">Mantenimiento</option>
+              <option value="Reparación">Reparación</option>
+              <option value="Revisión">Revisión</option>
             </select>
           </label>
 

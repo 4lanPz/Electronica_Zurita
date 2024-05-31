@@ -113,7 +113,7 @@ const TablaOrdenes = () => {
                       <MdVisibility
                         className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
                         onClick={() =>
-                          navigate(`/dashboard/visualizar/${orden._id}`)
+                          navigate(`/dashboard/actualizarorden/${orden._id}`)
                         }
                       />
                       <MdDeleteForever
@@ -233,7 +233,7 @@ const TablaOrdenes = () => {
                       <MdVisibility
                         className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
                         onClick={() =>
-                          navigate(`/dashboard/visualizar/${orden._id}`)
+                          navigate(`/dashboard/actualizarorden/${orden._id}`)
                         }
                       />
                       <MdDeleteForever
@@ -269,7 +269,7 @@ const TablaOrdenes = () => {
                   <th className="p-2">Fecha Ingreso</th>
                   <th className="p-2">Fecha Salida</th>
                   <th className="p-2">Estado</th>
-                  <th className="p-2">Acciones</th>
+                  
                 </tr>
               </thead>
               <tbody>
@@ -289,30 +289,7 @@ const TablaOrdenes = () => {
                         : "N/A"}
                     </td>
                     <td>{orden.estado}</td>
-                    <td className="py-2 text-center">
-                      <MdVisibility
-                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                        onClick={() =>
-                          navigate(`/dashboard/visualizar/${orden._id}`)
-                        }
-                      />
-                      {auth.rol === "tecnico" && (
-                        <>
-                          <MdUpdate
-                            className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                            onClick={() =>
-                              navigate(`/dashboard/actualizar/${orden._id}`)
-                            }
-                          />
-                          <MdDeleteForever
-                            className="h-7 w-7 text-red-900 cursor-pointer inline-block"
-                            onClick={() => {
-                              handleDelete(orden._id);
-                            }}
-                          />
-                        </>
-                      )}
-                    </td>
+                    
                   </tr>
                 ))}
               </tbody>

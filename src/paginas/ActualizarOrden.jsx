@@ -5,7 +5,7 @@ import Mensaje from "../componets/Alertas/Mensaje";
 import ModalOrden from "../componets/Modals/ModalOrden"; // Cambiar el nombre del modal si es necesario
 import OrdenesContext from "../context/OrdenesProvider"; // Cambiar el contexto a OrdenesProvider si lo has renombrado
 
-const Visualizar = () => {
+const ActualizarOrden = () => {
   const { id } = useParams();
   const [orden, setOrden] = useState({});
   const [mensaje, setMensaje] = useState({});
@@ -38,7 +38,7 @@ const Visualizar = () => {
     try {
       // Realizar la petición para actualizar el orden
       const token = localStorage.getItem("token");
-      const url = `${import.meta.env.VITE_BACKEND_URL}/orden/${id}`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/orden/actualizar/${id}`;
       const options = {
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +61,7 @@ const Visualizar = () => {
     <>
       <div className="">
         <h1 className="poppins-bold text-4xl text-black text-center">
-          Generar Proforma
+          Orden
         </h1>
         <hr className="my-4" />
 
@@ -159,4 +159,4 @@ const Visualizar = () => {
   );
 };
 
-export default Visualizar;
+export default ActualizarOrden;
