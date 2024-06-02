@@ -154,9 +154,6 @@ export const FormularioOrden = ({ orden }) => {
     <div className="p-8 w-full flex justify-center">
       <div className="xl:w-2/3 justify-center items-center">
         <form onSubmit={handleSubmit}>
-          {Object.keys(mensaje).length > 0 && (
-            <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
-          )}
           <div className="flex flex-wrap mb-3">
             <div className="w-1/2 pr-2">
               <label
@@ -359,6 +356,9 @@ export const FormularioOrden = ({ orden }) => {
             value={orden?._id ? "Actualizar Orden" : "Registrar Orden"}
             disabled={loading}
           />
+          {Object.keys(mensaje).length > 0 && (
+            <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
+          )}
         </form>
       </div>
     </div>

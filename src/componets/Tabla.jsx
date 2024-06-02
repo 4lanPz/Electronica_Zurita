@@ -1,4 +1,4 @@
-import { MdDeleteForever, MdUpdate } from "react-icons/md";
+import { AiOutlineFileText, AiOutlineDelete } from "react-icons/ai";
 import axios from "axios";
 import Mensaje from "./Alertas/Mensaje";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ const Tabla = () => {
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
   const [clientes, setClientes] = useState([]);
+  const [mensaje, setMensaje] = useState({});
 
   const listarClientes = async () => {
     try {
@@ -56,6 +57,54 @@ const Tabla = () => {
     }
   };
 
+  const TablaClientes = ({ titulo, data }) => (
+    <div>
+      <h2 className="poppins-semibold">{titulo}</h2>
+      <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
+        <thead className="bg-[#3D53A0] text-white">
+          <tr className="poppins-regular">
+            <th className="p-2">N°</th>
+            <th className="p-2">Nombre</th>
+            <th className="p-2">Email</th>
+            <th className="p-2">Celular</th>
+            <th className="p-2">Cédula</th>
+            <th className="p-2">Dirección</th>
+            <th className="p-2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((cliente, index) => (
+            <tr
+              className="poppins-regular border-b hover:bg-gray-300 text-center"
+              key={cliente._id}
+            >
+              <td>{index + 1}</td>
+              <td>{cliente.nombre}</td>
+              <td>{cliente.correo}</td>
+              <td>{cliente.telefono}</td>
+              <td>{cliente.cedula}</td>
+              <td>{cliente.direccion}</td>
+              <td className="py-2 text-center">
+                <>
+                  <AiOutlineFileText
+                    className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                    onClick={() =>
+                      navigate(`/dashboard/actualizar/${cliente._id}`)
+                    }
+                  />
+                  <AiOutlineDelete
+                    className="h-7 w-7 text-red-900 cursor-pointer inline-block"
+                    onClick={() => handleDelete(cliente._id)}
+                  />
+                </>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+
   const clientesFrecuentes = clientes.filter((cliente) => cliente.frecuente);
   const clientesNoFrecuentes = clientes.filter((cliente) => !cliente.frecuente);
 
@@ -65,105 +114,28 @@ const Tabla = () => {
         <Mensaje tipo={"active"}>{"No existen clientes registrados"}</Mensaje>
       ) : (
         <div className="flex flex-col">
-          {clientesFrecuentes.length > 0 && (
-            <div>
-              <h2 className="poppins-semibold">Clientes Frecuentes</h2>
-              <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
-                <thead className="bg-[#3D53A0] text-white">
-                  <tr className="poppins-regular">
-                    <th className="p-2">N°</th>
-                    <th className="p-2">Nombre</th>
-                    <th className="p-2">Email</th>
-                    <th className="p-2">Celular</th>
-                    <th className="p-2">Cédula</th>
-                    <th className="p-2">Dirección</th>
-                    <th className="p-2">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {clientesFrecuentes.map((cliente, index) => (
-                    <tr
-                      className="poppins-regular border-b hover:bg-gray-300 text-center"
-                      key={cliente._id}
-                    >
-                      <td>{index + 1}</td>
-                      <td>{cliente.nombre}</td>
-                      <td>{cliente.correo}</td>
-                      <td>{cliente.telefono}</td>
-                      <td>{cliente.cedula}</td>
-
-                      <td>{cliente.direccion}</td>
-                      <td className="py-2 text-center">
-                        <>
-                          <MdUpdate
-                            className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                            onClick={() =>
-                              navigate(`/dashboard/actualizar/${cliente._id}`)
-                            }
-                          />
-                          <MdDeleteForever
-                            className="h-7 w-7 text-red-900 cursor-pointer inline-block"
-                            onClick={() => {
-                              handleDelete(cliente._id);
-                            }}
-                          />
-                        </>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <div className="flex justify-between items-center ">
+            <h2 className="poppins-semibold">Clientes Frecuentes</h2>
+            <div className="flex space-x-4">
+              <div className="flex items-center space-x-2">
+                <AiOutlineFileText className="h-6 w-6 text-slate-800" />
+                <span>Actualizar</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <AiOutlineDelete className="h-6 w-6 text-red-900" />
+                <span>Eliminar</span>
+              </div>
             </div>
+          </div>
+          {clientesFrecuentes.length > 0 && (
+            <TablaClientes titulo="" data={clientesFrecuentes} />
           )}
           <hr className="mt-4 border-black" />
           {clientesNoFrecuentes.length > 0 && (
-            <div>
-              <h2 className="poppins-semibold mt-2">Clientes no Frecuentes</h2>
-              <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
-                <thead className="bg-[#3D53A0] text-white">
-                  <tr className="poppins-regular">
-                    <th className="p-2">N°</th>
-                    <th className="p-2">Nombre</th>
-                    <th className="p-2">Email</th>
-                    <th className="p-2">Celular</th>
-                    <th className="p-2">Cédula</th>
-                    <th className="p-2">Dirección</th>
-                    <th className="p-2">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {clientesNoFrecuentes.map((cliente, index) => (
-                    <tr
-                      className="poppins-regular border-b hover:bg-gray-300 text-center"
-                      key={cliente._id}
-                    >
-                      <td>{index + 1}</td>
-                      <td>{cliente.nombre}</td>
-                      <td>{cliente.correo}</td>
-                      <td>{cliente.telefono}</td>
-                      <td>{cliente.cedula}</td>
-                      <td>{cliente.direccion}</td>
-                      <td className="py-2 text-center">
-                        <>
-                          <MdUpdate
-                            className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                            onClick={() =>
-                              navigate(`/dashboard/actualizar/${cliente._id}`)
-                            }
-                          />
-                          <MdDeleteForever
-                            className="h-7 w-7 text-red-900 cursor-pointer inline-block"
-                            onClick={() => {
-                              handleDelete(cliente._id);
-                            }}
-                          />
-                        </>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <TablaClientes
+              titulo="Clientes no Frecuentes"
+              data={clientesNoFrecuentes}
+            />
           )}
         </div>
       )}

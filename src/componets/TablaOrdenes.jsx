@@ -1,9 +1,8 @@
-import { useState } from "react";
-import { MdDeleteForever, MdVisibility } from "react-icons/md";
+import { useState, useContext, useEffect } from "react";
+import { AiOutlineFileText, AiOutlineCheckCircle } from "react-icons/ai";
 import axios from "axios";
 import Mensaje from "./Alertas/Mensaje";
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect } from "react";
 import AuthContext from "../context/AuthProvider";
 import OrdenProceso from "./Modals/OrdenProceso";
 
@@ -13,6 +12,7 @@ const TablaOrdenes = () => {
   const [ordenes, setOrdenes] = useState([]);
   const [selectedOrden, setSelectedOrden] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+
   const handleOpenModal = (orden) => {
     setSelectedOrden(orden);
     setModalVisible(true);
@@ -71,7 +71,7 @@ const TablaOrdenes = () => {
   const Tabla = ({ titulo, data }) => (
     <div>
       <h2 className="poppins-semibold">{titulo}</h2>
-      <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
+      <table className="w-full mt-2 table-auto shadow-lg bg-white rounded-xl">
         {/* Table Header */}
         <thead className="bg-[#3D53A0] text-white">
           <tr className="poppins-regular">
@@ -105,20 +105,20 @@ const TablaOrdenes = () => {
               {titulo !== "Finalizado" && (
                 <td className="py-2 text-center">
                   {titulo === "Mantenimiento" || titulo === "Revisión" ? (
-                    <MdVisibility
+                    <AiOutlineFileText
                       className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
                       onClick={() => handleOpenModal(orden)}
                     />
                   ) : (
-                    <MdVisibility
+                    <AiOutlineFileText
                       className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
                       onClick={() =>
                         navigate(`/dashboard/visualizar/${orden._id}`)
                       }
                     />
                   )}
-                  <MdDeleteForever
-                    className="h-7 w-7 text-red-900 cursor-pointer inline-block"
+                  <AiOutlineCheckCircle
+                    className="h-7 w-7 text-green-700 cursor-pointer inline-block"
                     onClick={() => {
                       handleDelete(orden._id);
                     }}
@@ -148,12 +148,25 @@ const TablaOrdenes = () => {
 
   return (
     <div className="flex flex-col">
-      <Tabla titulo="Mantenimiento" data={ordenesMantenimiento} />
-      <hr className="mt-4 border-black" />
+      <div className="flex justify-between items-center mt-3">
+        <h2 className="poppins-semibold">Mantenimiento</h2>
+        <div className="flex space-x-4">
+          <div className="flex items-center space-x-2">
+            <AiOutlineFileText className="h-6 w-6 text-slate-800" />
+            <span>Actualizar</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <AiOutlineCheckCircle className="h-6 w-6 text-green-700" />
+            <span>Finalizar</span>
+          </div>
+        </div>
+      </div>
+      <Tabla titulo="" data={ordenesMantenimiento} />
+      <hr className="mt-4 mb-2 border-black" />
       <Tabla titulo="Reparación" data={ordenesReparacion} />
-      <hr className="mt-4 border-black" />
+      <hr className="mt-4 mb-2 border-black" />
       <Tabla titulo="Revisión" data={ordenesRevision} />
-      <hr className="mt-4 border-black" />
+      <hr className="mt-4 mb-2 border-black" />
       <Tabla titulo="Finalizado" data={ordenesFinalizado} />
       {modalVisible && (
         <OrdenProceso

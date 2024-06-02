@@ -77,9 +77,6 @@ export const FormularioCliente = ({ cliente }) => {
     <div className="p-8 w-full flex justify-center">
       <div className="xl:w-2/3 justify-center items-center">
         <form onSubmit={handleSubmit}>
-          {Object.keys(mensaje).length > 0 && (
-            <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
-          )}
           <div className="poppins-regular">
             <label
               htmlFor="nombre:"
@@ -205,6 +202,9 @@ export const FormularioCliente = ({ cliente }) => {
             }
             disabled={loading}
           />
+          {Object.keys(mensaje).length > 0 && (
+            <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
+          )}
         </form>
       </div>
     </div>

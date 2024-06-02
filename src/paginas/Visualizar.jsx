@@ -1,15 +1,12 @@
 import { useParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Mensaje from "../componets/Alertas/Mensaje";
-import ModalOrden from "../componets/Modals/ModalOrden"; // Cambiar el nombre del modal si es necesario
-import OrdenesContext from "../context/OrdenesProvider"; // Cambiar el contexto a OrdenesProvider si lo has renombrado
 
 const Visualizar = () => {
   const { id } = useParams();
   const [orden, setOrden] = useState({});
   const [mensaje, setMensaje] = useState({});
-  const { modal, handleModal, actualizarOrden } = useContext(OrdenesContext); // Añadir la función para actualizar orden si existe en el contexto
 
   useEffect(() => {
     const consultarOrden = async () => {
@@ -31,31 +28,7 @@ const Visualizar = () => {
       }
     };
     consultarOrden();
-  }, []);
-
-  // Función para manejar la actualización del orden
-  const handleSubmit = async (datos) => {
-    try {
-      // Realizar la petición para actualizar el orden
-      const token = localStorage.getItem("token");
-      const url = `${import.meta.env.VITE_BACKEND_URL}/orden/${id}`;
-      const options = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      await axios.put(url, datos, options);
-      // Actualizar la información del orden en el estado local
-      setOrden((prevOrden) => ({ ...prevOrden, ...datos }));
-      // Cerrar el modal
-      handleModal();
-      // Mostrar mensaje de éxito
-      setMensaje({ respuesta: "Orden actualizado exitosamente", tipo: true });
-    } catch (error) {
-      setMensaje({ respuesta: error.response.data.msg, tipo: false });
-    }
-  };
+  }, [id]);
 
   return (
     <>
@@ -68,16 +41,16 @@ const Visualizar = () => {
         {Object.keys(mensaje).length > 0 && (
           <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
         )}
-        <div className="w-full h-full flex flex-col justify-center items-center">
-          <div className=" border-black border-2 p-10 rounded-xl w-2/5">
-            <p className="poppins-semibold text-black text-center mb-8 text-xl">
-              Datos de la orden
-            </p>
-            <div className="poppins-regular m-2">
-              <div>
+        <div className="w-full h-full flex flex-col items-center">
+          <div className="flex flex-wrap mb-3">
+            <div className="w-1/2 pr-2">
+              <p className="poppins-semibold text-black text-center text-xl">
+                Datos de la orden
+              </p>
+              <div className="poppins-regular mt-2">
                 <p className="mt-3">
                   <span className="text-black uppercase font-bold">
-                    * Nombre del orden:{" "}
+                    * Número de orden:{" "}
                   </span>
                   {orden.numOrden}
                 </p>
@@ -145,14 +118,16 @@ const Visualizar = () => {
                 </p>
               </div>
             </div>
-            <button
-              className="mt-4 px-5 py-2 bg-[#5B72C3] text-white rounded-lg hover:bg-[#3D53A0] cursor-pointer transition-all w-full"
-              onClick={handleModal}
-            >
-              GENERAR PROFORMA
-            </button>
-            {modal && <ModalOrden orden={orden} onSubmit={handleSubmit} />}
+            <div className="w-1/2 pl-2">
+              <p className="poppins-semibold text-black text-center text-xl">
+                Datos de la proforma
+              </p>
+            </div>
           </div>
+
+          <button className="mt-4 px-5 py-2 bg-[#5B72C3] text-white rounded-lg hover:bg-[#3D53A0] cursor-pointer transition-all ">
+            GENERAR PROFORMA
+          </button>
         </div>
       </div>
     </>
