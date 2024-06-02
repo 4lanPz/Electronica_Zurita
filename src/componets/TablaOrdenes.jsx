@@ -1,14 +1,26 @@
-import { MdDeleteForever, MdVisibility, MdUpdate } from "react-icons/md";
+import { useState } from "react";
+import { MdDeleteForever, MdVisibility } from "react-icons/md";
 import axios from "axios";
 import Mensaje from "./Alertas/Mensaje";
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import AuthContext from "../context/AuthProvider";
+import OrdenProceso from "./Modals/OrdenProceso";
 
 const TablaOrdenes = () => {
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
   const [ordenes, setOrdenes] = useState([]);
+  const [selectedOrden, setSelectedOrden] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const handleOpenModal = (orden) => {
+    setSelectedOrden(orden);
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
 
   const listarOrdenes = async () => {
     try {
@@ -92,18 +104,16 @@ const TablaOrdenes = () => {
               <td>{orden.estado}</td>
               {titulo !== "Finalizado" && (
                 <td className="py-2 text-center">
-                  {titulo === "Reparación" ? (
+                  {titulo === "Mantenimiento" || titulo === "Revisión" ? (
                     <MdVisibility
                       className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                      onClick={() =>
-                        navigate(`/dashboard/visualizar/${orden._id}`)
-                      }
+                      onClick={() => handleOpenModal(orden)}
                     />
                   ) : (
                     <MdVisibility
                       className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
                       onClick={() =>
-                        navigate(`/dashboard/actualizarorden/${orden._id}`)
+                        navigate(`/dashboard/visualizar/${orden._id}`)
                       }
                     />
                   )}
@@ -145,6 +155,16 @@ const TablaOrdenes = () => {
       <Tabla titulo="Revisión" data={ordenesRevision} />
       <hr className="mt-4 border-black" />
       <Tabla titulo="Finalizado" data={ordenesFinalizado} />
+      {modalVisible && (
+        <OrdenProceso
+          orden={selectedOrden}
+          onCancel={handleCloseModal}
+          onSubmit={() => {
+            handleCloseModal();
+            // Actualizar las ordenes
+          }}
+        />
+      )}
     </div>
   );
 };
