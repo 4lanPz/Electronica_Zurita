@@ -342,9 +342,9 @@ export const FormularioOrden = ({ orden }) => {
               onChange={handleChange}
             >
               <option value="">Seleccionar servicio</option>
-              <option value="mantenimiento">Mantenimiento</option>
-              <option value="reparación">Reparación</option>
-              <option value="revisión">Revisión</option>
+              <option value="Mantenimiento">Mantenimiento</option>
+              <option value="Reparación">Reparación</option>
+              <option value="Revisión">Revisión</option>
             </select>
           </label>
 

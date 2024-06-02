@@ -2,12 +2,14 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Mensaje from "../componets/Alertas/Mensaje";
+import ModalProforma from "../componets/Modals/ModalProforma";
 
 const Visualizar = () => {
   const { id } = useParams();
   const [orden, setOrden] = useState({});
   const [mensaje, setMensaje] = useState({});
   const [piezas, setPiezas] = useState([{ pieza: "", precio: "" }]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const consultarOrden = async () => {
@@ -46,6 +48,13 @@ const Visualizar = () => {
     const nuevasPiezas = [...piezas];
     nuevasPiezas.splice(index, 1);
     setPiezas(nuevasPiezas);
+  };
+
+  const calcularTotal = () => {
+    return piezas.reduce(
+      (total, pieza) => total + parseFloat(pieza.precio || 0),
+      0
+    );
   };
 
   return (
@@ -175,11 +184,23 @@ const Visualizar = () => {
             </div>
           </div>
 
-          <button className="mt-4 px-5 py-2 bg-[#5B72C3] text-white rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all ">
+          <button
+            onClick={() => setModalVisible(true)}
+            className="mt-4 px-5 py-2 bg-[#5B72C3] text-white rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
+          >
             GENERAR PROFORMA
           </button>
         </div>
       </div>
+
+      {modalVisible && (
+        <ModalProforma
+          orden={orden}
+          piezas={piezas}
+          total={calcularTotal()}
+          handleClose={() => setModalVisible(false)}
+        />
+      )}
     </>
   );
 };

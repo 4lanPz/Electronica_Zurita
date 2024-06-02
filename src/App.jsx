@@ -7,7 +7,6 @@ import { NotFound } from "./paginas/NotFound";
 import Dashboard from "./layout/Dashboard";
 import Listar from "./paginas/Listar";
 import Visualizar from "./paginas/Visualizar";
-import ActualizarOrden from "./paginas/ActualizarOrden";
 import CrearCliente from "./paginas/CrearCliente";
 import CrearOrden from "./paginas/CrearOrden";
 import Actualizar from "./paginas/Actualizar";
@@ -51,7 +50,6 @@ function App() {
 
                         <Route path="listar" element={<Listar />} />
                         <Route path="visualizar/:id" element={<Visualizar />} />
-                        <Route path="actualizarorden/:id" element={<ActualizarOrden />} />
                         <Route path="perfil" element={<Perfil />} />
                         <Route path="listarordenes" element={<ListarOrdenes />}/>
                         <Route

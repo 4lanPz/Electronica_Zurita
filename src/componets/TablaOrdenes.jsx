@@ -149,8 +149,7 @@ const TablaOrdenes = () => {
   return (
     <div className="flex flex-col">
       <div className="flex justify-between items-center mt-3">
-        <h2 className="poppins-semibold">Mantenimiento</h2>
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 justify-end w-full">
           <div className="flex items-center space-x-2">
             <AiOutlineFileText className="h-6 w-6 text-slate-800" />
             <span>Actualizar</span>
@@ -161,7 +160,7 @@ const TablaOrdenes = () => {
           </div>
         </div>
       </div>
-      <Tabla titulo="" data={ordenesMantenimiento} />
+      <Tabla titulo="Mantenimiento" data={ordenesMantenimiento} />
       <hr className="mt-4 mb-2 border-black" />
       <Tabla titulo="Reparación" data={ordenesReparacion} />
       <hr className="mt-4 mb-2 border-black" />
