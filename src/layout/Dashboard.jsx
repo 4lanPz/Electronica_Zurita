@@ -128,11 +128,11 @@ const Dashboard = () => {
           </div>
         )}
       </div>
-      <div className="flex-1 flex flex-col  h-screen bg-gray-100">
-        <div className="bg-[#3D53A0]flex md:justify-end items-center gap-5 justify-center"></div>
+      <div className="flex-1 flex flex-col h-screen bg-gray-100">
+        <div className="bg-[#3D53A0] flex md:justify-end items-center gap-5 justify-center"></div>
 
         {/* <div className="flex-1 bg-gray-100 p-10"> */}
-        <div className="overflow-y-scroll p-8 bg-gray-100">
+        <div className="overflow-y-scroll p-8 h-screen bg-gray-100">
           <div className="">
             {autenticado ? <Outlet /> : <Navigate to="/" />}
           </div>
