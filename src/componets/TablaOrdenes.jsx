@@ -149,7 +149,7 @@ const TablaOrdenes = () => {
   return (
     <div className="flex flex-col">
       <div className="flex justify-between items-center mt-3">
-        <div className="flex space-x-4 justify-end w-full">
+        <div className="poppins-regular flex space-x-4 justify-end w-full">
           <div className="flex items-center space-x-2">
             <AiOutlineFileText className="h-6 w-6 text-slate-800" />
             <span>Actualizar</span>

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Mensaje from "../Alertas/Mensaje";
 
 const OrdenProceso = ({ orden, onCancel }) => {
   const [mensaje, setMensaje] = useState({});
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     estado: orden?.estado || "",
   });
@@ -18,7 +20,6 @@ const OrdenProceso = ({ orden, onCancel }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validaciones básicas
     if (!form.estado) {
       setMensaje({
         respuesta: "Debe elegir una opción",
@@ -43,18 +44,19 @@ const OrdenProceso = ({ orden, onCancel }) => {
       const response = await axios.put(url, form, options);
 
       setMensaje({
-        respuesta: "Orden: en estado en proceso",
+        respuesta: `La orden se ha cambiado a estado: ${form.estado}`,
         tipo: true,
       });
-      setTimeout(() => {
-        // Aquí llamas a la función de cancelar cuando se ha completado el proceso
-        onCancel();
-      }, 3000);
+
+      onCancel();
+
+      window.location.reload();
     } catch (error) {
       setMensaje({
         respuesta: error.response?.data?.msg || "Error desconocido",
         tipo: false,
       });
+      console.error("Error al actualizar la orden:", error);
     }
   };
 
@@ -73,8 +75,8 @@ const OrdenProceso = ({ orden, onCancel }) => {
               type="radio"
               id="si"
               name="estado"
-              value="en proceso"
-              checked={form.estado === "en proceso"}
+              value="En proceso"
+              checked={form.estado === "En proceso"}
               onChange={handleChange}
               className="mr-4"
             />
@@ -85,8 +87,8 @@ const OrdenProceso = ({ orden, onCancel }) => {
               type="radio"
               id="no"
               name="estado"
-              value="pendiente"
-              checked={form.estado === "pendiente"}
+              value="Pendiente"
+              checked={form.estado === "Pendiente"}
               onChange={handleChange}
             />
           </div>

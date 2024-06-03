@@ -22,8 +22,8 @@ export const FormularioOrden = ({ orden }) => {
     color: orden?.color || "", //string
     ingreso: orden?.ingreso,
     razon: orden?.razon || "", //string
-    servicio: orden?.servicio || "mantenimiento", //string
-    estado: orden?.estado || "pendiente", //string
+    servicio: orden?.servicio || "Mantenimiento", //string
+    estado: orden?.estado || "Pendiente", //string
     cedula: "",
   });
 

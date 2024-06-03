@@ -16,27 +16,32 @@ const ModalProforma = ({ orden, piezas, total, handleClose }) => {
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-      <div className="bg-[#2c3b73] w-2/4 h-4/5 rounded-lg overflow-y-scroll">
+      <div className="bg-[#2c3b73] lg:w-2/4 sm:w-3/4 h-4/5 rounded-lg overflow-y-scroll">
         <form className="p-10" onSubmit={handleSubmit}>
           <div className="w-full bg-white border border-slate-200 p-3 flex flex-col shadow-lg rounded-xl mb-2">
             <p className="poppins-bold text-black uppercase font-bold text-center mb-2">
-              Proforma
+              Proforma Orden {form.numOrden}
             </p>
-            <div className="mb-2">
-              <b className="poppins-semibold">Número de orden:</b>
-              <p className="poppins-regular">{form.numOrden}</p>
-            </div>
+            
             <div className="mb-2">
               <b className="poppins-semibold">Fecha de ingreso:</b>
               <p className="poppins-regular">
                 {new Date(form.ingreso).toLocaleDateString()}
               </p>
             </div>
-            <div className="flex flex-wrap mb-3">
+            <div className="flex flex-wrap">
               <div className="w-1/2 pr-2">
                 <div className="mb-2">
                   <b className="poppins-semibold">Equipo:</b>
                   <p className="poppins-regular">{form.equipo}</p>
+                </div>
+                <div className="mb-2">
+                  <b className="poppins-semibold">Marca:</b>
+                  <p className="poppins-regular">{form.marca}</p>
+                </div>
+                <div className="mb-2">
+                  <b className="poppins-semibold">Color:</b>
+                  <p className="poppins-regular">{form.color}</p>
                 </div>
               </div>
               <div className="w-1/2 pl-2">
@@ -44,32 +49,10 @@ const ModalProforma = ({ orden, piezas, total, handleClose }) => {
                   <b className="poppins-semibold">Modelo:</b>
                   <p className="poppins-regular">{form.modelo}</p>
                 </div>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap mb-3">
-              <div className="w-1/2 pr-2">
-                <div className="mb-2">
-                  <b className="poppins-semibold">Marca:</b>
-                  <p className="poppins-regular">{form.marca}</p>
-                </div>
-              </div>
-              <div className="w-1/2 pl-2">
                 <div className="mb-2">
                   <b className="poppins-semibold">Serie:</b>
                   <p className="poppins-regular">{form.serie}</p>
                 </div>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap mb-3">
-              <div className="w-1/2 pr-2">
-                <div className="mb-2">
-                  <b className="poppins-semibold">Color:</b>
-                  <p className="poppins-regular">{form.color}</p>
-                </div>
-              </div>
-              <div className="w-1/2 pl-2">
                 <div className="mb-2">
                   <b className="poppins-semibold">Servicio:</b>
                   <p className="poppins-regular">{form.servicio}</p>
@@ -82,15 +65,34 @@ const ModalProforma = ({ orden, piezas, total, handleClose }) => {
               <p className="poppins-regular">{form.razon}</p>
             </div>
             <div className="mb-2">
-              <b className="poppins-semibold">Piezas y precios:</b>
-              {form.piezas.map((pieza, index) => (
-                <p key={index} className="poppins-regular">
-                  {pieza.pieza}: ${pieza.precio}
-                </p>
-              ))}
+              <b className="poppins-semibold ">Datos de piezas:</b>
+              <table className="mt-3 w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr>
+                    <th className="pl-3 poppins-semibold text-left border border-gray-300">
+                      Pieza
+                    </th>
+                    <th className="pl-3 poppins-semibold text-left border border-gray-300">
+                      Precio
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {form.piezas.map((pieza, index) => (
+                    <tr key={index}>
+                      <td className="pl-3 oppins-regular border border-gray-300">
+                        {pieza.pieza}
+                      </td>
+                      <td className="pl-3 poppins-regular border border-gray-300">
+                        ${pieza.precio}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
             <div className="mb-2">
-              <b className="poppins-semibold">Total:</b>
+              <b className="poppins-semibold">Total estimado:</b>
               <p className="poppins-regular">${form.total}</p>
             </div>
           </div>
