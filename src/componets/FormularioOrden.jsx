@@ -20,7 +20,7 @@ export const FormularioOrden = ({ orden }) => {
     marca: orden?.marca || "", //string
     serie: orden?.serie || "", //string
     color: orden?.color || "", //string
-    ingreso: orden?.ingreso,
+    ingreso: orden?.ingreso || "", //string o vacío
     razon: orden?.razon || "", //string
     servicio: orden?.servicio || "Mantenimiento", //string
     estado: orden?.estado || "Pendiente", //string
