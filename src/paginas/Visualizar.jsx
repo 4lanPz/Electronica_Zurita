@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { FiTrash2 } from "react-icons/fi";
 import axios from "axios";
 import Mensaje from "../componets/Alertas/Mensaje";
 import ModalProforma from "../componets/Modals/ModalProforma";
@@ -57,149 +58,186 @@ const Visualizar = () => {
     );
   };
 
+  const mostrarModal = () => {
+    setModalVisible(true);
+  };
+
+  const cerrarModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <>
-      <div className="">
-        <h1 className="poppins-bold text-4xl text-black text-center">
-          Generar Proforma
-        </h1>
-        <hr className="my-4" />
+      <div className="w-full">
+        {Object.keys(orden).length === 0 ? (
+          <p className="text-xl font-semibold">Cargando...</p>
+        ) : (
+          <>
+            <h1 className="poppins-bold text-center text-4xl font-bold ">
+              Generación de proforma
+            </h1>
+            <hr className="my-4" />
+            <div className="flex flex-col justify-center items-center ">
+              <div className="poppins-semibold bg-white p-8 rounded-xl shadow-md mb-6 w-2/3 sm:w-3/4">
+                <h2 className="text-xl mb-4 text-center">
+                  Datos de la orden {orden.numOrden}
+                </h2>
 
-        {Object.keys(mensaje).length > 0 && (
-          <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
-        )}
-        <div className="w-full h-full flex flex-col items-center ">
-          <div className="w-full mb-6 flex flex-col items-center ">
-            <p className="poppins-semibold text-black  text-xl">
-              Datos de la orden
-            </p>
-            <div className="poppins-regular mt-2 ">
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Número de orden:{" "}
-                </span>
-                {orden.numOrden}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Equipo:{" "}
-                </span>
-                {orden.equipo}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Modelo:{" "}
-                </span>
-                {orden.modelo}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Marca:{" "}
-                </span>
-                {orden.marca}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Serie:{" "}
-                </span>
-                {orden.serie}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Color:{" "}
-                </span>
-                {orden.color}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Fecha de ingreso:{" "}
-                </span>
-                {new Date(orden.ingreso).toLocaleDateString()}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Razón:{" "}
-                </span>
-                {orden.razon}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Fecha de salida:{" "}
-                </span>
-                {orden.salida
-                  ? new Date(orden.salida).toLocaleDateString()
-                  : "N/A"}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Servicio:{" "}
-                </span>
-                {orden.servicio}
-              </p>
-              <p className="mt-3">
-                <span className="text-black uppercase font-bold">
-                  * Estado:{" "}
-                </span>
-                {orden.estado}
-              </p>
-            </div>
-          </div>
+                <div className="flex flex-wrap mb-1">
+                  <div className="w-1/2 pr-2">
+                    <p className="mb-1">
+                      Cliente:{" "}
+                      <span className="poppins-regular">
+                        {" "}
+                        {orden.cliente.nombre}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="w-1/2 pl-2">
+                    <p className="mb-1">
+                      Cédula:{" "}
+                      <span className="poppins-regular">
+                        {" "}
+                        {orden.cliente.cedula}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap mb-1">
+                  <div className="w-1/2 pr-2">
+                    <p className="mb-1">
+                      Equipo:{" "}
+                      <span className="poppins-regular"> {orden.equipo}</span>
+                    </p>
+                  </div>
+                  <div className="w-1/2 pl-2">
+                    <p className="mb-1">
+                      Marca:{" "}
+                      <span className="poppins-regular"> {orden.marca}</span>
+                    </p>
+                  </div>
+                </div>
 
-          <div className="w-full mb-6 flex flex-col items-center">
-            <p className="poppins-semibold text-black text-center text-xl mb-3">
-              Datos de la proforma
-            </p>
-            {piezas.map((pieza, index) => (
-              <div key={index} className="flex space-x-4 mb-2">
-                <input
-                  type="text"
-                  name="pieza"
-                  value={pieza.pieza}
-                  onChange={(event) => handlePiezaChange(index, event)}
-                  placeholder="Pieza"
-                  className="poppins-regular p-2 border border-gray-300 rounded-xl "
-                />
-                <input
-                  type="text"
-                  name="precio"
-                  value={pieza.precio}
-                  onChange={(event) => handlePiezaChange(index, event)}
-                  placeholder="Precio"
-                  className="poppins-regular p-2 border border-gray-300 rounded-xl"
-                />
+                <div className="flex flex-wrap mb-1">
+                  <div className="w-1/2 pr-2">
+                    <p className="mb-1">
+                      Modelo:{" "}
+                      <span className="poppins-regular"> {orden.modelo}</span>
+                    </p>
+                  </div>
+                  <div className="w-1/2 pl-2">
+                    <p className="mb-1">
+                      Serie:{" "}
+                      <span className="poppins-regular"> {orden.serie}</span>
+                    </p>
+                  </div>
+                </div>
+                <p className="mb-1">
+                  Fecha de Ingreso:{" "}
+                  <span className="poppins-regular">
+                    {" "}
+                    {new Date(orden.ingreso).toLocaleDateString()}
+                  </span>
+                </p>
+
+                <p className="mb-1">
+                  Razón: <span className="poppins-regular"> {orden.razon}</span>
+                </p>
+              </div>
+
+              <div className="bg-white p-8 rounded-xl shadow-lg mb-6 w-2/4 sm:w-3/4">
+                <h2 className="poppins-semibold text-xl mb-4 text-center">
+                  Piezas para la reparación
+                </h2>
+                <div className="grid gap-4">
+                  {piezas.map((pieza, index) => (
+                    <div
+                      key={index}
+                      className="grid grid-cols-10 gap-4 items-center"
+                    >
+                      <div className="col-span-7">
+                        <label
+                          htmlFor={`pieza-${index}`}
+                          className="poppins-semibold block mb-1"
+                        >
+                          Pieza N°{index + 1}
+                        </label>
+                        <input
+                          type="text"
+                          id={`pieza-${index}`}
+                          name="pieza"
+                          value={pieza.pieza}
+                          onChange={(event) => handlePiezaChange(index, event)}
+                          className="poppins-regular w-full p-2 border rounded-xl"
+                        />
+                      </div>
+                      <div className="col-span-2">
+                        <label
+                          htmlFor={`precio-${index}`}
+                          className="poppins-semibold block mb-1"
+                        >
+                          Precio
+                        </label>
+                        <input
+                          type="number"
+                          id={`precio-${index}`}
+                          name="precio"
+                          value={pieza.precio}
+                          onChange={(event) => handlePiezaChange(index, event)}
+                          className="poppins-regular w-full p-2 border rounded-xl"
+                        />
+                      </div>
+                      <div className="col-span-1 flex items-center justify-center">
+                        <button
+                          type="button"
+                          onClick={() => eliminarPieza(index)}
+                          className="bg-[#9b1746] text-white p-2 rounded-xl mt-8"
+                        >
+                          <FiTrash2 />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
                 <button
-                  onClick={() => eliminarPieza(index)}
-                  className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                  type="button"
+                  onClick={agregarPieza}
+                  className="poppins-regular text-white px-4 py-2 rounded-xl bg-[#5267b4] hover:bg-[#3D53A0] mt-4"
                 >
-                  Eliminar
+                  Agregar Pieza
                 </button>
               </div>
-            ))}
-            <button
-              onClick={agregarPieza}
-              className="mt-2 px-4 py-2 bg-[#5B72C3] text-white rounded-xl hover:bg-[#3D53A0]"
-            >
-              Agregar Pieza
-            </button>
-          </div>
 
-          <button
-            onClick={() => setModalVisible(true)}
-            className="mt-4 px-5 py-2 bg-[#5B72C3] text-white rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
-          >
-            GENERAR PROFORMA
-          </button>
-        </div>
+              <div className="bg-white p-8 rounded-xl shadow-lg mb-6 w-2/4 sm:w-3/4">
+                <h2 className="poppins-semibold text-xl mb-4">Total</h2>
+                <p className="poppins-semibold text-2xl font-bold">
+                  ${calcularTotal().toFixed(2)}
+                </p>
+              </div>
+              {mensaje.respuesta && (
+                <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
+              )}
+              <button
+                onClick={mostrarModal}
+                className="poppins-regular text-white px-4 py-2 rounded-xl w-1/5 bg-[#5267b4] hover:bg-[#3D53A0]"
+              >
+                Crear Proforma
+              </button>
+
+              {modalVisible && (
+                <ModalProforma
+                  orden={orden}
+                  piezas={piezas}
+                  total={calcularTotal()}
+                  handleClose={cerrarModal}
+                  ordenId={id} // Pasar ordenId correctamente
+                />
+              )}
+            </div>
+          </>
+        )}
       </div>
-
-      {modalVisible && (
-        <ModalProforma
-          orden={orden}
-          piezas={piezas}
-          total={calcularTotal()}
-          handleClose={() => setModalVisible(false)}
-        />
-      )}
     </>
   );
 };

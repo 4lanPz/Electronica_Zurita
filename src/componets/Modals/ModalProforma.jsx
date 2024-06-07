@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ModalProforma = ({ orden, piezas, total, handleClose }) => {
+const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
   const [form, setForm] = useState({
     ...orden,
     piezas,
@@ -9,9 +9,36 @@ const ModalProforma = ({ orden, piezas, total, handleClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí puedes agregar la lógica para enviar la proforma
-    console.log("Proforma enviada:", form);
-    handleClose();
+    try {
+      console.log(form)
+      const url = `${
+        import.meta.env.VITE_BACKEND_URL
+      }/proforma/registro/${ordenId}`;
+      console.log("URL:", url); // Verifica la URL
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          piezas: form.piezas,
+          precioTotal: form.total,
+        }),
+      });
+
+      // Verificar el estado de la respuesta
+      if (!response.ok) {
+        const errorText = await response.text(); // Obtener el texto de la respuesta en caso de error
+        console.error("Error de servidor:", errorText);
+        throw new Error(errorText);
+      }
+
+      const data = await response.json();
+      console.log("Proforma enviada:", data);
+      handleClose();
+    } catch (error) {
+      console.error("Error al enviar la proforma:", error);
+    }
   };
 
   return (
@@ -22,7 +49,7 @@ const ModalProforma = ({ orden, piezas, total, handleClose }) => {
             <p className="poppins-bold text-black uppercase font-bold text-center mb-2">
               Proforma Orden {form.numOrden}
             </p>
-            
+
             <div className="mb-2">
               <b className="poppins-semibold">Fecha de ingreso:</b>
               <p className="poppins-regular">
