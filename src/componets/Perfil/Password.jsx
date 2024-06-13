@@ -52,7 +52,7 @@ const Password = () => {
   return (
     <>
       <div className="mt-5">
-        <h1 className="poppins-bold font-black text-3xl text-black">
+        <h1 className="poppins-bold font-black text-2xl text-black">
           Actualizar Contraseña
         </h1>
         <hr className="my-4" />
@@ -99,8 +99,8 @@ const Password = () => {
 
         <input
           type="submit"
-          className="poppins-semibold bg-[#5B72C3] w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
-          value="Actualizar"
+          className="poppins-regular bg-[#5B72C3] w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
+          value="Actualizar contraseña"
         />
       </form>
     </>

@@ -43,7 +43,7 @@ const FormularioPerfil = () => {
   return (
     <>
     <div className="mt-5">
-        <h1 className="poppins-bold font-black text-3xl text-black">
+        <h1 className="poppins-bold font-black text-2xl text-black">
           Actualizar Datos Técnico
         </h1>
         <hr className="my-4" />
@@ -64,7 +64,7 @@ const FormularioPerfil = () => {
           <input
             id="nombre"
             type="text"
-            className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-xl"
+            className="poppins-regular border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-xl"
             placeholder="nombre"
             name="nombre"
             value={form.nombre}
@@ -81,7 +81,7 @@ const FormularioPerfil = () => {
           <input
             id="apellido"
             type="text"
-            className="poppins-regular border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-5"
+            className="poppins-regular border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-xl mb-5"
             placeholder="apellido"
             name="apellido"
             value={form.apellido}
@@ -100,7 +100,7 @@ const FormularioPerfil = () => {
         <input
           id="ditelefonoreccion"
           type="text"
-          className="poppins-regular border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md mb-3"
+          className="poppins-regular border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-xl mb-3"
           placeholder="telefono"
           name="telefono"
           value={form.telefono}
@@ -128,7 +128,7 @@ const FormularioPerfil = () => {
 
       <input
         type="submit"
-        className="poppins-semibold bg-[#5B72C3] w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
+        className="poppins-regular bg-[#5B72C3] w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
         value="Actualizar Datos"
       />
     </form>

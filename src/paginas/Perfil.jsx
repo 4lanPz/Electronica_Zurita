@@ -13,10 +13,10 @@ const Perfil = () => {
       <CardPerfil />
       </div>
       <div className="flex justify-around gap-x-8 flex-wrap gap-y-8 md:flex-nowrap">
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-1/2 pr-5 pl-10">
           <FormularioPerfil />
         </div>
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-1/2 pl-5 pr-10">
           <Password />
         </div>
       </div>

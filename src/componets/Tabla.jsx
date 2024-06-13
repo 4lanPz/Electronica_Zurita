@@ -10,6 +10,7 @@ const Tabla = () => {
   const navigate = useNavigate();
   const [clientes, setClientes] = useState([]);
   const [mensaje, setMensaje] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
 
   const listarClientes = async () => {
     try {
@@ -56,6 +57,15 @@ const Tabla = () => {
       });
     }
   };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredClientes = clientes.filter(
+    (cliente) =>
+      cliente.cedula && cliente.cedula.toString().includes(searchTerm)
+  );
 
   const TablaClientes = ({ titulo, data }) => (
     <div>
@@ -105,27 +115,44 @@ const Tabla = () => {
     </div>
   );
 
-  const clientesFrecuentes = clientes.filter((cliente) => cliente.frecuente);
-  const clientesNoFrecuentes = clientes.filter((cliente) => !cliente.frecuente);
+  const clientesFrecuentes = filteredClientes.filter(
+    (cliente) => cliente.frecuente
+  );
+  const clientesNoFrecuentes = filteredClientes.filter(
+    (cliente) => !cliente.frecuente
+  );
 
   return (
     <>
+      <div className="flex flex-col mb-5">
+        <div className="flex justify-between items-center ">
+          <div className="poppins-regular flex items-center w-full">
+            <input
+              type="text"
+              placeholder="Buscar por cédula"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              className="p-2 border border-black bg-[#5B72C3] placeholder:text-white text-white rounded-xl w-2/3"
+            />
+          </div>
+          <div className="poppins-regular flex space-x-4 items-center">
+            <div className="flex items-center space-x-2">
+              <AiOutlineFileText className="h-6 w-6 text-slate-800" />
+              <span>Actualizar</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <AiOutlineDelete className="h-6 w-6 text-red-900" />
+              <span>Finalizar</span>
+            </div>
+          </div>
+        </div>
+      </div>
       {clientesFrecuentes.length === 0 && clientesNoFrecuentes.length === 0 ? (
         <Mensaje tipo={"active"}>{"No existen clientes registrados"}</Mensaje>
       ) : (
         <div className="flex flex-col">
-          <div className="flex justify-between items-center ">
+          <div className="flex justify-between items-center">
             <h2 className="poppins-semibold">Clientes Frecuentes</h2>
-            <div className="flex space-x-4">
-              <div className="flex items-center space-x-2">
-                <AiOutlineFileText className="h-6 w-6 text-slate-800" />
-                <span>Actualizar</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <AiOutlineDelete className="h-6 w-6 text-red-900" />
-                <span>Eliminar</span>
-              </div>
-            </div>
           </div>
           {clientesFrecuentes.length > 0 && (
             <TablaClientes titulo="" data={clientesFrecuentes} />

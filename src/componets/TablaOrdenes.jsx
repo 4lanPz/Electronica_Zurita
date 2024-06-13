@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AiOutlineFileText, AiOutlineCheckCircle } from "react-icons/ai";
 import axios from "axios";
 import Mensaje from "./Alertas/Mensaje";
@@ -12,6 +12,7 @@ const TablaOrdenes = () => {
   const [ordenes, setOrdenes] = useState([]);
   const [selectedOrden, setSelectedOrden] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); // Estado para almacenar el término de búsqueda
 
   const handleOpenModal = (orden) => {
     setSelectedOrden(orden);
@@ -67,6 +68,17 @@ const TablaOrdenes = () => {
       console.log(error);
     }
   };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value); // Actualiza el estado con el valor del campo de búsqueda
+  };
+
+  // Filtrado de órdenes basado en el término de búsqueda
+  const filteredOrdenes = ordenes.filter(
+    (orden) =>
+      orden.cliente?.cedula &&
+      orden.cliente.cedula.toString().includes(searchTerm)
+  );
 
   const Tabla = ({ titulo, data }) => (
     <div>
@@ -132,24 +144,36 @@ const TablaOrdenes = () => {
     </div>
   );
 
-  const ordenesMantenimiento = ordenes.filter(
+  // Filtrado de las órdenes según el término de búsqueda
+  const ordenesMantenimiento = filteredOrdenes.filter(
     (orden) =>
       orden.servicio === "Mantenimiento" && orden.estado !== "Finalizado"
   );
-  const ordenesReparacion = ordenes.filter(
+  const ordenesReparacion = filteredOrdenes.filter(
     (orden) => orden.servicio === "Reparación" && orden.estado !== "Finalizado"
   );
-  const ordenesRevision = ordenes.filter(
+  const ordenesRevision = filteredOrdenes.filter(
     (orden) => orden.servicio === "Revisión" && orden.estado !== "Finalizado"
   );
-  const ordenesFinalizado = ordenes.filter(
+  const ordenesFinalizado = filteredOrdenes.filter(
     (orden) => orden.estado === "Finalizado"
   );
 
   return (
-    <div className="flex flex-col">
-      <div className="flex justify-between items-center mt-3">
-        <div className="poppins-regular flex space-x-4 justify-end w-full">
+    <div className="flex flex-col " >
+      <div className="flex justify-between items-center mt-3 mb-5">
+        {/* Barra de búsqueda */}
+        <div className="poppins-regular flex items-center w-full">
+          <input
+            type="text"
+            placeholder="Buscar por cédula"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className="p-2 border border-black bg-[#5B72C3] placeholder:text-white text-white rounded-xl w-2/3"
+          />
+        </div>
+        {/* Acciones de actualizar y finalizar */}
+        <div className="poppins-regular flex space-x-4 items-center">
           <div className="flex items-center space-x-2">
             <AiOutlineFileText className="h-6 w-6 text-slate-800" />
             <span>Actualizar</span>
@@ -160,6 +184,7 @@ const TablaOrdenes = () => {
           </div>
         </div>
       </div>
+      {/* Tablas filtradas */}
       <Tabla titulo="Mantenimiento" data={ordenesMantenimiento} />
       <hr className="mt-4 mb-2 border-black" />
       <Tabla titulo="Reparación" data={ordenesReparacion} />
@@ -173,7 +198,7 @@ const TablaOrdenes = () => {
           onCancel={handleCloseModal}
           onSubmit={() => {
             handleCloseModal();
-            // Actualizar las ordenes
+            // Actualizar las órdenes
           }}
         />
       )}

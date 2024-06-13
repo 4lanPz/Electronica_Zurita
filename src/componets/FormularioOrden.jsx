@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Mensaje from "./Alertas/Mensaje";
 
 export const FormularioOrden = ({ orden }) => {
   const navigate = useNavigate();
-  const [mensaje, setMensaje] = useState({});
+  const [mensajeCliente, setMensajeCliente] = useState({});
+  const [mensajeFormulario, setMensajeFormulario] = useState({});
   const [clienteInfo, setClienteInfo] = useState({
     nombre: " ",
     correo: " ",
@@ -47,7 +48,7 @@ export const FormularioOrden = ({ orden }) => {
       !form.color ||
       !form.razon
     ) {
-      setMensaje({
+      setMensajeFormulario({
         respuesta: "Todos los campos obligatorios deben ser completados",
         tipo: false,
       });
@@ -77,7 +78,7 @@ export const FormularioOrden = ({ orden }) => {
         ...options,
       });
 
-      setMensaje({
+      setMensajeFormulario({
         respuesta: orden?._id
           ? "Orden Actualizada"
           : "Orden generada con éxito",
@@ -88,14 +89,14 @@ export const FormularioOrden = ({ orden }) => {
         navigate("/dashboard/listarordenes");
       }, 3000);
     } catch (error) {
-      setMensaje({
+      setMensajeFormulario({
         respuesta: error.response?.data?.msg || "Error desconocido",
         tipo: false,
       });
       setLoading(false);
     } finally {
       setTimeout(() => {
-        setMensaje({});
+        setMensajeFormulario({});
       }, 3000);
       setLoading(false);
     }
@@ -129,23 +130,23 @@ export const FormularioOrden = ({ orden }) => {
           ...form,
           clienteId: cliente._id,
         });
-        setMensaje({
+        setMensajeCliente({
           respuesta: "Cliente encontrado",
           tipo: true,
         });
         setLoading(false);
         setTimeout(() => {
-          setMensaje({});
+          setMensajeCliente({});
         }, 5000);
       }
     } catch (error) {
-      setMensaje({
+      setMensajeCliente({
         respuesta: "No se ha encontrado un cliente con ese número de cédula",
         tipo: false,
       });
       setLoading(false);
       setTimeout(() => {
-        setMensaje({});
+        setMensajeCliente({});
       }, 5000);
     }
   };
@@ -154,8 +155,13 @@ export const FormularioOrden = ({ orden }) => {
     <div className="p-8 w-full flex justify-center">
       <div className="xl:w-2/3 justify-center items-center">
         <form onSubmit={handleSubmit}>
+          {Object.keys(mensajeCliente).length > 0 && (
+            <Mensaje tipo={mensajeCliente.tipo}>
+              {mensajeCliente.respuesta}
+            </Mensaje>
+          )}
           <div className="flex flex-wrap mb-3">
-            <div className="w-1/2 pr-2">
+            <div className="w-1/2 pr-10 pl-5">
               <label
                 htmlFor="cedula"
                 className="poppins-semibold text-black uppercase"
@@ -183,34 +189,25 @@ export const FormularioOrden = ({ orden }) => {
                 </button>
               </div>
             </div>
-            <div className="w-1/2 pl-2">
-              <div className=" w-auto bg-white border border-slate-200 p-3 flex flex-col shadow-lg rounded-xl">
-                <div className="flex items-center justify-between flex-wrap md:flex-nowrap">
-                  <div className="">
-                    <div className="">
-                      <b className="poppins-semibold">Nombre Cliente:</b>
+            <div className="w-1/2 pl-10 pr-5">
+              <div className="  bg-white border border-slate-200 p-3 flex flex-col shadow-lg rounded-xl">
+                <div className="">
+                  <div className="flex items-center justify-center flex-wrap md:flex-nowrap ">
+                    <div className="w-1/2">
+                      <b className="poppins-semibold">Cliente:</b>
                       <br />
                       <p className="poppins-regular">{clienteInfo.nombre}</p>
                     </div>
-                    <div className="">
-                      <b className="poppins-semibold">Correo electrónico:</b>
+                    <div className="w-1/2 pl-2">
+                      <b className="poppins-semibold">Télefono:</b>
                       <br />
-                      <p className="poppins-regular">{clienteInfo.correo}</p>
+                      <p className="poppins-regular">{clienteInfo.telefono}</p>
                     </div>
-                    <div className="flex items-center justify-center flex-wrap md:flex-nowrap">
-                      <div className="w-1/2">
-                        <b className="poppins-semibold">Cédula:</b>
-                        <br />
-                        <p className="poppins-regular">{clienteInfo.cedula}</p>
-                      </div>
-                      <div className="w-1/2">
-                        <b className="poppins-semibold">Télefono:</b>
-                        <br />
-                        <p className="poppins-regular">
-                          {clienteInfo.telefono}
-                        </p>
-                      </div>
-                    </div>
+                  </div>
+                  <div className="">
+                    <b className="poppins-semibold">Correo electrónico:</b>
+                    <br />
+                    <p className="poppins-regular">{clienteInfo.correo}</p>
                   </div>
                 </div>
               </div>
@@ -336,7 +333,7 @@ export const FormularioOrden = ({ orden }) => {
             Servicio:
             <select
               id="servicio"
-              className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-10"
+              className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-5"
               name="servicio"
               value={form.servicio}
               onChange={handleChange}
@@ -347,18 +344,19 @@ export const FormularioOrden = ({ orden }) => {
               <option value="Revisión">Revisión</option>
             </select>
           </label>
-
+          {Object.keys(mensajeFormulario).length > 0 && (
+            <Mensaje tipo={mensajeFormulario.tipo}>
+              {mensajeFormulario.respuesta}
+            </Mensaje>
+          )}
           <input
             type="submit"
-            className={`poppins-regular bg-[#5B72C3] w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all ${
+            className={`poppins-regular bg-[#5B72C3] w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all mt-3 ${
               loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
             value={orden?._id ? "Actualizar Orden" : "Registrar Orden"}
             disabled={loading}
           />
-          {Object.keys(mensaje).length > 0 && (
-            <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
-          )}
         </form>
       </div>
     </div>
