@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Mensaje from "../componets/Alertas/Mensaje";
 import AuthContext from "../context/AuthProvider";
 
@@ -14,6 +14,8 @@ export const Login = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   useEffect(() => {
     // Función para eliminar todos los tokens almacenados en el almacenamiento local
     const clearLocalStorage = () => {
@@ -22,6 +24,7 @@ export const Login = () => {
     // Llamar a la función al cargar la página de inicio de sesión
     clearLocalStorage();
   }, []);
+
   const handleChange = (e) => {
     setform({ ...form, [e.target.name]: e.target.value });
   };
@@ -43,6 +46,10 @@ export const Login = () => {
         setMensaje({});
       }, 60000);
     }
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -89,14 +96,37 @@ export const Login = () => {
               {/* Contraseña */}
               <div className="mb-3">
                 <label className="poppins-semibold">Contraseña</label>
-                <input
-                  type="password"
-                  placeholder="********************"
-                  name="password"
-                  value={form.password || ""}
-                  onChange={handleChange}
-                  className="mt-1 poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
-                />
+                <div className="flex items-center mt-2">
+                  <div className="flex-grow pr-1">
+                    {" "}
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="********************"
+                      name="password"
+                      value={form.password || ""}
+                      onChange={handleChange}
+                      className=" poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 "
+                      // Quita el borde derecho del input
+                    />
+                  </div>
+                  <div className="flex-shrink-0 ">
+                    {" "}
+                    <button
+                      type="button"
+                      onClick={toggleShowPassword}
+                      className="flex items-center justify-center bg-[#5B72C3] rounded-full w-10 h-9 "
+                      style={{
+                        borderLeft: "none", // Quita el borde izquierdo del botón
+                      }}
+                    >
+                      {showPassword ? (
+                        <AiOutlineEyeInvisible className="text-white text-xl" />
+                      ) : (
+                        <AiOutlineEye className="text-white text-xl" />
+                      )}
+                    </button>
+                  </div>
+                </div>
               </div>
 
               {/* Botón de inicio de sesión */}
