@@ -93,7 +93,7 @@ const TablaOrdenes = () => {
       orden.cliente.cedula.toString().includes(searchTerm)
   );
 
-  const Tabla = ({ titulo, data, mostrarFechaSalida }) => (
+  const Tabla = ({ titulo, data }) => (
     <div>
       <h2 className="poppins-semibold">{titulo}</h2>
       <table className="w-full mt-2 table-auto shadow-lg bg-white rounded-xl">
@@ -104,7 +104,7 @@ const TablaOrdenes = () => {
             <th className="p-2">Cédula</th>
             <th className="p-2">Equipo</th>
             <th className="p-2">Fecha Ingreso</th>
-            {mostrarFechaSalida && <th className="p-2">Fecha Salida</th>}
+            <th className="p-2">Fecha Salida</th>
             <th className="p-2">Estado</th>
             {titulo !== "Finalizado" && <th className="p-2">Acciones</th>}
           </tr>
@@ -120,13 +120,11 @@ const TablaOrdenes = () => {
               <td>{orden.cliente?.cedula}</td>
               <td>{orden.equipo}</td>
               <td>{new Date(orden.ingreso).toLocaleDateString()}</td>
-              {mostrarFechaSalida && (
-                <td>
-                  {orden.salida
-                    ? new Date(orden.salida).toLocaleDateString()
-                    : "N/A"}
-                </td>
-              )}
+              <td>
+                {orden.salida
+                  ? new Date(orden.salida).toLocaleDateString()
+                  : "N/A"}
+              </td>
               <td>{orden.estado}</td>
               {titulo !== "Finalizado" && (
                 <td className="py-2 text-center">
@@ -180,7 +178,7 @@ const TablaOrdenes = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between items-center mt-3 mb-5">
+      <div className="flex justify-between items-center mt-3 mb-3">
         <div className="poppins-regular flex items-center w-full">
           <input
             type="text"
@@ -192,8 +190,12 @@ const TablaOrdenes = () => {
         </div>
         <div className="poppins-regular flex space-x-4 items-center">
           <div className="flex items-center space-x-2">
-            <AiOutlineFileText className="h-6 w-6 text-slate-800" />
+            <AiOutlineFileText className="h-6 w-6 text-black" />
             <span>Actualizar</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <AiOutlineEye className="h-6 w-6 text-black" />
+            <span>Visualizar</span>
           </div>
           <div className="flex items-center space-x-2">
             <AiOutlineCheckCircle className="h-6 w-6 text-green-700" />
@@ -207,7 +209,7 @@ const TablaOrdenes = () => {
       <hr className="mt-4 mb-2 border-black" />
       <Tabla titulo="Revisión" data={ordenesRevision} />
       <hr className="mt-4 mb-2 border-black" />
-      <Tabla titulo="Finalizado" data={ordenesFinalizado} mostrarFechaSalida />
+      <Tabla titulo="Finalizado" data={ordenesFinalizado} />
       {modalVisible && (
         <OrdenProceso
           orden={selectedOrden}
