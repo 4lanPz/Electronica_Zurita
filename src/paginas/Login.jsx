@@ -114,10 +114,7 @@ export const Login = () => {
                     <button
                       type="button"
                       onClick={toggleShowPassword}
-                      className="flex items-center justify-center bg-[#5B72C3] rounded-full w-10 h-9 "
-                      style={{
-                        borderLeft: "none", // Quita el borde izquierdo del botón
-                      }}
+                      className="flex items-center justify-center bg-[#5B72C3] rounded-full w-10 h-9 hover:scale-100 hover:bg-[#3D53A0]"
                     >
                       {showPassword ? (
                         <AiOutlineEyeInvisible className="text-white text-xl" />

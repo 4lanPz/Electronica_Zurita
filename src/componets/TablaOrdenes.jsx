@@ -1,10 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
-import { AiOutlineFileText, AiOutlineCheckCircle } from "react-icons/ai";
+import {
+  AiOutlineFileText,
+  AiOutlineCheckCircle,
+  AiOutlineEye,
+} from "react-icons/ai";
 import axios from "axios";
-import Mensaje from "./Alertas/Mensaje";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
 import OrdenProceso from "./Modals/OrdenProceso";
+import ModalVerProforma from "./Modals/ModalVerProforma";
 
 const TablaOrdenes = () => {
   const { auth } = useContext(AuthContext);
@@ -12,7 +16,8 @@ const TablaOrdenes = () => {
   const [ordenes, setOrdenes] = useState([]);
   const [selectedOrden, setSelectedOrden] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(""); // Estado para almacenar el término de búsqueda
+  const [proformaModalVisible, setProformaModalVisible] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleOpenModal = (orden) => {
     setSelectedOrden(orden);
@@ -21,6 +26,15 @@ const TablaOrdenes = () => {
 
   const handleCloseModal = () => {
     setModalVisible(false);
+  };
+
+  const handleOpenProformaModal = (orden) => {
+    setSelectedOrden(orden);
+    setProformaModalVisible(true);
+  };
+
+  const handleCloseProformaModal = () => {
+    setProformaModalVisible(false);
   };
 
   const listarOrdenes = async () => {
@@ -70,29 +84,27 @@ const TablaOrdenes = () => {
   };
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value); // Actualiza el estado con el valor del campo de búsqueda
+    setSearchTerm(e.target.value);
   };
 
-  // Filtrado de órdenes basado en el término de búsqueda
   const filteredOrdenes = ordenes.filter(
     (orden) =>
       orden.cliente?.cedula &&
       orden.cliente.cedula.toString().includes(searchTerm)
   );
 
-  const Tabla = ({ titulo, data }) => (
+  const Tabla = ({ titulo, data, mostrarFechaSalida }) => (
     <div>
       <h2 className="poppins-semibold">{titulo}</h2>
       <table className="w-full mt-2 table-auto shadow-lg bg-white rounded-xl">
-        {/* Table Header */}
         <thead className="bg-[#3D53A0] text-white">
           <tr className="poppins-regular">
             <th className="p-2">N° Orden</th>
             <th className="p-2">Cliente</th>
-            <th className="p-2">Cedula</th>
+            <th className="p-2">Cédula</th>
             <th className="p-2">Equipo</th>
             <th className="p-2">Fecha Ingreso</th>
-            <th className="p-2">Fecha Salida</th>
+            {mostrarFechaSalida && <th className="p-2">Fecha Salida</th>}
             <th className="p-2">Estado</th>
             {titulo !== "Finalizado" && <th className="p-2">Acciones</th>}
           </tr>
@@ -108,11 +120,13 @@ const TablaOrdenes = () => {
               <td>{orden.cliente?.cedula}</td>
               <td>{orden.equipo}</td>
               <td>{new Date(orden.ingreso).toLocaleDateString()}</td>
-              <td>
-                {orden.salida
-                  ? new Date(orden.salida).toLocaleDateString()
-                  : "N/A"}
-              </td>
+              {mostrarFechaSalida && (
+                <td>
+                  {orden.salida
+                    ? new Date(orden.salida).toLocaleDateString()
+                    : "N/A"}
+                </td>
+              )}
               <td>{orden.estado}</td>
               {titulo !== "Finalizado" && (
                 <td className="py-2 text-center">
@@ -122,12 +136,18 @@ const TablaOrdenes = () => {
                       onClick={() => handleOpenModal(orden)}
                     />
                   ) : (
-                    <AiOutlineFileText
-                      className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                      onClick={() =>
-                        navigate(`/dashboard/visualizar/${orden._id}`)
-                      }
-                    />
+                    <>
+                      <AiOutlineFileText
+                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                        onClick={() =>
+                          navigate(`/dashboard/visualizar/${orden._id}`)
+                        }
+                      />
+                      <AiOutlineEye
+                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                        onClick={() => handleOpenProformaModal(orden)}
+                      />
+                    </>
                   )}
                   <AiOutlineCheckCircle
                     className="h-7 w-7 text-green-700 cursor-pointer inline-block"
@@ -144,7 +164,6 @@ const TablaOrdenes = () => {
     </div>
   );
 
-  // Filtrado de las órdenes según el término de búsqueda
   const ordenesMantenimiento = filteredOrdenes.filter(
     (orden) =>
       orden.servicio === "Mantenimiento" && orden.estado !== "Finalizado"
@@ -160,9 +179,8 @@ const TablaOrdenes = () => {
   );
 
   return (
-    <div className="flex flex-col " >
+    <div className="flex flex-col">
       <div className="flex justify-between items-center mt-3 mb-5">
-        {/* Barra de búsqueda */}
         <div className="poppins-regular flex items-center w-full">
           <input
             type="text"
@@ -172,7 +190,6 @@ const TablaOrdenes = () => {
             className="p-2 border border-black bg-[#5B72C3] placeholder:text-white text-white rounded-xl w-2/3"
           />
         </div>
-        {/* Acciones de actualizar y finalizar */}
         <div className="poppins-regular flex space-x-4 items-center">
           <div className="flex items-center space-x-2">
             <AiOutlineFileText className="h-6 w-6 text-slate-800" />
@@ -184,22 +201,26 @@ const TablaOrdenes = () => {
           </div>
         </div>
       </div>
-      {/* Tablas filtradas */}
       <Tabla titulo="Mantenimiento" data={ordenesMantenimiento} />
       <hr className="mt-4 mb-2 border-black" />
       <Tabla titulo="Reparación" data={ordenesReparacion} />
       <hr className="mt-4 mb-2 border-black" />
       <Tabla titulo="Revisión" data={ordenesRevision} />
       <hr className="mt-4 mb-2 border-black" />
-      <Tabla titulo="Finalizado" data={ordenesFinalizado} />
+      <Tabla titulo="Finalizado" data={ordenesFinalizado} mostrarFechaSalida />
       {modalVisible && (
         <OrdenProceso
           orden={selectedOrden}
           onCancel={handleCloseModal}
           onSubmit={() => {
             handleCloseModal();
-            // Actualizar las órdenes
           }}
+        />
+      )}
+      {proformaModalVisible && (
+        <ModalVerProforma
+          orden={selectedOrden}
+          onCancel={handleCloseProformaModal}
         />
       )}
     </div>
