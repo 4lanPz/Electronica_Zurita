@@ -33,22 +33,28 @@ export const FormularioOrden = ({ orden }) => {
       clienteId: Yup.string().required("Cliente es obligatorio"),
       equipo: Yup.string()
         .min(3, "Debe tener al menos 3 caracteres")
+        .max(20, "No puede tener más de 30 caracteres")
         .required("Equipo es obligatorio"),
       modelo: Yup.string()
         .min(3, "Debe tener al menos 3 caracteres")
+        .max(20, "No puede tener más de 30 caracteres")
         .required("Modelo es obligatorio"),
       marca: Yup.string()
         .min(3, "Debe tener al menos 3 caracteres")
+        .max(20, "No puede tener más de 30 caracteres")
         .required("Marca es obligatoria"),
-      serie: Yup.string().required("Número de serie es obligatorio"),
+      serie: Yup.string()
+        .max(20, "No puede tener más de 30 caracteres")
+        .required("Número de serie es obligatorio"),
       color: Yup.string()
         .min(3, "Debe tener al menos 3 caracteres")
+        .max(20, "No puede tener más de 30 caracteres")
         .required("Color es obligatorio"),
       ingreso: Yup.date()
         .nullable()
         .required("Fecha de ingreso es obligatoria"),
       razon: Yup.string()
-        .min(3, "Debe tener al menos 3 caracteres")
+        .min(3, "Debe tener al menos 10 caracteres")
         .required("Razón de ingreso es obligatoria"),
       servicio: Yup.string().required("Servicio es obligatorio"),
     }),
@@ -156,9 +162,9 @@ export const FormularioOrden = ({ orden }) => {
               {mensajeCliente.respuesta}
             </Mensaje>
           )}
-          <div className="flex flex-wrap mb-3">
+          <div className="flex flex-wrap">
             <div className="w-1/2 pr-10 pl-5">
-              <label htmlFor="cedula" className="block mt-4">
+              <label htmlFor="cedula" className="block">
                 <span className="poppins-semibold text-black uppercase">
                   Número de cédula Cliente:
                 </span>
@@ -220,7 +226,7 @@ export const FormularioOrden = ({ orden }) => {
             <input
               id="equipo"
               type="text"
-              className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+              className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
               placeholder="Tipo de equipo"
               name="equipo"
               value={formik.values.equipo}
@@ -232,45 +238,46 @@ export const FormularioOrden = ({ orden }) => {
               </div>
             ) : null}
           </label>
-
-          <label htmlFor="modelo" className="poppins-semibold text-black">
-            Modelo:
-            <input
-              id="modelo"
-              type="text"
-              className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
-              placeholder="Modelo del equipo"
-              name="modelo"
-              value={formik.values.modelo}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.modelo && formik.errors.modelo ? (
-              <div className="text-red-500 poppins-regular">
-                {formik.errors.modelo}
-              </div>
-            ) : null}
-          </label>
-
-          <label htmlFor="marca" className="block">
-            <span className="poppins-semibold text-black uppercase">
-              Marca:
-            </span>
-            <input
-              id="marca"
-              type="text"
-              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
-              placeholder="Marca del equipo"
-              name="marca"
-              value={formik.values.marca}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.marca && formik.errors.marca ? (
-              <div className="text-red-500 poppins-regular mt-1">
-                {formik.errors.marca}
-              </div>
-            ) : null}
-          </label>
-
+          <div className="mt-2">
+            <label htmlFor="modelo" className="poppins-semibold text-black ">
+              Modelo:
+              <input
+                id="modelo"
+                type="text"
+                className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
+                placeholder="Modelo del equipo"
+                name="modelo"
+                value={formik.values.modelo}
+                onChange={formik.handleChange}
+              />
+              {formik.touched.modelo && formik.errors.modelo ? (
+                <div className="text-red-500 poppins-regular">
+                  {formik.errors.modelo}
+                </div>
+              ) : null}
+            </label>
+          </div>
+          <div className="mt-2">
+            <label htmlFor="marca" className="block">
+              <span className="poppins-semibold text-black uppercase">
+                Marca:
+              </span>
+              <input
+                id="marca"
+                type="text"
+                className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
+                placeholder="Marca del equipo"
+                name="marca"
+                value={formik.values.marca}
+                onChange={formik.handleChange}
+              />
+              {formik.touched.marca && formik.errors.marca ? (
+                <div className="text-red-500 poppins-regular">
+                  {formik.errors.marca}
+                </div>
+              ) : null}
+            </label>
+          </div>
           <label htmlFor="serie" className="block mt-4">
             <span className="poppins-semibold text-black uppercase">
               Número de serie:
@@ -285,7 +292,7 @@ export const FormularioOrden = ({ orden }) => {
               onChange={formik.handleChange}
             />
             {formik.touched.serie && formik.errors.serie ? (
-              <div className="text-red-500 poppins-regular mt-1">
+              <div className="text-red-500 poppins-regular">
                 {formik.errors.serie}
               </div>
             ) : null}
@@ -305,7 +312,7 @@ export const FormularioOrden = ({ orden }) => {
               onChange={formik.handleChange}
             />
             {formik.touched.color && formik.errors.color ? (
-              <div className="text-red-500 poppins-regular mt-1">
+              <div className="text-red-500 poppins-regular">
                 {formik.errors.color}
               </div>
             ) : null}
@@ -325,7 +332,7 @@ export const FormularioOrden = ({ orden }) => {
               onChange={formik.handleChange}
             />
             {formik.touched.ingreso && formik.errors.ingreso ? (
-              <div className="text-red-500 poppins-regular mt-1">
+              <div className="text-red-500 poppins-regular">
                 {formik.errors.ingreso}
               </div>
             ) : null}
@@ -344,7 +351,7 @@ export const FormularioOrden = ({ orden }) => {
               onChange={formik.handleChange}
             />
             {formik.touched.razon && formik.errors.razon ? (
-              <div className="text-red-500 poppins-regular mt-1">
+              <div className="text-red-500 poppins-regular">
                 {formik.errors.razon}
               </div>
             ) : null}

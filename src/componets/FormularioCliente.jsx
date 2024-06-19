@@ -31,12 +31,12 @@ export const FormularioCliente = ({ cliente }) => {
       telefono: Yup.string()
         .matches(/^[0-9]*$/, "El teléfono solo puede contener números")
         .min(5, "El teléfono debe tener al menos 5 números")
-        .max(10, "El teléfono debe tener como máximo 10 números")
+        .max(10, "El teléfono debe tener de 10 números")
         .required("El teléfono es obligatorio"),
       cedula: Yup.string()
         .matches(/^[0-9]*$/, "La cédula solo puede contener números")
-        .min(5, "La cédula debe contener 10 números")
-        .max(10, "El número de cédula debe tener como máximo 10 números")
+        .min(10, "La cédula debe contener al menos 10 números")
+        .max(13, "El número de cédula debe tener como máximo 13 números")
         .required("El número de cédula es obligatorio"),
       frecuente: Yup.boolean().required(
         "La frecuencia del cliente es obligatoria"
@@ -104,7 +104,7 @@ export const FormularioCliente = ({ cliente }) => {
             <input
               id="nombre"
               type="text"
-              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 "
               placeholder="Nombre y apellido del cliente"
               name="nombre"
               value={formik.values.nombre}
@@ -118,7 +118,7 @@ export const FormularioCliente = ({ cliente }) => {
             ) : null}
           </div>
 
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap mt-3">
             <div className="w-1/2 pr-2">
               <label
                 htmlFor="telefono"
@@ -129,7 +129,7 @@ export const FormularioCliente = ({ cliente }) => {
               <input
                 id="telefono"
                 type="tel"
-                className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+                className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
                 placeholder="Teléfono / celular del cliente"
                 name="telefono"
                 value={formik.values.telefono}
@@ -152,7 +152,7 @@ export const FormularioCliente = ({ cliente }) => {
               <input
                 id="cedula"
                 type="tel"
-                className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+                className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
                 placeholder="Cédula del cliente"
                 name="cedula"
                 value={formik.values.cedula}
@@ -166,7 +166,7 @@ export const FormularioCliente = ({ cliente }) => {
               ) : null}
             </div>
           </div>
-          <div>
+          <div className="mt-3">
             <label
               htmlFor="correo"
               className="poppins-semibold text-black uppercase"
@@ -176,7 +176,7 @@ export const FormularioCliente = ({ cliente }) => {
             <input
               id="correo"
               type="email"
-              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
               placeholder="Correo electrónico del cliente"
               name="correo"
               value={formik.values.correo}
@@ -189,7 +189,7 @@ export const FormularioCliente = ({ cliente }) => {
               </div>
             ) : null}
           </div>
-          <div>
+          <div className="mt-3">
             <label
               htmlFor="frecuente"
               className="poppins-semibold text-black uppercase"
@@ -198,7 +198,7 @@ export const FormularioCliente = ({ cliente }) => {
             </label>
             <select
               id="frecuente"
-              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
               name="frecuente"
               value={formik.values.frecuente}
               onChange={formik.handleChange}
@@ -215,7 +215,7 @@ export const FormularioCliente = ({ cliente }) => {
             ) : null}
           </div>
 
-          <div>
+          <div className="mt-3">
             <label
               htmlFor="direccion"
               className="poppins-semibold text-black uppercase"
