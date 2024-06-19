@@ -7,7 +7,7 @@ import AuthContext from "../context/AuthProvider";
 
 export const Login = () => {
   const navigate = useNavigate();
-  const { setAuth, setEstado } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
   const [mensaje, setMensaje] = useState({});
   const [form, setform] = useState({
     email: "",
