@@ -153,18 +153,6 @@ export const Login = () => {
                 ¿Olvidaste tu contraseña?
               </Link>
             </div>
-            <div className="border-black mt-4 text-xs border-b-2 py-2 opacity-20 mb-3"></div>
-            <div className="flex justify-between items-center">
-              <p className="poppins-regular text-black">
-                ¿No tienes una cuenta?
-              </p>
-              <Link
-                to="/register"
-                className="poppins-regular py-2 px-5 bg-[#5B72C3] text-white border rounded-xl hover:scale-100 duration-300 hover:bg-[#3D53A0] hover:text-white"
-              >
-                Registrarse
-              </Link>
-            </div>
           </div>
         </div>
       </div>

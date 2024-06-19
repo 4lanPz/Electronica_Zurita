@@ -54,9 +54,9 @@ const Dashboard = () => {
             <ul className="poppins-regular">
               <li className="text-center">
                 <Link
-                  to="/dashboard/crearcliente"
+                  to="/dashboard/registrarCliente"
                   className={`${
-                    urlActual === "/dashboard/crearcliente"
+                    urlActual === "/dashboard/registrarCliente"
                       ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
                       : "text-white"
                   } block mt-2 hover:text-black`}
@@ -66,9 +66,9 @@ const Dashboard = () => {
               </li>
               <li className="text-center">
                 <Link
-                  to="/dashboard/listar"
+                  to="/dashboard/listarClientes"
                   className={`${
-                    urlActual === "/dashboard/listar"
+                    urlActual === "/dashboard/listarClientes"
                       ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
                       : "text-white"
                   }  block mt-2 hover:text-black`}
@@ -78,9 +78,9 @@ const Dashboard = () => {
               </li>
               <li className="text-center">
                 <Link
-                  to="/dashboard/crearorden"
+                  to="/dashboard/registrarOrden"
                   className={`${
-                    urlActual === "/dashboard/crearorden"
+                    urlActual === "/dashboard/registrarOrden"
                       ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
                       : "text-white"
                   }  block mt-2 hover:text-black`}
@@ -90,14 +90,27 @@ const Dashboard = () => {
               </li>
               <li className="text-center">
                 <Link
-                  to="/dashboard/listarordenes"
+                  to="/dashboard/listarOrdenes"
                   className={`${
-                    urlActual === "/dashboard/listarordenes"
+                    urlActual === "/dashboard/listarOrdenes"
                       ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
                       : "text-white"
                   }  block mt-2 hover:text-black`}
                 >
                   Lista de Trabajos
+                </Link>
+              </li>
+
+              <li className="text-center">
+                <Link
+                  to="/dashboard/registrarTecnico"
+                  className={`${
+                    urlActual === "/dashboard/registrarTecnico"
+                      ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
+                      : "text-white"
+                  }  block mt-2 hover:text-black`}
+                >
+                  Registro Técnico
                 </Link>
               </li>
 

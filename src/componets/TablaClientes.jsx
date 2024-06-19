@@ -66,6 +66,11 @@ const Tabla = () => {
     (cliente) =>
       cliente.cedula && cliente.cedula.toString().includes(searchTerm)
   );
+  
+  const cleanAddress = (address) => {
+    const suffix= ", Ecuador";
+    return address.endsWith(suffix) ? address.slice(0, -suffix.length) : address;
+  };
 
   const TablaClientes = ({ titulo, data }) => (
     <div>
@@ -88,12 +93,12 @@ const Tabla = () => {
               className="poppins-regular border-b hover:bg-gray-300 text-center"
               key={cliente._id}
             >
-              <td>{index + 1}</td>
-              <td>{cliente.nombre}</td>
-              <td>{cliente.correo}</td>
-              <td>{cliente.telefono}</td>
-              <td>{cliente.cedula}</td>
-              <td>{cliente.direccion}</td>
+              <td className="p-2">{index + 1}</td>
+              <td className="p-2">{cliente.nombre}</td>
+              <td className="p-2">{cliente.correo}</td>
+              <td className="p-2">{cliente.telefono}</td>
+              <td className="p-2">{cliente.cedula}</td>
+              <td className="p-2">{cleanAddress(cliente.direccion)}</td>
               <td className="py-2 text-center">
                 <>
                   <AiOutlineFileText

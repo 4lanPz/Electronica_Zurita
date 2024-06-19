@@ -1,5 +1,5 @@
 import React from "react";
-import Tabla from "../componets/Tabla";
+import TablaClientes from "../componets/TablaClientes";
 
 const Listar = () => {
   return (
@@ -8,7 +8,7 @@ const Listar = () => {
         Listado de clientes
       </h1>
       <hr className="my-4" />
-      <Tabla />
+      <TablaClientes />
     </div>
   );
 };

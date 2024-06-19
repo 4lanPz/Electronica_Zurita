@@ -2,15 +2,15 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Auth from "./layout/Auth";
 import { Login } from "./paginas/Login";
-import { Register } from "./paginas/Register";
 import { NotFound } from "./paginas/NotFound";
 import Dashboard from "./layout/Dashboard";
-import Listar from "./paginas/Listar";
 import Visualizar from "./paginas/Visualizar";
-import CrearCliente from "./paginas/CrearCliente";
-import CrearOrden from "./paginas/CrearOrden";
+import RegistrarCliente from "./paginas/RegistrarCliente";
+import RegistrarOrden from "./paginas/RegistrarOrden";
+import RegistrarTecnico from "./paginas/RegistrarTecnico";
 import Actualizar from "./paginas/Actualizar";
 import Perfil from "./paginas/Perfil";
+import ListarClientes from "./paginas/ListarClientes";
 import ListarOrdenes from "./paginas/ListarOrdenes";
 import { Confirmar } from "./paginas/Confirmar";
 import Restablecer from "./paginas/Restablecer";
@@ -30,7 +30,7 @@ function App() {
               <Route index element={<Login />} />
 
               <Route path="/" element={<Auth />}>
-                <Route path="register" element={<Register />} />
+                {/* <Route path="register" element={<Register />} /> */}
                 <Route path="forgot" element={<Forgot />} />
                 <Route path="confirmar/:token" element={<Confirmar />} />
                 <Route
@@ -46,25 +46,29 @@ function App() {
                   <PrivateRoute>
                     <Routes>
                       <Route element={<Dashboard />}>
-                        <Route index element={<CrearCliente />} />
+                        <Route index element={<RegistrarCliente />} />
 
-                        <Route path="listar" element={<Listar />} />
+                        <Route path="listarClientes" element={<ListarClientes />} />
                         <Route path="visualizar/:id" element={<Visualizar />} />
                         <Route path="perfil" element={<Perfil />} />
-                        <Route path="listarordenes" element={<ListarOrdenes />}/>
+                        <Route path="registrarTecnico" element={<RegistrarTecnico />} />
                         <Route
-                          path="crearcliente"
+                          path="listarOrdenes"
+                          element={<ListarOrdenes />}
+                        />
+                        <Route
+                          path="registrarCliente"
                           element={
                             <PrivateRouteWithRole>
-                              <CrearCliente />
+                              <RegistrarCliente />
                             </PrivateRouteWithRole>
                           }
                         />
                         <Route
-                          path="crearorden"
+                          path="registrarOrden"
                           element={
                             <PrivateRouteWithRole>
-                              <CrearOrden />
+                              <RegistrarOrden />
                             </PrivateRouteWithRole>
                           }
                         />

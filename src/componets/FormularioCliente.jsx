@@ -1,85 +1,102 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Mensaje from "./Alertas/Mensaje";
 import GoogleMaps from "./GoogleMaps";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 export const FormularioCliente = ({ cliente }) => {
   const navigate = useNavigate();
   const [mensaje, setMensaje] = useState({});
-  const [form, setForm] = useState({
-    nombre: cliente?.nombre || "", // string
-    correo: cliente?.correo || "", // email
-    telefono: cliente?.telefono || "", // number
-    cedula: cliente?.cedula || "", // number
-    frecuente: cliente?.frecuente || "", // boolean
-    direccion: cliente?.direccion || "", // string
-  });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    const newValue = name === "frecuente" ? value === "true" : value;
-    setForm({
-      ...form,
-      [name]: newValue,
-    });
-  };
+  const formik = useFormik({
+    initialValues: {
+      nombre: cliente?.nombre || "",
+      correo: cliente?.correo || "",
+      telefono: cliente?.telefono || "",
+      cedula: cliente?.cedula || "",
+      frecuente: cliente?.frecuente || "",
+      direccion: cliente?.direccion || "",
+    },
+    validationSchema: Yup.object({
+      nombre: Yup.string()
+        .matches(/^[a-zA-Z\s]*$/, "El nombre no puede contener números")
+        .min(3, "El nombre debe tener al menos 3 caracteres")
+        .required("El nombre es obligatorio"),
+      correo: Yup.string()
+        .email("Correo electrónico no válido")
+        .required("El correo electrónico es obligatorio"),
+      telefono: Yup.string()
+        .matches(/^[0-9]*$/, "El teléfono solo puede contener números")
+        .min(5, "El teléfono debe tener al menos 5 números")
+        .max(10, "El teléfono debe tener como máximo 10 números")
+        .required("El teléfono es obligatorio"),
+      cedula: Yup.string()
+        .matches(/^[0-9]*$/, "La cédula solo puede contener números")
+        .min(5, "La cédula debe contener 10 números")
+        .max(10, "El número de cédula debe tener como máximo 10 números")
+        .required("El número de cédula es obligatorio"),
+      frecuente: Yup.boolean().required(
+        "La frecuencia del cliente es obligatorio"
+      ),
+      direccion: Yup.string().required("La dirección es obligatoria"),
+    }),
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        const token = localStorage.getItem("token");
+        const url = cliente?._id
+          ? `${import.meta.env.VITE_BACKEND_URL}/cliente/actualizar/${
+              cliente._id
+            }`
+          : `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
+        const options = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        const response = cliente?._id
+          ? await axios.put(url, values, options)
+          : await axios.post(url, values, options);
 
-  const handleSubmit = async (e) => {
-    setLoading(true);
-    e.preventDefault();
-    try {
-      const token = localStorage.getItem("token");
-      const url = cliente?._id
-        ? `${import.meta.env.VITE_BACKEND_URL}/cliente/actualizar/${
-            cliente._id
-          }`
-        : `${import.meta.env.VITE_BACKEND_URL}/cliente/registro`;
-      const options = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const response = cliente?._id
-        ? await axios.put(url, form, options)
-        : await axios.post(url, form, options);
-
-      if (response && response.data) {
-        setMensaje({
-          respuesta: cliente?._id
-            ? "Cliente actualizado con éxito"
-            : "Cliente registrado con éxito y correo enviado",
-          tipo: true,
-        });
-        setTimeout(() => {
-          navigate("/dashboard/listar");
-        }, 3000);
-      } else {
+        if (response && response.data) {
+          setMensaje({
+            respuesta: cliente?._id
+              ? "Cliente actualizado con éxito"
+              : "Cliente registrado con éxito y correo enviado",
+            tipo: true,
+          });
+          setTimeout(() => {
+            navigate("/dashboard/listarClientes");
+          }, 3000);
+        } else {
+          setLoading(false);
+          console.error("La respuesta no contiene 'data'");
+        }
+      } catch (error) {
+        setMensaje({ respuesta: error.response.data.msg, tipo: false });
         setLoading(false);
-        console.error("La respuesta no contiene 'data'");
+        setTimeout(() => {
+          setMensaje({});
+        }, 3000);
       }
-    } catch (error) {
-      setMensaje({ respuesta: error.response.data.msg, tipo: false });
-      setLoading(false);
-      setTimeout(() => {
-        setMensaje({});
-      }, 3000);
-    }
-  };
+    },
+  });
 
   const setDireccion = (direccion) => {
-    setForm({ ...form, direccion });
+    formik.setFieldValue("direccion", direccion);
   };
 
   return (
     <div className="p-8 w-full flex justify-center">
       <div className="xl:w-2/3 justify-center items-center">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
           <div className="poppins-regular">
             <label
-              htmlFor="nombre:"
+              htmlFor="nombre"
               className="poppins-semibold text-black uppercase"
             >
               Nombre cliente:
@@ -90,15 +107,21 @@ export const FormularioCliente = ({ cliente }) => {
               className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
               placeholder="Nombre y apellido del cliente"
               name="nombre"
-              value={form.nombre}
-              onChange={handleChange}
+              value={formik.values.nombre}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.nombre && formik.errors.nombre ? (
+              <div className="text-red-500 poppins-regular">
+                {formik.errors.nombre}
+              </div>
+            ) : null}
           </div>
 
           <div className="flex flex-wrap">
             <div className="w-1/2 pr-2">
               <label
-                htmlFor="telefono:"
+                htmlFor="telefono"
                 className="poppins-semibold text-black uppercase"
               >
                 Teléfono / celular:
@@ -109,13 +132,19 @@ export const FormularioCliente = ({ cliente }) => {
                 className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
                 placeholder="Teléfono / celular del cliente"
                 name="telefono"
-                value={form.telefono}
-                onChange={handleChange}
+                value={formik.values.telefono}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
+              {formik.touched.telefono && formik.errors.telefono ? (
+                <div className="text-red-500 poppins-regular">
+                  {formik.errors.telefono}
+                </div>
+              ) : null}
             </div>
             <div className="w-1/2 pl-2">
               <label
-                htmlFor="cedula:"
+                htmlFor="cedula"
                 className="poppins-semibold text-black uppercase"
               >
                 Cédula:
@@ -126,31 +155,43 @@ export const FormularioCliente = ({ cliente }) => {
                 className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
                 placeholder="Cédula del cliente"
                 name="cedula"
-                value={form.cedula}
-                onChange={handleChange}
+                value={formik.values.cedula}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
+              {formik.touched.cedula && formik.errors.cedula ? (
+                <div className="text-red-500 poppins-regular">
+                  {formik.errors.cedula}
+                </div>
+              ) : null}
             </div>
           </div>
           <div>
             <label
-              htmlFor="correo:"
+              htmlFor="correo"
               className="poppins-semibold text-black uppercase"
             >
               Correo Electrónico:
             </label>
             <input
               id="correo"
-              type="text"
+              type="email"
               className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
               placeholder="Correo electrónico del cliente"
               name="correo"
-              value={form.correo}
-              onChange={handleChange}
+              value={formik.values.correo}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.correo && formik.errors.correo ? (
+              <div className="text-red-500 poppins-regular">
+                {formik.errors.correo}
+              </div>
+            ) : null}
           </div>
           <div>
             <label
-              htmlFor="frecuente:"
+              htmlFor="frecuente"
               className="poppins-semibold text-black uppercase"
             >
               Cliente frecuente
@@ -159,18 +200,24 @@ export const FormularioCliente = ({ cliente }) => {
               id="frecuente"
               className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
               name="frecuente"
-              value={form.frecuente}
-              onChange={handleChange}
+              value={formik.values.frecuente}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             >
               <option value="">Seleccionar</option>
               <option value="true">Sí</option>
               <option value="false">No</option>
             </select>
+            {formik.touched.frecuente && formik.errors.frecuente ? (
+              <div className="text-red-500 poppins-regular">
+                {formik.errors.frecuente}
+              </div>
+            ) : null}
           </div>
 
           <div>
             <label
-              htmlFor="direccion:"
+              htmlFor="direccion"
               className="poppins-semibold text-black uppercase"
             >
               Dirección
@@ -181,13 +228,21 @@ export const FormularioCliente = ({ cliente }) => {
               className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
               placeholder="Dirección"
               name="direccion"
-              value={form.direccion}
-              onChange={handleChange}
+              value={formik.values.direccion}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.direccion && formik.errors.direccion ? (
+              <div className="text-red-500 poppins-regular">
+                {formik.errors.direccion}
+              </div>
+            ) : null}
           </div>
 
           <GoogleMaps setDireccion={setDireccion} />
-
+          {Object.keys(mensaje).length > 0 && (
+            <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
+          )}
           <input
             type="submit"
             className={`poppins-regular bg-[#5B72C3] w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all ${
@@ -202,9 +257,6 @@ export const FormularioCliente = ({ cliente }) => {
             }
             disabled={loading}
           />
-          {Object.keys(mensaje).length > 0 && (
-            <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
-          )}
         </form>
       </div>
     </div>
