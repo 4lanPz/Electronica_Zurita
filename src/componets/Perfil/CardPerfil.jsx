@@ -1,27 +1,15 @@
 import { useContext } from "react";
 import AuthContext from "../../context/AuthProvider";
-import Tecimage from "/images/tecprofile.jpg";
 
 export const CardPerfil = () => {
   const { auth } = useContext(AuthContext);
   return (
-    <div
-      className="bg-white border border-slate-200 h-auto p-4 flex flex-col items-center justify-between shadow-xl rounded-lg"
-    >
-      <h1 className="poppins-bold font-black text-2xl text-black">
+    <div className="bg-white border border-slate-200 h-auto p-4 flex flex-col justify-between shadow-lg rounded-xl w-2/5 sm:2/4">
+      <h1 className="poppins-bold font-black text-2xl text-black text-center">
         Datos del Técnico
       </h1>
       <div className="flex items-center justify-center flex-wrap md:flex-nowrap">
-        <div className="w-full md:w-1/2">
-          <img
-            src={Tecimage}
-            alt="img-técnico"
-            className="m-auto"
-            width={140}
-            height={140}
-          />
-        </div>
-        <div className="w-full ml-5">
+        <div className="w-full">
           <div className="">
             <b className="poppins-semibold">Nombre técnico:</b>
             <br />

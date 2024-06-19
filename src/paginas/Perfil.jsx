@@ -1,7 +1,7 @@
 import React from "react";
 import { CardPerfil } from "../componets/Perfil/CardPerfil";
 import FormularioPerfil from "../componets/Perfil/FormularioPerfil";
-import Password from "../componets/Perfil/Password";
+import ContrasenaPerfil from "../componets/Perfil/ContrasenaPerfil";
 import AuthContext from "../context/AuthProvider";
 import { useContext } from "react";
 
@@ -13,11 +13,11 @@ const Perfil = () => {
       <CardPerfil />
       </div>
       <div className="flex justify-around gap-x-8 flex-wrap gap-y-8 md:flex-nowrap">
-        <div className="w-full md:w-1/2 pr-5 pl-10">
+        <div className="w-full md:w-1/2 pr-3 pl-10">
           <FormularioPerfil />
         </div>
-        <div className="w-full md:w-1/2 pl-5 pr-10">
-          <Password />
+        <div className="w-full md:w-1/2 pl-3 pr-10">
+          <ContrasenaPerfil />
         </div>
       </div>
     </>

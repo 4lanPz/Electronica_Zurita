@@ -18,14 +18,13 @@ const ModalVerProforma = ({ orden, onCancel }) => {
         setProformaData(response.data.proforma);
         setError(null); // Limpiar errores si la solicitud fue exitosa
       } catch (error) {
-        console.error("Error al obtener la proforma:", error);
-        setError("Error al obtener la proforma. Por favor, intenta de nuevo."); // Manejar el error
+        console.error("Error al obtener la proforma o no hay proforma");
       } finally {
         setLoading(false);
       }
     };
-
-    fetchProformaData(); // Llamada inicial para obtener los datos de la proforma al cargar el componente
+    // Llamada inicial para obtener los datos de la proforma al cargar el componente
+    fetchProformaData();
 
     return () => {
       // Limpiar datos al desmontar el componente
@@ -38,9 +37,9 @@ const ModalVerProforma = ({ orden, onCancel }) => {
   }
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 ">
+    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 overflow-y-scroll">
       <div className="bg-white lg:w-2/4 w-2/3 p-10 rounded-xl">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center">
           <h2 className="poppins-bold text-2xl text-center w-full">
             Proforma Orden {orden.numOrden}
           </h2>
