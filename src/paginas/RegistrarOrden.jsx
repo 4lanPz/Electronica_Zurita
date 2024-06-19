@@ -1,7 +1,7 @@
 import React from "react";
 import { FormularioOrden } from "../componets/FormularioOrden";
 
-const CrearOrden = () => {
+const RegistrarOrden = () => {
   return (
     <div>
       <h1 className="text-center poppins-bold font-black text-4xl text-black">
@@ -13,4 +13,4 @@ const CrearOrden = () => {
   );
 };
 
-export default CrearOrden;
+export default RegistrarOrden;

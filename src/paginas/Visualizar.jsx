@@ -222,7 +222,7 @@ const Visualizar = () => {
                 onClick={mostrarModal}
                 className="poppins-regular text-white px-4 py-2 rounded-xl w-1/5 bg-[#5267b4] hover:bg-[#3D53A0]"
               >
-                Crear Proforma
+                Registrat Proforma
               </button>
 
               {modalVisible && (
