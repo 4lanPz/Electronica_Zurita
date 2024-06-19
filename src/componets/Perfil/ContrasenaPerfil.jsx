@@ -19,23 +19,27 @@ const ContrasenaPerfil = () => {
       ),
       passwordnuevo: Yup.string()
         .required("La nueva contraseña es obligatoria")
-        .min(6, "La nueva contraseña debe tener al menos 6 caracteres"),
+        .min(6, "La nueva contraseña debe tener al menos 6 caracteres")
+        .notOneOf(
+          [Yup.ref("passwordactual"), null],
+          "La nueva contraseña no puede ser igual a la contraseña actual"
+        ),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const resultado = await actualizarPassword(values);
       setMensaje(resultado);
       setTimeout(() => {
         setMensaje({});
       }, 3000);
+      // Limpiar los valores del formulario después de enviar
+      resetForm();
     },
   });
 
   return (
     <>
       <div className="mt-5">
-        <h1 className="poppins-bold text-black">
-          Actualizar Contraseña
-        </h1>
+        <h1 className="poppins-bold text-black">Actualizar Contraseña</h1>
         <hr className="my-4" />
       </div>
       <form onSubmit={formik.handleSubmit}>

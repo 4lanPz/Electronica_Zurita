@@ -154,7 +154,7 @@ export const FormularioOrden = ({ orden }) => {
   };
 
   return (
-    <div className="p-8 w-full flex justify-center">
+    <div className="p-8 w-full flex justify-center h-full">
       <div className="xl:w-2/3 justify-center items-center">
         <form onSubmit={formik.handleSubmit}>
           {Object.keys(mensajeCliente).length > 0 && (

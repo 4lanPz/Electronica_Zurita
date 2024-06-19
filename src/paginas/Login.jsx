@@ -17,11 +17,9 @@ export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    // Función para eliminar todos los tokens almacenados en el almacenamiento local
     const clearLocalStorage = () => {
       localStorage.removeItem("token");
     };
-    // Llamar a la función al cargar la página de inicio de sesión
     clearLocalStorage();
   }, []);
 

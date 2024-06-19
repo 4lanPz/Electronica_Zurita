@@ -3,12 +3,18 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Mensaje from "../componets/Alertas/Mensaje";
 import { useFormik } from "formik";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import * as Yup from "yup";
 
 export const FormularioTecnico = () => {
   const navigate = useNavigate();
   const [mensaje, setMensaje] = useState({});
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -145,7 +151,7 @@ export const FormularioTecnico = () => {
                   className="mb-1 block poppins-semibold"
                   htmlFor="telefono"
                 >
-                  Teléfono:
+                  Teléfono / celular:
                 </label>
                 <input
                   type="tel"
@@ -154,7 +160,7 @@ export const FormularioTecnico = () => {
                   value={formik.values.telefono}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  placeholder="Ingresa tu teléfono"
+                  placeholder="Ingresa tu teléfono o celular"
                   className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
                 />
                 {formik.touched.telefono && formik.errors.telefono ? (
@@ -188,16 +194,33 @@ export const FormularioTecnico = () => {
               <label className="mb-1 block poppins-semibold" htmlFor="password">
                 Contraseña:
               </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                placeholder="********************"
-                className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
-              />
+              <div className="flex items-center">
+                <div className="flex-grow pr-1">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    name="password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    placeholder="********************"
+                    className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
+                  />
+                </div>
+                <div className="flex-shrink-0 ">
+                  <button
+                    type="button"
+                    onClick={toggleShowPassword}
+                    className="flex items-center justify-center bg-[#5B72C3] rounded-full w-10 h-9 hover:scale-100 hover:bg-[#3D53A0]"
+                  >
+                    {showPassword ? (
+                      <AiOutlineEyeInvisible className="text-white text-xl" />
+                    ) : (
+                      <AiOutlineEye className="text-white text-xl" />
+                    )}
+                  </button>
+                </div>
+              </div>
               {formik.touched.password && formik.errors.password ? (
                 <div className="text-red-500 poppins-regular">
                   {formik.errors.password}

@@ -34,21 +34,22 @@ const Dashboard = () => {
         </button>
         {menuOpen && (
           <div className="mx-10">
-            <img
-              src="/images/logo_bw.jpg"
-              alt="logo Electrónica Zurita"
-              className="m-auto mt-3 p-1 mb-3"
-              width={150}
-              height={150}
-            />
-            <h2 className="font-bold text-3xl text-white text-center">
-              Electrónica <br /> Zurita
-            </h2>
+            <div className="mx-8 flex flex-col xl:flex-col md:flex-col sm:flex-row  items-center justify-center">
+              <img
+                src="/images/logo_bw.jpg"
+                alt="logo Electrónica Zurita"
+                className="m-auto mt-3 p-1 mb-3"
+                width={125}
+                height={125}
+              />
+              <h2 className="poppins-bold text-2xl text-white text-center">
+                Electrónica <br /> Zurita
+              </h2>
+            </div>
 
-            <p className="poppins-semibold text-white text-center mt-4">
-              Técnico
+            <p className="poppins-regular text-white text-center mt-2">
+              Técnico: {`${auth?.nombre}`}
             </p>
-            <p className="poppins-semibold text-white text-center ">{`${auth?.nombre}`}</p>
             <hr className="my-3 border-slate-500" />
 
             <ul className="poppins-regular">
@@ -127,10 +128,10 @@ const Dashboard = () => {
                 </Link>
               </li>
             </ul>
-            <div className="p-4 mt-10">
+            <div className="p-4">
               <Link
                 to="/"
-                className="poppins-regular text-xl text-white text-md block text-center bg-[#9b1746] hover:text-black px-4 py-1 rounded-xl"
+                className="poppins-semibold text-white text-md block text-center bg-[#9b1746] hover:text-black px-3 py-1 rounded-xl"
                 onClick={() => {
                   localStorage.removeItem("token");
                 }}
@@ -145,14 +146,12 @@ const Dashboard = () => {
         <div className="bg-[#3D53A0] flex md:justify-end items-center gap-5 justify-center"></div>
 
         {/* <div className="flex-1 bg-gray-100 p-10"> */}
-        <div className="overflow-y-scroll p-8 h-screen bg-gray-100">
+        <div className="overflow-y-scroll p-8  bg-gray-100">
           <div className="">
             {autenticado ? <Outlet /> : <Navigate to="/" />}
           </div>
         </div>
-        <div className="bg-[#3D53A0]">
-          
-        </div>
+        <div className="bg-[#3D53A0]"></div>
       </div>
     </div>
   );
