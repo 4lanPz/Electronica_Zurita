@@ -37,7 +37,7 @@ export const Login = () => {
       const respuesta = await axios.post(url, form);
       localStorage.setItem("token", respuesta.data.token);
       setAuth(respuesta.data);
-      navigate("/dashboard/crearcliente");
+      navigate("/dashboard/registrarCliente");
     } catch (error) {
       setLoading(false);
       setMensaje({ respuesta: error.response.data.msg, tipo: false });

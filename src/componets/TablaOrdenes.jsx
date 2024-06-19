@@ -180,7 +180,7 @@ const TablaOrdenes = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-3">
         <div className="poppins-regular flex items-center w-full">
           <input
             type="text"
