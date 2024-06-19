@@ -84,7 +84,9 @@ const TablaOrdenes = () => {
   };
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
+    const value = e.target.value;
+    const onlyNums = value.replace(/[^0-9]/g, "");
+    setSearchTerm(onlyNums);
   };
 
   const filteredOrdenes = ordenes.filter(
@@ -115,17 +117,17 @@ const TablaOrdenes = () => {
               className="poppins-regular border-b hover:bg-gray-300 text-center"
               key={orden._id}
             >
-              <td>{orden.numOrden}</td>
-              <td>{orden.cliente?.nombre}</td>
-              <td>{orden.cliente?.cedula}</td>
-              <td>{orden.equipo}</td>
-              <td>{new Date(orden.ingreso).toLocaleDateString()}</td>
-              <td>
+              <td className="p-2">{orden.numOrden}</td>
+              <td className="p-2">{orden.cliente?.nombre}</td>
+              <td className="p-2">{orden.cliente?.cedula}</td>
+              <td className="p-2">{orden.equipo}</td>
+              <td className="p-2">{new Date(orden.ingreso).toLocaleDateString()}</td>
+              <td className="p-2">
                 {orden.salida
                   ? new Date(orden.salida).toLocaleDateString()
                   : "N/A"}
               </td>
-              <td>{orden.estado}</td>
+              <td className="p-2">{orden.estado}</td>
               {titulo !== "Finalizado" && (
                 <td className="py-2 text-center">
                   {titulo === "Mantenimiento" || titulo === "Revisión" ? (
@@ -178,14 +180,14 @@ const TablaOrdenes = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between items-center mt-3 mb-3">
+      <div className="flex justify-between items-center">
         <div className="poppins-regular flex items-center w-full">
           <input
             type="text"
             placeholder="Buscar por cédula"
             value={searchTerm}
             onChange={handleSearchChange}
-            className="p-2 border border-black bg-[#5B72C3] placeholder:text-white text-white rounded-xl w-2/3"
+            className="p-2 border border-black bg-white placeholder:text-black text-black rounded-xl w-2/3"
           />
         </div>
         <div className="poppins-regular flex space-x-4 items-center">

@@ -1,10 +1,10 @@
-import { useState} from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import axios from "axios";
-import Mensaje from "./Alertas/Mensaje";
-import GoogleMaps from "./GoogleMaps";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Mensaje from "./Alertas/Mensaje";
+import GoogleMaps from "./GoogleMaps";
 
 export const FormularioCliente = ({ cliente }) => {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ export const FormularioCliente = ({ cliente }) => {
         .max(10, "El número de cédula debe tener como máximo 10 números")
         .required("El número de cédula es obligatorio"),
       frecuente: Yup.boolean().required(
-        "La frecuencia del cliente es obligatorio"
+        "La frecuencia del cliente es obligatoria"
       ),
       direccion: Yup.string().required("La dirección es obligatoria"),
     }),
@@ -245,7 +245,7 @@ export const FormularioCliente = ({ cliente }) => {
           )}
           <input
             type="submit"
-            className={`poppins-regular bg-[#5B72C3] w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all ${
+            className={`mt-5 poppins-regular bg-[#5B72C3] w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all ${
               loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
             value={

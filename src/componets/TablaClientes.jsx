@@ -1,14 +1,21 @@
-import { AiOutlineFileText, AiOutlineDelete } from "react-icons/ai";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import Mensaje from "./Alertas/Mensaje";
+import {
+  AiOutlineFileText,
+  AiOutlineDelete,
+  AiOutlineEye,
+} from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthProvider";
+import ModalVerCliente from "./Modals/ModalVerCliente";
+import Mensaje from "./Alertas/Mensaje";
 
 const Tabla = () => {
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
   const [clientes, setClientes] = useState([]);
+  const [selectedCliente, setSelectedCliente] = useState(null);
+  const [clienteModalVisible, setClienteModalVisible] = useState(false);
   const [mensaje, setMensaje] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -59,18 +66,33 @@ const Tabla = () => {
   };
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
+    const value = e.target.value;
+    // Validar que solo se ingresen números
+    const onlyNums = value.replace(/[^0-9]/g, "");
+    setSearchTerm(onlyNums);
+  };
+
+  const cleanAddress = (address) => {
+    const suffix = ", Ecuador";
+    return address.endsWith(suffix)
+      ? address.slice(0, -suffix.length)
+      : address;
+  };
+
+  const handleOpenClienteModal = (cliente) => {
+    setSelectedCliente(cliente);
+    setClienteModalVisible(true);
+  };
+
+  const handleCloseClienteModal = () => {
+    setSelectedCliente(null);
+    setClienteModalVisible(false);
   };
 
   const filteredClientes = clientes.filter(
     (cliente) =>
       cliente.cedula && cliente.cedula.toString().includes(searchTerm)
   );
-  
-  const cleanAddress = (address) => {
-    const suffix= ", Ecuador";
-    return address.endsWith(suffix) ? address.slice(0, -suffix.length) : address;
-  };
 
   const TablaClientes = ({ titulo, data }) => (
     <div>
@@ -107,6 +129,10 @@ const Tabla = () => {
                       navigate(`/dashboard/actualizar/${cliente._id}`)
                     }
                   />
+                  <AiOutlineEye
+                    className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                    onClick={() => handleOpenClienteModal(cliente)}
+                  />
                   <AiOutlineDelete
                     className="h-7 w-7 text-red-900 cursor-pointer inline-block"
                     onClick={() => handleDelete(cliente._id)}
@@ -130,14 +156,14 @@ const Tabla = () => {
   return (
     <>
       <div className="flex flex-col mb-5">
-        <div className="flex justify-between items-center ">
+        <div className="flex justify-between items-center">
           <div className="poppins-regular flex items-center w-full">
             <input
               type="text"
               placeholder="Buscar por cédula"
               value={searchTerm}
               onChange={handleSearchChange}
-              className="p-2 border border-black bg-[#5B72C3] placeholder:text-white text-white rounded-xl w-2/3"
+              className="p-2 border border-black bg-white placeholder:text-black text-black rounded-xl w-2/3"
             />
           </div>
           <div className="poppins-regular flex space-x-4 items-center">
@@ -146,8 +172,12 @@ const Tabla = () => {
               <span>Actualizar</span>
             </div>
             <div className="flex items-center space-x-2">
+              <AiOutlineEye className="h-6 w-6 text-slate-800" />
+              <span>Visualizar</span>
+            </div>
+            <div className="flex items-center space-x-2">
               <AiOutlineDelete className="h-6 w-6 text-red-900" />
-              <span>Finalizar</span>
+              <span>Eliminar</span>
             </div>
           </div>
         </div>
@@ -167,6 +197,12 @@ const Tabla = () => {
             <TablaClientes
               titulo="Clientes no Frecuentes"
               data={clientesNoFrecuentes}
+            />
+          )}
+          {clienteModalVisible && (
+            <ModalVerCliente
+              cliente={selectedCliente}
+              onCancel={handleCloseClienteModal}
             />
           )}
         </div>

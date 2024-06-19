@@ -2,112 +2,111 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Mensaje from "./Alertas/Mensaje";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 export const FormularioOrden = ({ orden }) => {
   const navigate = useNavigate();
   const [mensajeCliente, setMensajeCliente] = useState({});
   const [mensajeFormulario, setMensajeFormulario] = useState({});
   const [clienteInfo, setClienteInfo] = useState({
-    nombre: " ",
-    correo: " ",
-    cedula: " ",
-    telefono: " ",
+    nombre: "",
+    correo: "",
+    cedula: "",
+    telefono: "",
   });
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({
-    clienteId: orden?.clienteId || "", //string
-    equipo: orden?.equipo || "", //string
-    modelo: orden?.modelo || "", //string
-    marca: orden?.marca || "", //string
-    serie: orden?.serie || "", //string
-    color: orden?.color || "", //string
-    ingreso: orden?.ingreso || "", //string o vacío
-    razon: orden?.razon || "", //string
-    servicio: orden?.servicio || "Mantenimiento", //string
-    estado: orden?.estado || "Pendiente", //string
-    cedula: "",
+
+  const formik = useFormik({
+    initialValues: {
+      clienteId: orden?.clienteId || "",
+      equipo: orden?.equipo || "",
+      modelo: orden?.modelo || "",
+      marca: orden?.marca || "",
+      serie: orden?.serie || "",
+      color: orden?.color || "",
+      ingreso: orden?.ingreso || "",
+      razon: orden?.razon || "",
+      servicio: orden?.servicio || "Mantenimiento",
+    },
+    validationSchema: Yup.object({
+      clienteId: Yup.string().required("Cliente es obligatorio"),
+      equipo: Yup.string()
+        .min(3, "Debe tener al menos 3 caracteres")
+        .required("Equipo es obligatorio"),
+      modelo: Yup.string()
+        .min(3, "Debe tener al menos 3 caracteres")
+        .required("Modelo es obligatorio"),
+      marca: Yup.string()
+        .min(3, "Debe tener al menos 3 caracteres")
+        .required("Marca es obligatoria"),
+      serie: Yup.string().required("Número de serie es obligatorio"),
+      color: Yup.string()
+        .min(3, "Debe tener al menos 3 caracteres")
+        .required("Color es obligatorio"),
+      ingreso: Yup.date()
+        .nullable()
+        .required("Fecha de ingreso es obligatoria"),
+      razon: Yup.string()
+        .min(3, "Debe tener al menos 3 caracteres")
+        .required("Razón de ingreso es obligatoria"),
+      servicio: Yup.string().required("Servicio es obligatorio"),
+    }),
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        const token = localStorage.getItem("token");
+        const url = orden?._id
+          ? `${import.meta.env.VITE_BACKEND_URL}/orden/actualizar/${orden._id}`
+          : `${import.meta.env.VITE_BACKEND_URL}/orden/registro`;
+
+        const method = orden?._id ? "PUT" : "POST";
+
+        const options = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const response = await axios({
+          url,
+          method,
+          data: values,
+          ...options,
+        });
+
+        setMensajeFormulario({
+          respuesta: orden?._id
+            ? "Orden Actualizada"
+            : "Orden generada con éxito",
+          tipo: true,
+        });
+        setLoading(false);
+        setTimeout(() => {
+          navigate("/dashboard/listarOrdenes");
+        }, 3000);
+      } catch (error) {
+        setMensajeFormulario({
+          respuesta: error.response?.data?.msg || "Error desconocido",
+          tipo: false,
+        });
+        setLoading(false);
+      } finally {
+        setTimeout(() => {
+          setMensajeFormulario({});
+        }, 3000);
+        setLoading(false);
+      }
+    },
   });
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    setLoading(true);
-    e.preventDefault();
-
-    // Validaciones básicas
-    if (
-      !form.equipo ||
-      !form.modelo ||
-      !form.marca ||
-      !form.serie ||
-      !form.color ||
-      !form.razon
-    ) {
-      setMensajeFormulario({
-        respuesta: "Todos los campos obligatorios deben ser completados",
-        tipo: false,
-      });
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const token = localStorage.getItem("token");
-      const url = orden?._id
-        ? `${import.meta.env.VITE_BACKEND_URL}/orden/actualizar/${orden._id}`
-        : `${import.meta.env.VITE_BACKEND_URL}/orden/registro`;
-
-      const method = orden?._id ? "PUT" : "POST";
-
-      const options = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      const response = await axios({
-        url,
-        method,
-        data: form,
-        ...options,
-      });
-
-      setMensajeFormulario({
-        respuesta: orden?._id
-          ? "Orden Actualizada"
-          : "Orden generada con éxito",
-        tipo: true,
-      });
-      setLoading(false);
-      setTimeout(() => {
-        navigate("/dashboard/listarordenes");
-      }, 3000);
-    } catch (error) {
-      setMensajeFormulario({
-        respuesta: error.response?.data?.msg || "Error desconocido",
-        tipo: false,
-      });
-      setLoading(false);
-    } finally {
-      setTimeout(() => {
-        setMensajeFormulario({});
-      }, 3000);
-      setLoading(false);
-    }
-  };
 
   const handleBuscarCliente = async () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
       const url = `${import.meta.env.VITE_BACKEND_URL}/clientes/cedula/${
-        form.cedula
+        formik.values.cedula
       }`;
       const options = {
         headers: {
@@ -126,10 +125,7 @@ export const FormularioOrden = ({ orden }) => {
           cedula: cliente.cedula,
           telefono: cliente.telefono,
         });
-        setForm({
-          ...form,
-          clienteId: cliente._id,
-        });
+        formik.setFieldValue("clienteId", cliente._id);
         setMensajeCliente({
           respuesta: "Cliente encontrado",
           tipo: true,
@@ -154,7 +150,7 @@ export const FormularioOrden = ({ orden }) => {
   return (
     <div className="p-8 w-full flex justify-center">
       <div className="xl:w-2/3 justify-center items-center">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
           {Object.keys(mensajeCliente).length > 0 && (
             <Mensaje tipo={mensajeCliente.tipo}>
               {mensajeCliente.respuesta}
@@ -162,20 +158,25 @@ export const FormularioOrden = ({ orden }) => {
           )}
           <div className="flex flex-wrap mb-3">
             <div className="w-1/2 pr-10 pl-5">
-              <label
-                htmlFor="cedula"
-                className="poppins-semibold text-black uppercase"
-              >
-                Número de cédula Cliente:
+              <label htmlFor="cedula" className="block mt-4">
+                <span className="poppins-semibold text-black uppercase">
+                  Número de cédula Cliente:
+                </span>
                 <input
                   id="cedula"
-                  className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
-                  placeholder="Número de cedula del cliente"
+                  className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
+                  placeholder="Número de cédula del cliente"
                   name="cedula"
-                  value={form.cedula}
-                  onChange={handleChange}
-                ></input>
+                  value={formik.values.cedula}
+                  onChange={formik.handleChange}
+                />
               </label>
+
+              {formik.touched.cedula && formik.errors.cedula ? (
+                <div className="text-red-500 poppins-regular">
+                  {formik.errors.cedula}
+                </div>
+              ) : null}
               <div className="flex justify-center p-3">
                 <button
                   type="button"
@@ -204,7 +205,7 @@ export const FormularioOrden = ({ orden }) => {
                       <p className="poppins-regular">{clienteInfo.telefono}</p>
                     </div>
                   </div>
-                  <div className="">
+                  <div>
                     <b className="poppins-semibold">Correo electrónico:</b>
                     <br />
                     <p className="poppins-regular">{clienteInfo.correo}</p>
@@ -214,10 +215,7 @@ export const FormularioOrden = ({ orden }) => {
             </div>
           </div>
 
-          <label
-            htmlFor="equipo"
-            className="poppins-semibold text-black uppercase"
-          >
+          <label htmlFor="equipo" className="poppins-semibold text-black">
             Equipo:
             <input
               id="equipo"
@@ -225,15 +223,17 @@ export const FormularioOrden = ({ orden }) => {
               className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
               placeholder="Tipo de equipo"
               name="equipo"
-              value={form.equipo}
-              onChange={handleChange}
+              value={formik.values.equipo}
+              onChange={formik.handleChange}
             />
+            {formik.touched.equipo && formik.errors.equipo ? (
+              <div className="text-red-500 poppins-regular">
+                {formik.errors.equipo}
+              </div>
+            ) : null}
           </label>
 
-          <label
-            htmlFor="modelo"
-            className="poppins-semibold text-black uppercase"
-          >
+          <label htmlFor="modelo" className="poppins-semibold text-black">
             Modelo:
             <input
               id="modelo"
@@ -241,117 +241,147 @@ export const FormularioOrden = ({ orden }) => {
               className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
               placeholder="Modelo del equipo"
               name="modelo"
-              value={form.modelo}
-              onChange={handleChange}
+              value={formik.values.modelo}
+              onChange={formik.handleChange}
             />
+            {formik.touched.modelo && formik.errors.modelo ? (
+              <div className="text-red-500 poppins-regular">
+                {formik.errors.modelo}
+              </div>
+            ) : null}
           </label>
 
-          <label
-            htmlFor="marca"
-            className="poppins-semibold text-black uppercase"
-          >
-            Marca:
+          <label htmlFor="marca" className="block">
+            <span className="poppins-semibold text-black uppercase">
+              Marca:
+            </span>
             <input
               id="marca"
               type="text"
-              className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
               placeholder="Marca del equipo"
               name="marca"
-              value={form.marca}
-              onChange={handleChange}
+              value={formik.values.marca}
+              onChange={formik.handleChange}
             />
+            {formik.touched.marca && formik.errors.marca ? (
+              <div className="text-red-500 poppins-regular mt-1">
+                {formik.errors.marca}
+              </div>
+            ) : null}
           </label>
 
-          <label
-            htmlFor="serie"
-            className="poppins-semibold text-black uppercase"
-          >
-            Número de serie:
+          <label htmlFor="serie" className="block mt-4">
+            <span className="poppins-semibold text-black uppercase">
+              Número de serie:
+            </span>
             <input
               id="serie"
               type="text"
-              className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
               placeholder="Número de serie del equipo"
               name="serie"
-              value={form.serie}
-              onChange={handleChange}
+              value={formik.values.serie}
+              onChange={formik.handleChange}
             />
+            {formik.touched.serie && formik.errors.serie ? (
+              <div className="text-red-500 poppins-regular mt-1">
+                {formik.errors.serie}
+              </div>
+            ) : null}
           </label>
 
-          <label
-            htmlFor="color"
-            className="poppins-semibold text-black uppercase"
-          >
-            Color del equipo:
+          <label htmlFor="color" className="block mt-4">
+            <span className="poppins-semibold text-black uppercase">
+              Color del equipo:
+            </span>
             <input
               id="color"
               type="text"
-              className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
               placeholder="Color del equipo"
               name="color"
-              value={form.color}
-              onChange={handleChange}
+              value={formik.values.color}
+              onChange={formik.handleChange}
             />
+            {formik.touched.color && formik.errors.color ? (
+              <div className="text-red-500 poppins-regular mt-1">
+                {formik.errors.color}
+              </div>
+            ) : null}
           </label>
 
-          <label
-            htmlFor="ingreso"
-            className="poppins-semibold text-black uppercase"
-          >
-            Fecha de ingreso del equipo:
+          <label htmlFor="ingreso" className="block mt-4">
+            <span className="poppins-semibold text-black uppercase">
+              Fecha de ingreso del equipo:
+            </span>
             <input
               id="ingreso"
               type="date"
-              className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-3"
+              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
               placeholder="Fecha de ingreso del equipo"
               name="ingreso"
-              value={form.ingreso}
-              onChange={handleChange}
+              value={formik.values.ingreso}
+              onChange={formik.handleChange}
             />
+            {formik.touched.ingreso && formik.errors.ingreso ? (
+              <div className="text-red-500 poppins-regular mt-1">
+                {formik.errors.ingreso}
+              </div>
+            ) : null}
           </label>
 
-          <label
-            htmlFor="razon"
-            className="poppins-semibold text-black uppercase"
-          >
-            Razón de ingreso:
+          <label htmlFor="razon" className="block mt-4">
+            <span className="poppins-semibold text-black uppercase">
+              Razón de ingreso:
+            </span>
             <textarea
               id="razon"
-              type="text"
-              className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 "
+              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
               placeholder="Razones de ingreso del equipo"
               name="razon"
-              value={form.razon}
-              onChange={handleChange}
+              value={formik.values.razon}
+              onChange={formik.handleChange}
             />
+            {formik.touched.razon && formik.errors.razon ? (
+              <div className="text-red-500 poppins-regular mt-1">
+                {formik.errors.razon}
+              </div>
+            ) : null}
           </label>
 
-          <label
-            htmlFor="servicio"
-            className="poppins-semibold text-black uppercase mt-0"
-          >
-            Servicio:
+          <label htmlFor="servicio" className="block mt-4">
+            <span className="poppins-semibold text-black uppercase">
+              Servicio:
+            </span>
             <select
               id="servicio"
-              className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 mb-5"
+              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
               name="servicio"
-              value={form.servicio}
-              onChange={handleChange}
+              value={formik.values.servicio}
+              onChange={formik.handleChange}
             >
               <option value="">Seleccionar servicio</option>
               <option value="Mantenimiento">Mantenimiento</option>
               <option value="Reparación">Reparación</option>
               <option value="Revisión">Revisión</option>
             </select>
+            {formik.touched.servicio && formik.errors.servicio ? (
+              <div className="text-red-500 poppins-regular mt-1">
+                {formik.errors.servicio}
+              </div>
+            ) : null}
           </label>
+
           {Object.keys(mensajeFormulario).length > 0 && (
             <Mensaje tipo={mensajeFormulario.tipo}>
               {mensajeFormulario.respuesta}
             </Mensaje>
           )}
+
           <input
             type="submit"
-            className={`poppins-regular bg-[#5B72C3] w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all mt-3 ${
+            className={`poppins-regular bg-[#5B72C3] w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all mt-6 ${
               loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
             value={orden?._id ? "Actualizar Orden" : "Registrar Orden"}

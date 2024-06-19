@@ -65,7 +65,7 @@ export const FormularioTecnico = () => {
       setForm({});
       setLoading(false);
       setTimeout(() => {
-        navigate("/dashboard/crearcliente");
+        navigate("/dashboard/registrarCliente");
       }, 3000);
     } catch (error) {
       setMensaje({

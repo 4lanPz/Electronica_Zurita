@@ -7,14 +7,35 @@ const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
     total,
   });
 
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validar si hay piezas con valores vacíos
+    const piezasConErrores = piezas.some(
+      (pieza) => pieza.pieza.trim() === "" || pieza.precio.trim() === ""
+    );
+
+    if (piezas.length === 0 || piezasConErrores) {
+      setErrorMessage("Debe ingresar al menos una pieza con precio estimado");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000); // Limpiar mensaje de error después de 5 segundos
+      return; // Salir de la función sin enviar la proforma
+    }
+
     try {
-      console.log(form)
       const url = `${
         import.meta.env.VITE_BACKEND_URL
       }/proforma/registro/${ordenId}`;
-      console.log("URL:", url); // Verifica la URL
+
+      // Verificar si hay al menos una pieza antes de enviar la solicitud POST
+      if (form.piezas.length === 0) {
+        throw new Error("Debe ingresar al menos una pieza para la proforma");
+      }
+
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -26,18 +47,26 @@ const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
         }),
       });
 
-      // Verificar el estado de la respuesta
       if (!response.ok) {
-        const errorText = await response.text(); // Obtener el texto de la respuesta en caso de error
+        const errorText = await response.text();
         console.error("Error de servidor:", errorText);
-        throw new Error(errorText);
+        throw new Error("Error de servidor al enviar la proforma");
       }
 
       const data = await response.json();
       console.log("Proforma enviada:", data);
+      setSuccessMessage("Proforma enviada correctamente.");
+      setTimeout(() => {
+        setSuccessMessage("");
+        navigate("/dashboard/listarOrdenes");
+      }, 5000); // Limpiar mensaje de éxito después de 5 segundos
       handleClose();
     } catch (error) {
-      console.error("Error al enviar la proforma:", error);
+      console.error("Error al enviar la proforma:", error.message);
+      setErrorMessage(error.message);
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000); // Limpiar mensaje de error después de 5 segundos
     }
   };
 
@@ -105,16 +134,49 @@ const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {form.piezas.map((pieza, index) => (
-                    <tr key={index}>
-                      <td className="pl-3 oppins-regular border border-gray-300">
-                        {pieza.pieza}
-                      </td>
-                      <td className="pl-3 poppins-regular border border-gray-300">
-                        ${pieza.precio}
-                      </td>
-                    </tr>
-                  ))}
+                  {form.piezas.map(
+                    (pieza, index) =>
+                      // Validar si tanto pieza como precio están definidos
+                      pieza.pieza.trim() !== "" &&
+                      pieza.precio.trim() !== "" && (
+                        <tr key={index}>
+                          <td className="pl-3 oppins-regular border border-gray-300">
+                            <input
+                              type="text"
+                              value={pieza.pieza}
+                              onChange={(e) =>
+                                setForm((prevForm) => ({
+                                  ...prevForm,
+                                  piezas: prevForm.piezas.map((p, idx) =>
+                                    idx === index
+                                      ? { ...p, pieza: e.target.value }
+                                      : p
+                                  ),
+                                }))
+                              }
+                              className="p-1 w-full"
+                            />
+                          </td>
+                          <td className="pl-3 poppins-regular border border-gray-300">
+                            <input
+                              type="text"
+                              value={pieza.precio}
+                              onChange={(e) =>
+                                setForm((prevForm) => ({
+                                  ...prevForm,
+                                  piezas: prevForm.piezas.map((p, idx) =>
+                                    idx === index
+                                      ? { ...p, precio: e.target.value }
+                                      : p
+                                  ),
+                                }))
+                              }
+                              className="p-1 w-full"
+                            />
+                          </td>
+                        </tr>
+                      )
+                  )}
                 </tbody>
               </table>
             </div>
@@ -123,6 +185,12 @@ const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
               <p className="poppins-regular">${form.total}</p>
             </div>
           </div>
+          {errorMessage && (
+            <div className="poppins-semibold w-auto p-4 mb-2 border bg-red-50 text-red-500 border-red-500  rounded-xl items-center justify center text-sm">
+              {errorMessage}
+            </div>
+          )}
+
           <div className="flex justify-center gap-5">
             <input
               type="submit"
