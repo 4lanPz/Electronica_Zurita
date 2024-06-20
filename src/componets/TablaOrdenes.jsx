@@ -140,7 +140,7 @@ const TablaOrdenes = () => {
                       <AiOutlineFileText
                         className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
                         onClick={() =>
-                          navigate(`/dashboard/visualizar/${orden._id}`)
+                          navigate(`/dashboard/registrarProforma/${orden._id}`)
                         }
                       />
                       <AiOutlineEye

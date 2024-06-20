@@ -5,7 +5,7 @@ import axios from "axios";
 import Mensaje from "../componets/Alertas/Mensaje";
 import ModalProforma from "../componets/Modals/ModalProforma";
 
-const Visualizar = () => {
+const RegistrarProforma = () => {
   const { id } = useParams();
   const [orden, setOrden] = useState({});
   const [mensaje, setMensaje] = useState({});
@@ -222,7 +222,7 @@ const Visualizar = () => {
                 onClick={mostrarModal}
                 className="poppins-regular text-white px-4 py-2 rounded-xl w-1/5 bg-[#5267b4] hover:bg-[#3D53A0]"
               >
-                Registrat Proforma
+                Registrar Proforma
               </button>
 
               {modalVisible && (
@@ -242,4 +242,4 @@ const Visualizar = () => {
   );
 };
 
-export default Visualizar;
+export default RegistrarProforma;

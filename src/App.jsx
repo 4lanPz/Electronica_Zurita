@@ -4,7 +4,7 @@ import Auth from "./layout/Auth";
 import { Login } from "./paginas/Login";
 import { NotFound } from "./paginas/NotFound";
 import Dashboard from "./layout/Dashboard";
-import Visualizar from "./paginas/Visualizar";
+import RegistrarProforma from "./paginas/RegistrarProforma";
 import RegistrarCliente from "./paginas/RegistrarCliente";
 import RegistrarOrden from "./paginas/RegistrarOrden";
 import RegistrarTecnico from "./paginas/RegistrarTecnico";
@@ -50,7 +50,7 @@ function App() {
                           path="listarClientes"
                           element={<ListarClientes />}
                         />
-                        <Route path="visualizar/:id" element={<Visualizar />} />
+                        <Route path="registrarproforma/:id" element={<RegistrarProforma />} />
                         <Route path="perfil" element={<Perfil />} />
                         <Route
                           path="registrarTecnico"
@@ -68,7 +68,7 @@ function App() {
                           path="registrarOrden"
                           element={<RegistrarOrden />}
                         />
-                        <Route path="actualizar/:id" element={<Actualizar />} />
+                        <Route path="actualizarCliente/:id" element={<Actualizar />} />
                       </Route>
                     </Routes>
                   </PrivateRoute>

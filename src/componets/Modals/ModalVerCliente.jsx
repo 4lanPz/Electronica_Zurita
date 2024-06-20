@@ -7,7 +7,7 @@ const ModalVerCliente = ({ cliente, onCancel }) => {
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white w-2/4 p-10 rounded-xl flex flex-col">
+      <div className="bg-white w-2/4 p-10 rounded-xl flex flex-col overflow-y-scroll h-3/4">
         {loading && (
           <p className="poppins-semibold">Cargando datos del cliente...</p>
         )}
@@ -21,32 +21,38 @@ const ModalVerCliente = ({ cliente, onCancel }) => {
               Datos del cliente
             </h2>
             <div className="flex flex-wrap mb-3">
-              <div className="w-full lg:w-1/2 pr-5">
+              <div className="w-1/2 pr-5">
                 <div className="mb-2">
                   <b className="poppins-semibold">Nombre:</b>
                   <p className="poppins-regular">{cliente.nombre}</p>
                 </div>
+              </div>
+              <div className="w-1/2 pl-5">
                 <div className="mb-2">
                   <b className="poppins-semibold">Email:</b>
                   <p className="poppins-regular">{cliente.correo}</p>
                 </div>
+              </div>
+              <div className="w-1/2 pr-5">
                 <div className="mb-2">
                   <b className="poppins-semibold">Celular:</b>
                   <p className="poppins-regular">{cliente.telefono}</p>
                 </div>
+              </div>
+              <div className="w-1/2 pl-5">
                 <div className="mb-2">
                   <b className="poppins-semibold">Cédula:</b>
                   <p className="poppins-regular">{cliente.cedula}</p>
                 </div>
-                <div className="mb-2">
-                  <b className="poppins-semibold">Dirección:</b>
-                  <p className="poppins-regular">{cliente.direccion}</p>
-                </div>
               </div>
-              <div className="xl:w-1/2 sm:w-full pl-5 sm:pl-0">
-                <div style={{ minHeight: "300px" }}>
-                  <GoogleMaps direccion={cliente.direccion} />
-                </div>
+              <div className="mb-2">
+                <b className="poppins-semibold">Dirección:</b>
+                <p className="poppins-regular">{cliente.direccion}</p>
+              </div>
+            </div>
+            <div className="w-full">
+              <div style={{ minHeight: "300px" }}>
+                <GoogleMaps direccion={cliente.direccion} />
               </div>
             </div>
           </>
