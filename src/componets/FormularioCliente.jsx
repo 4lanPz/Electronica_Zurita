@@ -22,7 +22,7 @@ export const FormularioCliente = ({ cliente }) => {
     },
     validationSchema: Yup.object({
       nombre: Yup.string()
-        .matches(/^[a-zA-Z\s]*$/, "El nombre no puede contener números")
+        .matches(/^[a-zA-ZÀ-ÿ]+$/, "El nombre no puede contener números")
         .min(3, "El nombre debe tener al menos 3 caracteres")
         .required("El nombre es obligatorio"),
       correo: Yup.string()

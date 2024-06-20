@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import AuthContext from "../../context/AuthProvider";
@@ -6,7 +6,13 @@ import Mensaje from "../Alertas/Mensaje";
 
 const FormularioPerfil = () => {
   const [mensaje, setMensaje] = useState({});
-  const { auth, actualizarPerfil } = useContext(AuthContext);
+  const { auth, actualizarPerfil, loading } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!loading && !auth._id) {
+      // Maneja la redirección o notificación de usuario no autenticado
+    }
+  }, [loading, auth]);
 
   const formik = useFormik({
     initialValues: {
@@ -16,15 +22,16 @@ const FormularioPerfil = () => {
       telefono: auth.telefono || "",
       email: auth.email || "",
     },
+    enableReinitialize: true,
     validationSchema: Yup.object({
       nombre: Yup.string()
         .required("El nombre es obligatorio")
-        .matches(/^[a-zA-Z\s]+$/, "El nombre solo debe contener letras")
+        .matches(/^[a-zA-ZÀ-ÿ]+$/, "El nombre solo debe contener letras")
         .min(3, "El nombre debe tener al menos 3 caracteres")
         .max(30, "El nombre debe tener máximo 30 caracteres"),
       apellido: Yup.string()
         .required("El apellido es obligatorio")
-        .matches(/^[a-zA-Z\s]+$/, "El apellido solo debe contener letras")
+        .matches(/^[a-zA-ZÀ-ÿ]+$/, "El apellido solo debe contener letras")
         .min(3, "El apellido debe tener al menos 3 caracteres")
         .max(30, "El apellido debe tener máximo 30 caracteres"),
       telefono: Yup.string()
@@ -48,6 +55,10 @@ const FormularioPerfil = () => {
     },
   });
 
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
+
   return (
     <>
       <div className="mt-5">
@@ -61,10 +72,7 @@ const FormularioPerfil = () => {
 
         <div className="flex flex-wrap mb-3">
           <div className="w-1/2 pr-2">
-            <label
-              htmlFor="nombre"
-              className="poppins-semibold text-black"
-            >
+            <label htmlFor="nombre" className="poppins-semibold text-black">
               Nombre:{" "}
             </label>
             <input
@@ -82,10 +90,7 @@ const FormularioPerfil = () => {
             ) : null}
           </div>
           <div className="w-1/2 pl-2">
-            <label
-              htmlFor="apellido"
-              className="poppins-semibold text-black"
-            >
+            <label htmlFor="apellido" className="poppins-semibold text-black">
               Apellido:{" "}
             </label>
             <input
@@ -105,10 +110,7 @@ const FormularioPerfil = () => {
         </div>
 
         <div className="mb-3">
-          <label
-            htmlFor="telefono"
-            className="poppins-semibold text-black"
-          >
+          <label htmlFor="telefono" className="poppins-semibold text-black">
             Teléfono:{" "}
           </label>
           <input
@@ -127,10 +129,7 @@ const FormularioPerfil = () => {
         </div>
 
         <div className="mb-3">
-          <label
-            htmlFor="email"
-            className="poppins-semibold text-black"
-          >
+          <label htmlFor="email" className="poppins-semibold text-black">
             Email:{" "}
           </label>
           <input
