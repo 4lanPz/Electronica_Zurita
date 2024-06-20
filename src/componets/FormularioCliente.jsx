@@ -22,7 +22,7 @@ export const FormularioCliente = ({ cliente }) => {
     },
     validationSchema: Yup.object({
       nombre: Yup.string()
-        .matches(/^[a-zA-ZÀ-ÿ]+$/, "El nombre no puede contener números")
+        .matches(/^[a-zA-ZÀ-ÿ\s]+$/, "El nombre no puede contener números")
         .min(3, "El nombre debe tener al menos 3 caracteres")
         .required("El nombre es obligatorio"),
       correo: Yup.string()
@@ -32,12 +32,14 @@ export const FormularioCliente = ({ cliente }) => {
         .matches(/^[0-9]*$/, "El teléfono solo puede contener números")
         .min(5, "El teléfono debe tener al menos 5 números")
         .max(10, "El teléfono debe tener de 10 números")
-        .required("El teléfono es obligatorio"),
+        .required("El teléfono es obligatorio")
+        .test("is-positive", "El teléfono no puede ser negativo", value => parseInt(value) >= 0),
       cedula: Yup.string()
         .matches(/^[0-9]*$/, "La cédula solo puede contener números")
         .min(10, "La cédula debe contener al menos 10 números")
         .max(13, "El número de cédula debe tener como máximo 13 números")
-        .required("El número de cédula es obligatorio"),
+        .required("El número de cédula es obligatorio")
+        .test("is-positive", "El número no puede ser negativo", value => parseInt(value) >= 0),
       frecuente: Yup.boolean().required(
         "La frecuencia del cliente es obligatoria"
       ),

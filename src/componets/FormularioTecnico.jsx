@@ -37,15 +37,25 @@ export const FormularioTecnico = () => {
         .min(3, "El apellido debe tener al menos 3 caracteres")
         .max(30, "El apellido debe tener máximo 30 caracteres"),
       ruc: Yup.string()
-        .required("El RUC es obligatorio")
         .matches(/^\d+$/, "El RUC debe ser un número")
         .min(10, "El RUC debe tener al menos 10 números")
-        .max(13, "El RUC debe tener máximo 13 números"),
+        .max(13, "El RUC debe tener máximo 13 números")
+        .required("El RUC es obligatorio")
+        .test(
+          "is-positive",
+          "El número no puede ser negativo",
+          (value) => parseInt(value) >= 0
+        ),
       telefono: Yup.string()
-        .required("El teléfono es obligatorio")
         .matches(/^\d+$/, "El teléfono debe ser un número")
         .min(5, "El teléfono debe tener mínimo 5 dígitos")
-        .max(13, "El teléfono debe tener máximo 13 números"),
+        .max(13, "El teléfono debe tener máximo 13 números")
+        .required("El teléfono es obligatorio")
+        .test(
+          "is-positive",
+          "El teléfono no puede ser negativo",
+          (value) => parseInt(value) >= 0
+        ),
       email: Yup.string()
         .email("El correo electrónico no es válido")
         .required("El correo electrónico es obligatorio"),

@@ -57,6 +57,16 @@ export const FormularioOrden = ({ orden }) => {
         .min(3, "Debe tener al menos 10 caracteres")
         .required("Razón de ingreso es obligatoria"),
       servicio: Yup.string().required("Servicio es obligatorio"),
+      cedula: Yup.string()
+        .matches(/^[0-9]*$/, "La cédula solo puede contener números")
+        .min(10, "La cédula debe contener al menos 10 números")
+        .max(13, "El número de cédula debe tener como máximo 13 números")
+        .required("Número de cédula es obligatorio")
+        .test(
+          "is-positive",
+          "El número no puede ser negativo",
+          (value) => parseInt(value) >= 0
+        ),
     }),
     onSubmit: async (values) => {
       setLoading(true);
@@ -108,6 +118,20 @@ export const FormularioOrden = ({ orden }) => {
   });
 
   const handleBuscarCliente = async () => {
+    // Validar el campo cédula antes de buscar cliente
+    const isValidCedula = await formik.validateField("cedula");
+
+    if (formik.errors.cedula) {
+      setMensajeCliente({
+        respuesta: formik.errors.cedula,
+        tipo: false,
+      });
+      setTimeout(() => {
+        setMensajeCliente({});
+      }, 5000);
+      return;
+    }
+
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
