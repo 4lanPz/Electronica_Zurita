@@ -63,7 +63,7 @@ const FormularioPerfil = () => {
           <div className="w-1/2 pr-2">
             <label
               htmlFor="nombre"
-              className="poppins-semibold text-black uppercase"
+              className="poppins-semibold text-black"
             >
               Nombre:{" "}
             </label>
@@ -84,7 +84,7 @@ const FormularioPerfil = () => {
           <div className="w-1/2 pl-2">
             <label
               htmlFor="apellido"
-              className="poppins-semibold text-black uppercase"
+              className="poppins-semibold text-black"
             >
               Apellido:{" "}
             </label>
@@ -107,7 +107,7 @@ const FormularioPerfil = () => {
         <div className="mb-3">
           <label
             htmlFor="telefono"
-            className="poppins-semibold text-black uppercase"
+            className="poppins-semibold text-black"
           >
             Teléfono:{" "}
           </label>
@@ -129,7 +129,7 @@ const FormularioPerfil = () => {
         <div className="mb-3">
           <label
             htmlFor="email"
-            className="poppins-semibold text-black uppercase"
+            className="poppins-semibold text-black"
           >
             Email:{" "}
           </label>
@@ -150,7 +150,7 @@ const FormularioPerfil = () => {
 
         <input
           type="submit"
-          className="poppins-regular bg-[#5B72C3] w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
+          className="poppins-regular bg-[#5B72C3] w-full p-3 text-white rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
           value="Actualizar Datos"
         />
       </form>

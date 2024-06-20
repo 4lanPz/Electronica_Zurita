@@ -34,7 +34,7 @@ const Dashboard = () => {
         </button>
         {menuOpen && (
           <div className="mx-10">
-            <div className="mx-8 flex flex-col xl:flex-col md:flex-col sm:flex-row  items-center justify-center">
+            <div className="mx-4 flex flex-col xl:flex-col md:flex-col sm:flex-row  items-center justify-center">
               <img
                 src="/images/logo_bw.jpg"
                 alt="logo Electrónica Zurita"

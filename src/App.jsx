@@ -30,7 +30,6 @@ function App() {
               <Route index element={<Login />} />
 
               <Route path="/" element={<Auth />}>
-                {/* <Route path="register" element={<Register />} /> */}
                 <Route path="forgot" element={<Forgot />} />
                 <Route path="confirmar/:token" element={<Confirmar />} />
                 <Route
@@ -48,29 +47,27 @@ function App() {
                       <Route element={<Dashboard />}>
                         <Route index element={<RegistrarCliente />} />
 
-                        <Route path="listarClientes" element={<ListarClientes />} />
+                        <Route
+                          path="listarClientes"
+                          element={<ListarClientes />}
+                        />
                         <Route path="visualizar/:id" element={<Visualizar />} />
                         <Route path="perfil" element={<Perfil />} />
-                        <Route path="registrarTecnico" element={<RegistrarTecnico />} />
+                        <Route
+                          path="registrarTecnico"
+                          element={<RegistrarTecnico />}
+                        />
                         <Route
                           path="listarOrdenes"
                           element={<ListarOrdenes />}
                         />
                         <Route
                           path="registrarCliente"
-                          element={
-                            <PrivateRouteWithRole>
-                              <RegistrarCliente />
-                            </PrivateRouteWithRole>
-                          }
+                          element={<RegistrarCliente />}
                         />
                         <Route
                           path="registrarOrden"
-                          element={
-                            <PrivateRouteWithRole>
-                              <RegistrarOrden />
-                            </PrivateRouteWithRole>
-                          }
+                          element={<RegistrarOrden />}
                         />
                         <Route path="actualizar/:id" element={<Actualizar />} />
                       </Route>

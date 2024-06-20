@@ -49,7 +49,7 @@ const ContrasenaPerfil = () => {
         <div className="mb-3">
           <label
             htmlFor="passwordactual"
-            className="poppins-semibold text-black uppercase"
+            className="poppins-semibold text-black "
           >
             Contraseña actual:{" "}
           </label>
@@ -71,7 +71,7 @@ const ContrasenaPerfil = () => {
         <div className="mb-3">
           <label
             htmlFor="passwordnuevo"
-            className="poppins-semibold text-black uppercase"
+            className="poppins-semibold text-black "
           >
             Nueva contraseña:{" "}
           </label>
@@ -92,7 +92,7 @@ const ContrasenaPerfil = () => {
 
         <input
           type="submit"
-          className="poppins-regular bg-[#5B72C3] w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
+          className="poppins-regular bg-[#5B72C3] w-full p-3 text-white  rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
           value="Actualizar Contraseña"
         />
       </form>
