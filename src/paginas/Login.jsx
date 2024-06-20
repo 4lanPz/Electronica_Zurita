@@ -145,7 +145,7 @@ export const Login = () => {
             {/* Olvidaste la contraseña */}
             <div className="mb-1">
               <Link
-                to="/forgot"
+                to="/recuperar"
                 className="poppins-regular underline text-black hover:text-gray-700"
               >
                 ¿Olvidaste tu contraseña?

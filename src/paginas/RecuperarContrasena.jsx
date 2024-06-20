@@ -3,28 +3,34 @@ import { useState } from "react";
 import axios from "axios";
 import Mensaje from "../componets/Alertas/Mensaje";
 
-export const Forgot = () => {
+export const RecuperarContrasena = () => {
   const [mensaje, setMensaje] = useState({});
-  const [mail, setMail] = useState({});
+  const [mail, setMail] = useState("");
+  const [loading, setLoading] = useState(false); // Estado para controlar la carga
 
   const handleChange = (e) => {
-    setMail({
-      ...mail,
-      [e.target.name]: e.target.value,
-    });
+    setMail(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Activar la animación de carga
 
     try {
       const url = `${import.meta.env.VITE_BACKEND_URL}/recuperar-password`;
-      const respuesta = await axios.post(url, mail);
-      setMensaje({ respuesta: respuesta.data.msg, tipo: true });
+      const respuesta = await axios.post(url, { email: mail });
       setMail("");
+      setMensaje({ respuesta: respuesta.data.msg, tipo: true });
     } catch (error) {
       setMensaje({ respuesta: error.response.data.msg, tipo: false });
+    } finally {
+      setLoading(false); // Desactivar la animación de carga
     }
+
+    // El mensaje se ocultará después de 6 segundos
+    setTimeout(() => {
+      setMensaje({});
+    }, 6000);
   };
 
   return (
@@ -71,16 +77,23 @@ export const Forgot = () => {
                     className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
                     name="email"
                     onChange={handleChange}
+                    value={mail}
                   />
                 </div>
 
                 <div className="mb-3">
-                  <button className="poppins-regular bg-[#5267b4] text-white border py-2 w-full rounded-xl mt-5 hover:scale-105 duration-300 hover:bg-[#3D53A0] hover:text-white">
-                    Enviar correo de recuperación
+                  <button
+                    type="submit"
+                    className={`poppins-regular bg-[#5267b4] text-white border py-2 w-full rounded-xl mt-5 hover:scale-105 duration-300 hover:bg-[#3D53A0] hover:text-white ${
+                      loading ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    disabled={loading} // Deshabilita el botón mientras se carga
+                  >
+                    {loading ? "Cargando..." : "Enviar correo de recuperación"}
                   </button>
                 </div>
               </form>
-              {Object.keys(mensaje).length > 0 && (
+              {mensaje.respuesta && (
                 <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
               )}
 
