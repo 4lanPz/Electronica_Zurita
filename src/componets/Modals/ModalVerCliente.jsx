@@ -45,13 +45,13 @@ const ModalVerCliente = ({ cliente, onCancel }) => {
                   <p className="poppins-regular">{cliente.cedula}</p>
                 </div>
               </div>
-              <div className="mb-2">
+              <div className="">
                 <b className="poppins-semibold">Dirección:</b>
                 <p className="poppins-regular">{cliente.direccion}</p>
               </div>
             </div>
-            <div className="w-full">
-              <div style={{ minHeight: "300px" }}>
+            <div className="w-full h-auto">
+              <div>
                 <GoogleMaps direccion={cliente.direccion} />
               </div>
             </div>

@@ -1,13 +1,26 @@
-import { useContext, useState } from "react";
-import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
 
 const Dashboard = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const urlActual = location.pathname;
   const { auth } = useContext(AuthContext);
   const autenticado = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (!auth && !autenticado) {
+      navigate("/");
+    }
+  }, [auth, autenticado, navigate]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -34,7 +47,7 @@ const Dashboard = () => {
         </button>
         {menuOpen && (
           <div className="mx-10">
-            <div className="mx-4 flex flex-col xl:flex-col md:flex-col sm:flex-row  items-center justify-center">
+            <div className="mx-4 flex flex-col xl:flex-col md:flex-col sm:flex-row items-center justify-center">
               <img
                 src="/images/logo_bw.jpg"
                 alt="logo Electrónica Zurita"
@@ -146,7 +159,7 @@ const Dashboard = () => {
         <div className="bg-[#3D53A0] flex md:justify-end items-center gap-5 justify-center"></div>
 
         {/* <div className="flex-1 bg-gray-100 p-10"> */}
-        <div className="overflow-y-scroll p-8  bg-gray-100">
+        <div className="overflow-y-scroll p-8 bg-gray-100">
           <div className="">
             {autenticado ? <Outlet /> : <Navigate to="/" />}
           </div>

@@ -4,7 +4,7 @@ import AuthContext from "../../context/AuthProvider";
 export const CardPerfil = () => {
   const { auth } = useContext(AuthContext);
   return (
-    <div className="bg-white border border-slate-200 h-auto p-4 flex flex-col justify-between shadow-lg rounded-xl w-2/5 sm:2/4">
+    <div className="bg-white border border-slate-200 h-auto p-4 flex flex-col justify-between shadow-lg rounded-xl xl:w-2/5 sm:2/4 ">
       <h1 className="poppins-bold font-black text-2xl text-black text-center">
         Datos del Técnico
       </h1>
