@@ -69,7 +69,7 @@ const OrdenProceso = ({ orden, onCancel }) => {
         <form onSubmit={handleSubmit} className="text-center">
           <div className="poppins-regular text-xl flex items-center justify-center mb-4">
             <label htmlFor="si" className="mr-2 ">
-              ¿Sí?
+              Sí
             </label>
             <input
               type="radio"
@@ -81,7 +81,7 @@ const OrdenProceso = ({ orden, onCancel }) => {
               className="mr-4"
             />
             <label htmlFor="no" className="mr-2">
-              ¿No?
+              No
             </label>
             <input
               type="radio"

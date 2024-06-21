@@ -120,7 +120,7 @@ const TablaOrdenes = () => {
             <th className="p-2">Fecha Ingreso</th>
             {titulo === "Finalizado" && <th className="p-2">Fecha Salida</th>}
             <th className="p-2">Estado</th>
-            {titulo !== "Finalizado" && <th className="p-2">Acciones</th>}
+            {titulo !== "Finalizado" && <th className="1">Acciones</th>}
           </tr>
         </thead>
         <tbody>
@@ -149,24 +149,24 @@ const TablaOrdenes = () => {
                   {titulo === "Mantenimiento" || titulo === "Revisión" ? (
                     <>
                       <AiOutlineFileText
-                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-1"
                         onClick={() => handleOpenModal(orden)}
                       />
                       <AiOutlineEye
-                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-1"
                         onClick={() => handleOpenVerOrdenModal(orden)}
                       />
                     </>
                   ) : (
                     <>
                       <AiOutlineFileText
-                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-1"
                         onClick={() =>
                           navigate(`/dashboard/registrarProforma/${orden._id}`)
                         }
                       />
                       <AiOutlineEye
-                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-1"
                         onClick={() => handleOpenProformaModal(orden)}
                       />
                     </>

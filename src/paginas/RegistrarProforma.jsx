@@ -14,7 +14,12 @@ const validationSchema = Yup.object().shape({
       precio: Yup.number()
         .typeError("Debe ser un número")
         .required("El precio es obligatorio")
-        .min(0, "El precio debe ser mayor o igual a 0"),
+        .min(0, "El precio no puede ser negativo")
+        .test(
+          "no-negative",
+          "El precio no puede ser negativo",
+          (value) => value >= 0
+        ),
     })
   ),
 });
@@ -78,7 +83,7 @@ const RegistrarProforma = () => {
             </h1>
             <hr className="my-4" />
             <div className="flex flex-col justify-center items-center ">
-              <div className="poppins-semibold bg-white p-8 rounded-xl shadow-md mb-6 w-2/3 sm:w-3/4">
+              <div className="poppins-semibold bg-white p-8 rounded-xl shadow-md mb-6 xl:w-2/4 sm:w-3/4">
                 <h2 className="text-xl mb-4 text-center">
                   Datos de la orden {orden.numOrden}
                 </h2>
@@ -154,7 +159,7 @@ const RegistrarProforma = () => {
                 }}
               >
                 {({ values }) => (
-                  <Form className="bg-white p-8 rounded-xl shadow-lg mb-6 w-2/4 sm:w-3/4">
+                  <Form className="bg-white p-8 rounded-xl shadow-lg  xl:w-2/4 sm:w-3/4">
                     <h2 className="poppins-semibold text-xl mb-4 text-center">
                       Piezas para la reparación
                     </h2>
@@ -165,7 +170,7 @@ const RegistrarProforma = () => {
                             values.piezas.map((pieza, index) => (
                               <div
                                 key={index}
-                                className="grid grid-cols-10 gap-4 items-center mb-2"
+                                className="grid grid-cols-10 gap-4 items-center "
                               >
                                 <div className="col-span-7">
                                   <label
@@ -180,12 +185,8 @@ const RegistrarProforma = () => {
                                     type="text"
                                     className="poppins-regular w-full p-2 border rounded-xl"
                                   />
-                                  <ErrorMessage
-                                    name={`piezas.${index}.pieza`}
-                                    component="div"
-                                    className="text-red-500 text-sm"
-                                  />
                                 </div>
+
                                 <div className="col-span-2">
                                   <label
                                     htmlFor={`piezas.${index}.precio`}
@@ -199,11 +200,6 @@ const RegistrarProforma = () => {
                                     type="number"
                                     className="poppins-regular w-full p-2 border rounded-xl"
                                   />
-                                  <ErrorMessage
-                                    name={`piezas.${index}.precio`}
-                                    component="div"
-                                    className="text-red-500 text-sm"
-                                  />
                                 </div>
                                 <div className="col-span-1 flex items-center justify-center">
                                   <button
@@ -213,6 +209,19 @@ const RegistrarProforma = () => {
                                   >
                                     <FiTrash2 />
                                   </button>
+                                </div>
+                                <div className="poppins-regular col-span-10 text-red-500">
+                                  <ErrorMessage
+                                    name={`piezas.${index}.pieza`}
+                                    component="div"
+                                    className="text-red-500"
+                                  />
+                                  <ErrorMessage
+                                    name={`piezas.${index}.precio`}
+                                    component="div"
+                                    class
+                                    Name="text-red-500"
+                                  />
                                 </div>
                               </div>
                             ))}
@@ -227,10 +236,7 @@ const RegistrarProforma = () => {
                       )}
                     </FieldArray>
                     <div className="mt-4">
-                      <h2 className="poppins-semibold text-xl mb-4">Total</h2>
-                      <p className="poppins-semibold text-2xl font-bold">
-                        ${calcularTotal(values.piezas).toFixed(2)}
-                      </p>
+                      <h2 className="poppins-semibold text-xl">Total: ${calcularTotal(values.piezas).toFixed(2)}</h2>
                     </div>
                     {mensaje.respuesta && (
                       <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
