@@ -1,15 +1,16 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+import Mensaje from "../Alertas/Mensaje";
 const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
   const [form, setForm] = useState({
     ...orden,
     piezas,
     total,
   });
-
+  const [mensaje, setMensaje] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -19,22 +20,21 @@ const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
     );
 
     if (piezas.length === 0 || piezasConErrores) {
-      setErrorMessage("Debe ingresar al menos una pieza con precio estimado");
+      setMensaje({
+        respuesta: "Lo siento, hay una pieza sin precio o una pieza vacía",
+        tipo: false,
+      });
       setTimeout(() => {
-        setErrorMessage("");
+        setMensaje({});
       }, 5000); // Limpiar mensaje de error después de 5 segundos
       return; // Salir de la función sin enviar la proforma
     }
 
     try {
+      console.log(form);
       const url = `${
         import.meta.env.VITE_BACKEND_URL
       }/proforma/registro/${ordenId}`;
-
-      // Verificar si hay al menos una pieza antes de enviar la solicitud POST
-      if (form.piezas.length === 0) {
-        throw new Error("Debe ingresar al menos una pieza para la proforma");
-      }
 
       const response = await fetch(url, {
         method: "POST",
@@ -47,26 +47,21 @@ const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
         }),
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Error de servidor:", errorText);
-        throw new Error("Error de servidor al enviar la proforma");
-      }
-
       const data = await response.json();
-      console.log("Proforma enviada:", data);
-      setSuccessMessage("Proforma enviada correctamente.");
+      setMensaje({
+        respuesta: "La proforma se ha registrado con exito",
+        tipo: true,
+      });
       setTimeout(() => {
-        setSuccessMessage("");
+        setMensaje({});
         navigate("/dashboard/listarOrdenes");
-      }, 5000); // Limpiar mensaje de éxito después de 5 segundos
+      }, 6000);
       handleClose();
     } catch (error) {
-      console.error("Error al enviar la proforma:", error.message);
-      setErrorMessage(error.message);
+      setMensaje({ respuesta: "Error al enviar la proforma", tipo: false });
       setTimeout(() => {
-        setErrorMessage("");
-      }, 5000); // Limpiar mensaje de error después de 5 segundos
+        setMensaje({});
+      }, 5000);
     }
   };
 
@@ -180,18 +175,16 @@ const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
                 </tbody>
               </table>
             </div>
-            <div className="mb-2">
+            <div className="">
               <b className="poppins-semibold">Total estimado:</b>
               <p className="poppins-regular">${form.total}</p>
             </div>
           </div>
-          {errorMessage && (
-            <div className="poppins-semibold w-auto p-4 mb-2 border bg-red-50 text-red-500 border-red-500  rounded-xl items-center justify center text-sm">
-              {errorMessage}
-            </div>
+          {Object.keys(mensaje).length > 0 && (
+            <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
           )}
 
-          <div className="flex justify-center gap-5">
+          <div className="flex justify-center gap-5 mt-3">
             <input
               type="submit"
               className="poppins-regular bg-[#5B72C3] green w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
