@@ -8,8 +8,6 @@ const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
     total,
   });
   const [mensaje, setMensaje] = useState({});
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,12 +19,12 @@ const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
 
     if (piezas.length === 0 || piezasConErrores) {
       setMensaje({
-        respuesta: "Lo siento, hay una pieza sin precio o una pieza vacía",
+        respuesta: "Lo siento, esta orden ya cuenta con una proforma",
         tipo: false,
       });
       setTimeout(() => {
         setMensaje({});
-      }, 5000); // Limpiar mensaje de error después de 5 segundos
+      }, 5000);
       return; // Salir de la función sin enviar la proforma
     }
 

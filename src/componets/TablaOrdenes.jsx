@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
 import OrdenProceso from "./Modals/OrdenProceso";
 import ModalVerProforma from "./Modals/ModalVerProforma";
+import ModalVerOrden from "./Modals/ModalVerOrden";
 
 const TablaOrdenes = () => {
   const { auth } = useContext(AuthContext);
@@ -18,6 +19,17 @@ const TablaOrdenes = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [proformaModalVisible, setProformaModalVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [verOrdenModalVisible, setVerOrdenModalVisible] = useState(false);
+  const [selectedOrdenVer, setSelectedOrdenVer] = useState(null);
+
+  const handleOpenVerOrdenModal = (orden) => {
+    setSelectedOrdenVer(orden);
+    setVerOrdenModalVisible(true);
+  };
+
+  const handleCloseVerOrdenModal = () => {
+    setVerOrdenModalVisible(false);
+  };
 
   const handleOpenModal = (orden) => {
     setSelectedOrden(orden);
@@ -106,7 +118,7 @@ const TablaOrdenes = () => {
             <th className="p-2">Cédula</th>
             <th className="p-2">Equipo</th>
             <th className="p-2">Fecha Ingreso</th>
-            <th className="p-2">Fecha Salida</th>
+            {titulo === "Finalizado" && <th className="p-2">Fecha Salida</th>}
             <th className="p-2">Estado</th>
             {titulo !== "Finalizado" && <th className="p-2">Acciones</th>}
           </tr>
@@ -121,20 +133,30 @@ const TablaOrdenes = () => {
               <td className="p-2">{orden.cliente?.nombre}</td>
               <td className="p-2">{orden.cliente?.cedula}</td>
               <td className="p-2">{orden.equipo}</td>
-              <td className="p-2">{new Date(orden.ingreso).toLocaleDateString()}</td>
               <td className="p-2">
-                {orden.salida
-                  ? new Date(orden.salida).toLocaleDateString()
-                  : "N/A"}
+                {new Date(orden.ingreso).toLocaleDateString()}
               </td>
+              {titulo === "Finalizado" && (
+                <td className="p-2">
+                  {orden.salida
+                    ? new Date(orden.salida).toLocaleDateString()
+                    : "N/A"}
+                </td>
+              )}
               <td className="p-2">{orden.estado}</td>
               {titulo !== "Finalizado" && (
                 <td className="py-2 text-center">
                   {titulo === "Mantenimiento" || titulo === "Revisión" ? (
-                    <AiOutlineFileText
-                      className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
-                      onClick={() => handleOpenModal(orden)}
-                    />
+                    <>
+                      <AiOutlineFileText
+                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                        onClick={() => handleOpenModal(orden)}
+                      />
+                      <AiOutlineEye
+                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                        onClick={() => handleOpenVerOrdenModal(orden)}
+                      />
+                    </>
                   ) : (
                     <>
                       <AiOutlineFileText
@@ -225,6 +247,12 @@ const TablaOrdenes = () => {
         <ModalVerProforma
           orden={selectedOrden}
           onCancel={handleCloseProformaModal}
+        />
+      )}
+      {verOrdenModalVisible && (
+        <ModalVerOrden
+          orden={selectedOrdenVer}
+          onCancel={handleCloseVerOrdenModal}
         />
       )}
     </div>

@@ -7,8 +7,7 @@ import * as Yup from "yup";
 
 export const FormularioOrden = ({ orden }) => {
   const navigate = useNavigate();
-  const [mensajeCliente, setMensajeCliente] = useState({});
-  const [mensajeFormulario, setMensajeFormulario] = useState({});
+  const [mensaje, setMensaje] = useState({});
   const [clienteInfo, setClienteInfo] = useState({
     nombre: "",
     correo: "",
@@ -92,25 +91,23 @@ export const FormularioOrden = ({ orden }) => {
           ...options,
         });
 
-        setMensajeFormulario({
+        setMensaje({
           respuesta: orden?._id
             ? "Orden Actualizada"
             : "Orden generada con éxito",
           tipo: true,
         });
-        setLoading(false);
         setTimeout(() => {
+          setMensaje({});
           navigate("/dashboard/listarOrdenes");
-        }, 3000);
+        }, 5000);
       } catch (error) {
-        setMensajeFormulario({
-          respuesta: error.response?.data?.msg || "Error desconocido",
+        setMensaje({
+          respuesta: "Error al registrar o actualizar la orden",
           tipo: false,
         });
-        setLoading(false);
-      } finally {
         setTimeout(() => {
-          setMensajeFormulario({});
+          setMensaje({});
         }, 3000);
         setLoading(false);
       }
@@ -118,17 +115,16 @@ export const FormularioOrden = ({ orden }) => {
   });
 
   const handleBuscarCliente = async () => {
-    // Validar el campo cédula antes de buscar cliente
-    const isValidCedula = await formik.validateField("cedula");
+    formik.validateField("cedula");
 
     if (formik.errors.cedula) {
-      setMensajeCliente({
+      setMensaje({
         respuesta: formik.errors.cedula,
         tipo: false,
       });
       setTimeout(() => {
-        setMensajeCliente({});
-      }, 5000);
+        setMensaje({});
+      }, 3000);
       return;
     }
 
@@ -156,24 +152,24 @@ export const FormularioOrden = ({ orden }) => {
           telefono: cliente.telefono,
         });
         formik.setFieldValue("clienteId", cliente._id);
-        setMensajeCliente({
+        setMensaje({
           respuesta: "Cliente encontrado",
           tipo: true,
         });
         setLoading(false);
         setTimeout(() => {
-          setMensajeCliente({});
-        }, 5000);
+          setMensaje({});
+        }, 3000);
       }
     } catch (error) {
-      setMensajeCliente({
-        respuesta: "No se ha encontrado un cliente con ese número de cédula",
+      setMensaje({
+        respuesta: "No existe un cliente con ese número de cédula",
         tipo: false,
       });
       setLoading(false);
       setTimeout(() => {
-        setMensajeCliente({});
-      }, 5000);
+        setMensaje({});
+      }, 3000);
     }
   };
 
@@ -181,10 +177,8 @@ export const FormularioOrden = ({ orden }) => {
     <div className="p-8 w-full flex justify-center h-full">
       <div className="xl:w-2/3 justify-center items-center">
         <form onSubmit={formik.handleSubmit}>
-          {Object.keys(mensajeCliente).length > 0 && (
-            <Mensaje tipo={mensajeCliente.tipo}>
-              {mensajeCliente.respuesta}
-            </Mensaje>
+          {Object.keys(mensaje).length > 0 && (
+            <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
           )}
           <div className="flex flex-wrap">
             <div className="w-1/2 pr-10 pl-5">
@@ -404,10 +398,8 @@ export const FormularioOrden = ({ orden }) => {
             ) : null}
           </label>
 
-          {Object.keys(mensajeFormulario).length > 0 && (
-            <Mensaje tipo={mensajeFormulario.tipo}>
-              {mensajeFormulario.respuesta}
-            </Mensaje>
+          {Object.keys(mensaje).length > 0 && (
+            <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
           )}
 
           <input

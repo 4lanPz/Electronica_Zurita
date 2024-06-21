@@ -10,7 +10,6 @@ const FormularioPerfil = () => {
 
   useEffect(() => {
     if (!loading && !auth._id) {
-      // Maneja la redirección o notificación de usuario no autenticado
     }
   }, [loading, auth]);
 
