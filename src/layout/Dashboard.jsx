@@ -60,10 +60,10 @@ const Dashboard = () => {
               </h2>
             </div>
 
-            <p className="poppins-regular text-white text-center mt-2">
+            {/* <p className="poppins-regular text-white text-center mt-2">
               Técnico: {`${auth?.nombre}`}
-            </p>
-            <hr className="my-3 border-slate-500" />
+            </p> */}
+            <hr className="my-5 border-slate-500" />
 
             <ul className="poppins-regular">
               <li className="text-center">
@@ -124,7 +124,7 @@ const Dashboard = () => {
                       : "text-white"
                   }  block mt-2 hover:text-black`}
                 >
-                  Registro Técnico
+                  Gestión Técnicos
                 </Link>
               </li>
 
@@ -157,8 +157,6 @@ const Dashboard = () => {
       </div>
       <div className="flex-1 flex flex-col h-screen bg-gray-100">
         <div className="bg-[#3D53A0] flex md:justify-end items-center gap-5 justify-center"></div>
-
-        {/* <div className="flex-1 bg-gray-100 p-10"> */}
         <div className="overflow-y-scroll p-8 bg-gray-100">
           <div className="">
             {autenticado ? <Outlet /> : <Navigate to="/" />}

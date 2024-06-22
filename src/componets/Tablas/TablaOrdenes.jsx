@@ -207,7 +207,7 @@ const TablaOrdenes = () => {
           <input
             type="text"
             placeholder="Buscar por cédula"
-            value={searchTerm}
+            value={searchTerm || ""} // Evitar undefined
             onChange={handleSearchChange}
             className="p-2 border border-black bg-white placeholder:text-black text-black rounded-xl w-2/3"
           />

@@ -4,30 +4,12 @@ import { FiTrash2 } from "react-icons/fi";
 import axios from "axios";
 import Mensaje from "../componets/Alertas/Mensaje";
 import ModalProforma from "../componets/Modals/ModalProforma";
-import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
-import * as Yup from "yup";
-
-const validationSchema = Yup.object().shape({
-  piezas: Yup.array().of(
-    Yup.object().shape({
-      pieza: Yup.string().required("La pieza es obligatoria"),
-      precio: Yup.number()
-        .typeError("Debe ser un número")
-        .required("El precio es obligatorio")
-        .min(0, "El precio no puede ser negativo")
-        .test(
-          "no-negative",
-          "El precio no puede ser negativo",
-          (value) => value >= 0
-        ),
-    })
-  ),
-});
 
 const RegistrarProforma = () => {
   const { id } = useParams();
   const [orden, setOrden] = useState({});
   const [mensaje, setMensaje] = useState({});
+  const [piezas, setPiezas] = useState([{ pieza: "", precio: "" }]);
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
@@ -52,11 +34,24 @@ const RegistrarProforma = () => {
     consultarOrden();
   }, [id]);
 
-  const initialValues = {
-    piezas: [{ pieza: "", precio: "" }],
+  const handlePiezaChange = (index, event) => {
+    const { name, value } = event.target;
+    const nuevasPiezas = [...piezas];
+    nuevasPiezas[index][name] = value;
+    setPiezas(nuevasPiezas);
   };
 
-  const calcularTotal = (piezas) => {
+  const agregarPieza = () => {
+    setPiezas([...piezas, { pieza: "", precio: "" }]);
+  };
+
+  const eliminarPieza = (index) => {
+    const nuevasPiezas = [...piezas];
+    nuevasPiezas.splice(index, 1);
+    setPiezas(nuevasPiezas);
+  };
+
+  const calcularTotal = () => {
     return piezas.reduce(
       (total, pieza) => total + parseFloat(pieza.precio || 0),
       0
@@ -83,7 +78,7 @@ const RegistrarProforma = () => {
             </h1>
             <hr className="my-4" />
             <div className="flex flex-col justify-center items-center ">
-              <div className="poppins-semibold bg-white p-8 rounded-xl shadow-md mb-6 xl:w-2/4 sm:w-3/4">
+              <div className="poppins-semibold bg-white p-8 rounded-xl shadow-md mb-6 w-2/3 sm:w-3/4">
                 <h2 className="text-xl mb-4 text-center">
                   Datos de la orden {orden.numOrden}
                 </h2>
@@ -150,111 +145,91 @@ const RegistrarProforma = () => {
                 </p>
               </div>
 
-              <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={(values) => {
-                  // Lógica para enviar los datos al backend
-                  mostrarModal();
-                }}
-              >
-                {({ values }) => (
-                  <Form className="bg-white p-8 rounded-xl shadow-lg  xl:w-2/4 sm:w-3/4">
-                    <h2 className="poppins-semibold text-xl mb-4 text-center">
-                      Piezas para la reparación
-                    </h2>
-                    <FieldArray name="piezas">
-                      {({ insert, remove, push }) => (
-                        <>
-                          {values.piezas.length > 0 &&
-                            values.piezas.map((pieza, index) => (
-                              <div
-                                key={index}
-                                className="grid grid-cols-10 gap-4 items-center "
-                              >
-                                <div className="col-span-7">
-                                  <label
-                                    htmlFor={`piezas.${index}.pieza`}
-                                    className="poppins-semibold block mb-1"
-                                  >
-                                    Pieza N°{index + 1}
-                                  </label>
-                                  <Field
-                                    name={`piezas.${index}.pieza`}
-                                    placeholder="Nombre de la pieza"
-                                    type="text"
-                                    className="poppins-regular w-full p-2 border rounded-xl"
-                                  />
-                                </div>
-
-                                <div className="col-span-2">
-                                  <label
-                                    htmlFor={`piezas.${index}.precio`}
-                                    className="poppins-semibold block mb-1"
-                                  >
-                                    Precio
-                                  </label>
-                                  <Field
-                                    name={`piezas.${index}.precio`}
-                                    placeholder="Precio"
-                                    type="number"
-                                    className="poppins-regular w-full p-2 border rounded-xl"
-                                  />
-                                </div>
-                                <div className="col-span-1 flex items-center justify-center">
-                                  <button
-                                    type="button"
-                                    onClick={() => remove(index)}
-                                    className="bg-[#9b1746] text-white p-2 rounded-xl mt-8"
-                                  >
-                                    <FiTrash2 />
-                                  </button>
-                                </div>
-                                <div className="poppins-regular col-span-10 text-red-500">
-                                  <ErrorMessage
-                                    name={`piezas.${index}.pieza`}
-                                    component="div"
-                                    className="text-red-500"
-                                  />
-                                  <ErrorMessage
-                                    name={`piezas.${index}.precio`}
-                                    component="div"
-                                    class
-                                    Name="text-red-500"
-                                  />
-                                </div>
-                              </div>
-                            ))}
-                          <button
-                            type="button"
-                            onClick={() => push({ pieza: "", precio: "" })}
-                            className="poppins-regular text-white px-4 py-2 rounded-xl bg-[#5267b4] hover:bg-[#3D53A0] mt-4"
-                          >
-                            Agregar Pieza
-                          </button>
-                        </>
-                      )}
-                    </FieldArray>
-                    <div className="mt-4">
-                      <h2 className="poppins-semibold text-xl">Total: ${calcularTotal(values.piezas).toFixed(2)}</h2>
-                    </div>
-                    {mensaje.respuesta && (
-                      <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
-                    )}
-                    <button
-                      type="submit"
-                      className="poppins-regular text-white px-4 py-2 rounded-xl w-full bg-[#5267b4] hover:bg-[#3D53A0] mt-4"
+              <div className="bg-white p-8 rounded-xl shadow-lg mb-6 w-2/4 sm:w-3/4">
+                <h2 className="poppins-semibold text-xl mb-4 text-center">
+                  Piezas para la reparación
+                </h2>
+                <div className="grid gap-4">
+                  {piezas.map((pieza, index) => (
+                    <div
+                      key={index}
+                      className="grid grid-cols-10 gap-4 items-center"
                     >
-                      Registrar Proforma
-                    </button>
-                  </Form>
-                )}
-              </Formik>
+                      <div className="col-span-7">
+                        <label
+                          htmlFor={`pieza-${index}`}
+                          className="poppins-semibold block mb-1"
+                        >
+                          Pieza N°{index + 1}
+                        </label>
+                        <input
+                          type="text"
+                          id={`pieza-${index}`}
+                          name="pieza"
+                          value={pieza.pieza}
+                          onChange={(event) => handlePiezaChange(index, event)}
+                          className="poppins-regular w-full p-2 border rounded-xl"
+                        />
+                      </div>
+                      <div className="col-span-2">
+                        <label
+                          htmlFor={`precio-${index}`}
+                          className="poppins-semibold block mb-1"
+                        >
+                          Precio
+                        </label>
+                        <input
+                          type="number"
+                          id={`precio-${index}`}
+                          name="precio"
+                          value={pieza.precio}
+                          onChange={(event) => handlePiezaChange(index, event)}
+                          className="poppins-regular w-full p-2 border rounded-xl"
+                        />
+                      </div>
+                      <div className="col-span-1 flex items-center justify-center">
+                        <button
+                          type="button"
+                          onClick={() => eliminarPieza(index)}
+                          className="bg-[#9b1746] text-white p-2 rounded-xl mt-8"
+                        >
+                          <FiTrash2 />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={agregarPieza}
+                  className="poppins-regular text-white px-4 py-2 rounded-xl bg-[#5267b4] hover:bg-[#3D53A0] mt-4"
+                >
+                  Agregar Pieza
+                </button>
+              </div>
+
+              <div className="bg-white p-8 rounded-xl shadow-lg mb-6 w-2/4 sm:w-3/4">
+                <h2 className="poppins-semibold text-xl mb-4">Total</h2>
+                <p className="poppins-semibold text-2xl font-bold">
+                  ${calcularTotal().toFixed(2)}
+                </p>
+              </div>
+              {mensaje.respuesta && (
+                <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
+              )}
+              <button
+                onClick={mostrarModal}
+                className="poppins-regular text-white px-4 py-2 rounded-xl w-1/5 bg-[#5267b4] hover:bg-[#3D53A0]"
+              >
+                Registrar Proforma
+              </button>
+
               {modalVisible && (
                 <ModalProforma
                   orden={orden}
-                  piezas={initialValues.piezas}
-                  total={calcularTotal(initialValues.piezas)}
+                  piezas={piezas}
+                  total={calcularTotal()}
                   handleClose={cerrarModal}
                   ordenId={id} // Pasar ordenId correctamente
                 />
