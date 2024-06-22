@@ -1,5 +1,5 @@
 import React from "react";
-import TablaOrdenes from "../componets/TablaOrdenes";
+import TablaOrdenes from "../componets/Tablas/TablaOrdenes";
 
 const ListarOrdenes = () => {
   return (

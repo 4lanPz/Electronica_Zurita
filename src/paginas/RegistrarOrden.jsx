@@ -1,5 +1,5 @@
 import React from "react";
-import { FormularioOrden } from "../componets/FormularioOrden";
+import { FormularioOrden } from "../componets/Formularios/FormularioOrden";
 
 const RegistrarOrden = () => {
   return (

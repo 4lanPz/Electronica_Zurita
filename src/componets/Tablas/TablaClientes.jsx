@@ -6,9 +6,9 @@ import {
   AiOutlineEye,
 } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthProvider";
-import ModalVerCliente from "./Modals/ModalVerCliente";
-import Mensaje from "./Alertas/Mensaje";
+import AuthContext from "../../context/AuthProvider";
+import ModalVerCliente from "../Modals/ModalVerCliente";
+import Mensaje from "../Alertas/Mensaje";
 
 const Tabla = () => {
   const { auth } = useContext(AuthContext);

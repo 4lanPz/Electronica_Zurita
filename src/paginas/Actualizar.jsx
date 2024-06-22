@@ -1,4 +1,4 @@
-import { FormularioCliente } from "../componets/FormularioCliente";
+import { FormularioCliente } from "../componets/Formularios/FormularioCliente";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Mensaje from "../componets/Alertas/Mensaje";

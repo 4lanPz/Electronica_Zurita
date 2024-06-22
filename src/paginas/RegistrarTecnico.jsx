@@ -1,5 +1,5 @@
 import React from "react";
-import { FormularioTecnico } from "../componets/FormularioTecnico";
+import { FormularioTecnico } from "../componets/Formularios/FormularioTecnico";
 
 const Registro = () => {
   return (

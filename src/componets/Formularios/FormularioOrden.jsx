@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Mensaje from "./Alertas/Mensaje";
+import Mensaje from "../Alertas/Mensaje";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 

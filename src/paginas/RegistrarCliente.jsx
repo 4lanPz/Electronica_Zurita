@@ -1,5 +1,5 @@
 import React from "react";
-import { FormularioCliente } from "../componets/FormularioCliente";
+import { FormularioCliente } from "../componets/Formularios/FormularioCliente";
 
 const RegistrarCliente = () => {
   return (

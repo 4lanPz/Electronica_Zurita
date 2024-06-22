@@ -3,8 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Mensaje from "./Alertas/Mensaje";
-import GoogleMaps from "./GoogleMaps";
+import Mensaje from "../Alertas/Mensaje";
+import GoogleMaps from "../GoogleMaps";
 
 export const FormularioCliente = ({ cliente }) => {
   const navigate = useNavigate();

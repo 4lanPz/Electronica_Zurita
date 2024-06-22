@@ -6,10 +6,10 @@ import {
 } from "react-icons/ai";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthProvider";
-import OrdenProceso from "./Modals/OrdenProceso";
-import ModalVerProforma from "./Modals/ModalVerProforma";
-import ModalVerOrden from "./Modals/ModalVerOrden";
+import AuthContext from "../../context/AuthProvider";
+import OrdenProceso from "../Modals/OrdenProceso";
+import ModalVerProforma from "../Modals/ModalVerProforma";
+import ModalVerOrden from "../Modals/ModalVerOrden";
 
 const TablaOrdenes = () => {
   const { auth } = useContext(AuthContext);

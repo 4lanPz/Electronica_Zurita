@@ -1,5 +1,5 @@
 import React from "react";
-import TablaClientes from "../componets/TablaClientes";
+import TablaClientes from "../componets/Tablas/TablaClientes";
 
 const Listar = () => {
   return (
