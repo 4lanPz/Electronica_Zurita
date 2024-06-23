@@ -78,9 +78,9 @@ const TablaTecnicos = () => {
     setTecnicoModalVisible(true);
   };
 
-  const handleCloseTecnicoModal = () => { 
+  const handleCloseTecnicoModal = () => {
     setTecnicoModalVisible(false);
-    listarTecnicos()
+    listarTecnicos();
   };
 
   const filteredTecnicos = tecnicos.filter((tecnico) =>
@@ -110,29 +110,28 @@ const TablaTecnicos = () => {
         <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
           <thead className="bg-[#3D53A0] text-white">
             <tr className="poppins-regular">
+              <th className="p-2">N°</th>
               <th className="p-2">Nombre</th>
               <th className="p-2">RUC</th>
               <th className="p-2">Correo electrónico</th>
               <th className="p-2">teléfono</th>
-              <th className="p-2">Estado</th>
               <th className="p-2">Acción</th>
             </tr>
           </thead>
           <tbody>
-            {filteredTecnicos.map((tecnico) => (
+            {filteredTecnicos.map((tecnico, index) => (
               <tr
                 className="poppins-regular border-b hover:bg-gray-300 text-center"
                 key={tecnico._id}
               >
+                <td className="p-2">{index + 1 } </td>
                 <td className="p-2">
                   {tecnico.nombre} {tecnico.apellido}
                 </td>
                 <td className="p-2">{tecnico.ruc}</td>
                 <td className="p-2">{tecnico.email}</td>
                 <td className="p-2">{tecnico.telefono}</td>
-                <td className="p-2">
-                  {tecnico.status ? "Activo" : "Pendiente"}
-                </td>
+
                 <td className="py-2 text-center">
                   <AiOutlineDelete
                     className="h-7 w-7 text-red-900 cursor-pointer inline-block mr-2"

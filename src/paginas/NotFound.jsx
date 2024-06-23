@@ -23,7 +23,7 @@ export const NotFound = () => {
 
               <Link
                 to="/"
-                className="poppins-regular p-3 m-5 w-full text-center green text-white  border rounded-xl hover:scale-105 duration-300 hover:bg-emerald-900 hover:text-white"
+                className="poppins-regular p-3 m-5 w-full text-center green text-white bg-[#5B72C3] border rounded-xl hover:scale-105 duration-300 hover:bg-[#3D53A0] hover:text-white"
               >
                 Volver al inicio de sesión
               </Link>

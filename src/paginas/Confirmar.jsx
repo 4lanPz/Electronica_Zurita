@@ -19,6 +19,12 @@ export const Confirmar = () => {
   };
   useEffect(() => {
     verifyToken();
+    setTimeout(() => {
+      const clearLocalStorage = () => {
+        localStorage.removeItem("token");
+      };
+      clearLocalStorage();
+    }, 1000);
   }, []);
 
   return (
@@ -38,15 +44,12 @@ export const Confirmar = () => {
               src={logoConfirm}
               alt="Confirmar Técnico"
             />
-            {/* <p className="poppins-semibold text-black mt-8">
-              Ya puedes iniciar sesión
-            </p> */}
             {Object.keys(mensaje).length > 0 && (
             <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
           )}
             <Link
               to="/"
-              className="poppins-regular p-3 m-5 w-full text-center green text-white  border rounded-xl hover:scale-105 duration-300 hover:bg-emerald-900 hover:text-white mb-0"
+              className="poppins-regular p-3 m-5 w-full text-center green text-white  border rounded-xl hover:scale-105 duration-300 hover:bg-[#3D53A0] bg-[#5B72C3] hover:text-white mb-0"
             >
               Iniciar sesión
             </Link>

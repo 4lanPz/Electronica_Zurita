@@ -62,10 +62,15 @@ const OrdenProceso = ({ orden, onCancel }) => {
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-      <div className="bg-gray-100 p-4 rounded-xl shadow-md">
-        <h2 className="poppins-semibold text-xl text-black text-center mb-4">
-          ¿Desea pasar la orden {orden.numOrden} a estado "En proceso"?
+      <div className="bg-gray-100 p-10 rounded-xl shadow-md">
+        <h2 className="poppins-bold text-2xl text-black text-center mb-4">
+          Orden {orden.numOrden}
         </h2>
+        <p className="poppins-regular text-xl">Cliente: {orden.cliente?.nombre}</p>
+        <p className="poppins-regular text-xl">Equipo: {orden.equipo}</p>
+        <p className="poppins-regular text-xl">Marca: {orden.marca}</p>
+        <p className="poppins-regular text-xl">Color: {orden.color}</p>
+        <p className="poppins-semibold mt-3">¿Desea pasar esta orden al estado "En proceso"?</p>
         <form onSubmit={handleSubmit} className="text-center">
           <div className="poppins-regular text-xl flex items-center justify-center mb-4">
             <label htmlFor="si" className="mr-2 ">
