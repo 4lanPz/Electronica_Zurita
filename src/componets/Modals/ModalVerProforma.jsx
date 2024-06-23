@@ -37,8 +37,8 @@ const ModalVerProforma = ({ orden, onCancel }) => {
   }
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 overflow-y-scroll">
-      <div className="bg-white lg:w-2/4 w-2/3 p-10 rounded-xl">
+    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 ">
+      <div className="bg-white lg:w-2/4 w-2/3 p-10 rounded-xl h-3/4 overflow-y-scroll">
         <div className="flex justify-between items-center">
           <h2 className="poppins-bold text-2xl text-center w-full">
             Proforma Orden {orden.numOrden}
