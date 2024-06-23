@@ -10,10 +10,6 @@ export const Confirmar = () => {
   const [mensaje, setMensaje] = useState({});
   const verifyToken = async () => {
     try {
-      const clearLocalStorage = () => {
-        localStorage.removeItem("token");
-      };
-      clearLocalStorage();
       const url = `${import.meta.env.VITE_BACKEND_URL}/confirmar/${token}`;
       const respuesta = await axios.get(url);
       setMensaje({ respuesta: respuesta.data.msg, tipo: true });

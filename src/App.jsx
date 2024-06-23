@@ -27,17 +27,16 @@ function App() {
           <OrdenesProvider>
             <Routes>
               <Route index element={<Login />} />
-
               <Route path="/" element={<Auth />}>
                 <Route path="recuperar" element={<RecuperarContrasena />} />
-                <Route path="confirmar/:token" element={<Confirmar />} />
-                <Route
-                  path="recuperar-password/:token"
-                  element={<Restablecer />}
-                />
+
                 <Route path="*" element={<NotFound />} />
               </Route>
-
+              <Route path="confirmar/:token" element={<Confirmar />} />
+              <Route
+                path="recuperar-password/:token"
+                element={<Restablecer />}
+              />
               <Route
                 path="dashboard/*"
                 element={
@@ -50,12 +49,12 @@ function App() {
                           path="listarClientes"
                           element={<ListarClientes />}
                         />
-                        <Route path="registrarproforma/:id" element={<RegistrarProforma />} />
-                        <Route path="perfil" element={<Perfil />} />
                         <Route
-                          path="tecnicos"
-                          element={<Tecnicos />}
+                          path="registrarproforma/:id"
+                          element={<RegistrarProforma />}
                         />
+                        <Route path="perfil" element={<Perfil />} />
+                        <Route path="tecnicos" element={<Tecnicos />} />
                         <Route
                           path="listarOrdenes"
                           element={<ListarOrdenes />}
@@ -68,7 +67,10 @@ function App() {
                           path="registrarOrden"
                           element={<RegistrarOrden />}
                         />
-                        <Route path="actualizarCliente/:id" element={<Actualizar />} />
+                        <Route
+                          path="actualizarCliente/:id"
+                          element={<Actualizar />}
+                        />
                       </Route>
                     </Routes>
                   </PrivateRoute>
