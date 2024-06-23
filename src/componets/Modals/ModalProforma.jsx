@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Mensaje from "../Alertas/Mensaje";
+import axios from "axios";
+
 const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
   const [form, setForm] = useState({
     ...orden,
@@ -9,54 +11,29 @@ const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
   });
   const [mensaje, setMensaje] = useState({});
   const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validar si hay piezas con valores vacíos
-    const piezasConErrores = piezas.some(
-      (pieza) => pieza.pieza.trim() === "" || pieza.precio.trim() === ""
-    );
-
-    if (piezas.length === 0 || piezasConErrores) {
-      setMensaje({
-        respuesta: "Lo siento, esta orden ya cuenta con una proforma",
-        tipo: false,
-      });
-      setTimeout(() => {
-        setMensaje({});
-      }, 5000);
-      return; // Salir de la función sin enviar la proforma
-    }
-
     try {
-      console.log(form);
       const url = `${
         import.meta.env.VITE_BACKEND_URL
       }/proforma/registro/${ordenId}`;
 
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          piezas: form.piezas,
-          precioTotal: form.total,
-        }),
+      const response = await axios.post(url, {
+        piezas: form.piezas,
+        precioTotal: form.total,
       });
 
-      const data = await response.json();
-      setMensaje({
-        respuesta: "La proforma se ha registrado con exito",
-        tipo: true,
-      });
+      // Si la petición es exitosa
+      setMensaje({ respuesta: "Proforma registrada con éxito", tipo: true });
       setTimeout(() => {
         setMensaje({});
         navigate("/dashboard/listarOrdenes");
-      }, 6000);
-      handleClose();
+      }, 3000);
     } catch (error) {
-      setMensaje({ respuesta: "Error al enviar la proforma", tipo: false });
+      // Si hay un error en la petición
+      console.error("Hubo un error inesperado:", error);
+      setMensaje({ respuesta: "Hubo un error inesperado", tipo: false });
       setTimeout(() => {
         setMensaje({});
       }, 5000);
@@ -183,11 +160,13 @@ const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
           )}
 
           <div className="flex justify-center gap-5 mt-3">
-            <input
+            <button
               type="submit"
               className="poppins-regular bg-[#5B72C3] green w-full p-3 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
-              value="Registrar"
-            />
+              onClick={handleSubmit}
+            >
+              Registrar
+            </button>
             <button
               type="button"
               className="poppins-regular sm:w-auto leading-3 text-center text-white px-6 py-4 rounded-lg bg-red-700 hover:bg-red-900"

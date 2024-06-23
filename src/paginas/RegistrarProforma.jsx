@@ -42,6 +42,12 @@ const RegistrarProforma = () => {
   };
 
   const agregarPieza = () => {
+    // Validar que la última pieza no esté vacía antes de agregar una nueva
+    const ultimaPieza = piezas[piezas.length - 1];
+    if (ultimaPieza.pieza.trim() === "" || ultimaPieza.precio.trim() === "") {
+      // Si la última pieza tiene campos vacíos, no agregamos una nueva
+      return;
+    }
     setPiezas([...piezas, { pieza: "", precio: "" }]);
   };
 
@@ -59,7 +65,26 @@ const RegistrarProforma = () => {
   };
 
   const mostrarModal = () => {
-    setModalVisible(true);
+    // Validar que todas las piezas tengan valores no vacíos y precio mayor que cero antes de mostrar el modal
+    const piezasValidas = piezas.every(
+      (pieza) =>
+        pieza.pieza.trim() !== "" &&
+        pieza.precio.trim() !== "" &&
+        parseFloat(pieza.precio) > 0
+    );
+
+    if (piezasValidas) {
+      setModalVisible(true);
+    } else {
+      setMensaje({
+        respuesta:
+          "Por favor no se aceptan piezas vacias o con precios iguales a 0",
+        tipo: false,
+      });
+      setTimeout(() => {
+        setMensaje({});
+      }, 6000);
+    }
   };
 
   const cerrarModal = () => {
@@ -209,18 +234,17 @@ const RegistrarProforma = () => {
                 </button>
               </div>
 
-              <div className="bg-white p-8 rounded-xl shadow-lg mb-6 w-2/4 sm:w-3/4">
-                <h2 className="poppins-semibold text-xl mb-4">Total</h2>
-                <p className="poppins-semibold text-2xl font-bold">
-                  ${calcularTotal().toFixed(2)}
-                </p>
+              <div className=" rounded-xl w-2/4 sm:w-3/4 text-center">
+                <h2 className="poppins-semibold text-xl ">
+                  Total: ${calcularTotal().toFixed(2)}
+                </h2>
               </div>
               {mensaje.respuesta && (
                 <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
               )}
               <button
                 onClick={mostrarModal}
-                className="poppins-regular text-white px-4 py-2 rounded-xl w-1/5 bg-[#5267b4] hover:bg-[#3D53A0]"
+                className="poppins-regular text-white px-4 py-2 rounded-xl w-1/5 bg-[#5267b4] hover:bg-[#3D53A0] mb-10 mt-3"
               >
                 Registrar Proforma
               </button>
