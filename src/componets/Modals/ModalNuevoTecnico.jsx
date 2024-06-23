@@ -6,7 +6,7 @@ import { useFormik } from "formik";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import * as Yup from "yup";
 
-export const FormularioTecnico = () => {
+const ModalNuevoTecnico = ({ onCancel }) => {
   const navigate = useNavigate();
   const [mensaje, setMensaje] = useState({});
   const [loading, setLoading] = useState(false);
@@ -72,7 +72,7 @@ export const FormularioTecnico = () => {
         formik.resetForm();
         setLoading(false);
         setTimeout(() => {
-          navigate("/dashboard/registrarCliente");
+          onCancel();
         }, 3000);
       } catch (error) {
         setMensaje({
@@ -83,11 +83,13 @@ export const FormularioTecnico = () => {
       }
     },
   });
-
   return (
-    <>
-      <div className="p-4 w-full flex justify-center">
-        <div className="xl:w-2/3 sm:w-3/4 justify-center items-center">
+    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+      <div className="bg-white w-3/4 p-10 rounded-xl flex flex-col overflow-y-scroll h-3/4">
+        <h1 className="poppins-bold text-center font-black text-black mb-3">
+          Registrar nuevo técnico
+        </h1>
+        <div className="justify-center items-center">
           <div className="text-center"></div>
           <form onSubmit={formik.handleSubmit} className="mb-2">
             <div className="flex flex-wrap mb-3">
@@ -103,7 +105,7 @@ export const FormularioTecnico = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Ingresa tu nombre"
-                  className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
+                  className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-600 p-2 text-black"
                 />
                 {formik.touched.nombre && formik.errors.nombre ? (
                   <div className="text-red-500 poppins-regular">
@@ -126,7 +128,7 @@ export const FormularioTecnico = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Ingresa tu apellido"
-                  className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
+                  className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-600 p-2 text-black"
                 />
                 {formik.touched.apellido && formik.errors.apellido ? (
                   <div className="text-red-500 poppins-regular">
@@ -148,7 +150,7 @@ export const FormularioTecnico = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Ingresa tu número de RUC"
-                  className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
+                  className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-600 p-2 text-black"
                 />
                 {formik.touched.ruc && formik.errors.ruc ? (
                   <div className="text-red-500 poppins-regular">
@@ -171,7 +173,7 @@ export const FormularioTecnico = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Ingresa tu teléfono o celular"
-                  className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
+                  className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-600 p-2 text-black"
                 />
                 {formik.touched.telefono && formik.errors.telefono ? (
                   <div className="text-red-500 poppins-regular">
@@ -192,7 +194,7 @@ export const FormularioTecnico = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 placeholder="Ingresa tu correo"
-                className=" poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
+                className=" poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-600 p-2 text-black"
               />
               {formik.touched.email && formik.errors.email ? (
                 <div className="text-red-500 poppins-regular">
@@ -214,7 +216,7 @@ export const FormularioTecnico = () => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     placeholder="********************"
-                    className="poppins-regular block w-full rounded-xl border border-gray-300 focus:border-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-700 py-1 px-2 text-black"
+                    className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-600 p-2 text-black"
                   />
                 </div>
                 <div className="flex-shrink-0 ">
@@ -240,18 +242,36 @@ export const FormularioTecnico = () => {
             {Object.keys(mensaje).length > 0 && (
               <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
             )}
-            <button
-              type="submit"
-              className={`w-full poppins-regular bg-[#5267b4] text-white border py-2 rounded-xl mt-3 duration-300 hover:bg-[#3D53A0] hover:text-white mb-0 ${
-                loading ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-              disabled={loading}
-            >
-              {loading ? "Cargando..." : "Registrar nuevo técnico"}
-            </button>
+            <div className="flex flex-grid text-center">
+              <div className="w-2/3 px-5">
+                <button
+                  type="submit"
+                  className={`w-full poppins-regular  m-3 text-white border py-2 rounded-xl duration-300 bg-[#5267b4] hover:bg-[#3D53A0] hover:text-white mb-0 ${
+                    loading ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                  disabled={loading}
+                >
+                  {loading ? "Cargando..." : "Registrar nuevo técnico"}
+                </button>
+              </div>
+              <div className="w-2/3 px-5">
+                <button
+                  type="button"
+                  className={
+                    "w-full poppins-regular m-3 text-white border py-2 rounded-xl duration-300 bg-[#9b1746] hover:bg-[#af4369] hover:text-white mb-0 "
+                  }
+                  onClick={onCancel}
+                >
+                  {" "}
+                  Cerrar{" "}
+                </button>
+              </div>
+            </div>
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
+
+export default ModalNuevoTecnico;

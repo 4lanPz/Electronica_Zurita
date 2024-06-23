@@ -117,9 +117,9 @@ const Dashboard = () => {
 
               <li className="text-center">
                 <Link
-                  to="/dashboard/registrarTecnico"
+                  to="/dashboard/tecnicos"
                   className={`${
-                    urlActual === "/dashboard/registrarTecnico"
+                    urlActual === "/dashboard/tecnicos"
                       ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
                       : "text-white"
                   }  block mt-2 hover:text-black`}

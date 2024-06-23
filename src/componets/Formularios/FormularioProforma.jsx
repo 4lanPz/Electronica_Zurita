@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import axios from "axios";
 import Mensaje from "../Alertas/Mensaje";
-import ModalProforma from "../Modals/ModalProforma";
+import ModalProforma from "../Modals/ModalNuevaProforma";
 
 export const FormularioProforma = () => {
   const { id } = useParams();

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Mensaje from "../Alertas/Mensaje";
 import axios from "axios";
 
-const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
+const ModalNuevaProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
   const [form, setForm] = useState({
     ...orden,
     piezas,
@@ -181,4 +181,4 @@ const ModalProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
   );
 };
 
-export default ModalProforma;
+export default ModalNuevaProforma;

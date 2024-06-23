@@ -7,7 +7,7 @@ import Dashboard from "./layout/Dashboard";
 import RegistrarProforma from "./paginas/RegistrarProforma";
 import RegistrarCliente from "./paginas/RegistrarCliente";
 import RegistrarOrden from "./paginas/RegistrarOrden";
-import RegistrarTecnico from "./paginas/RegistrarTecnico";
+import Tecnicos from "./paginas/Tecnicos";
 import Actualizar from "./paginas/Actualizar";
 import Perfil from "./paginas/Perfil";
 import ListarClientes from "./paginas/ListarClientes";
@@ -53,8 +53,8 @@ function App() {
                         <Route path="registrarproforma/:id" element={<RegistrarProforma />} />
                         <Route path="perfil" element={<Perfil />} />
                         <Route
-                          path="registrarTecnico"
-                          element={<RegistrarTecnico />}
+                          path="tecnicos"
+                          element={<Tecnicos />}
                         />
                         <Route
                           path="listarOrdenes"

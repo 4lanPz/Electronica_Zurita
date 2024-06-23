@@ -8,6 +8,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthProvider";
 import ModalVerCliente from "../Modals/ModalVerCliente";
+import BorrarCliente from "../Modals/BorrarCliente";
 import Mensaje from "../Alertas/Mensaje";
 
 const Tabla = () => {
@@ -16,6 +17,7 @@ const Tabla = () => {
   const [clientes, setClientes] = useState([]);
   const [selectedCliente, setSelectedCliente] = useState(null);
   const [clienteModalVisible, setClienteModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [mensaje, setMensaje] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -41,25 +43,25 @@ const Tabla = () => {
   }, []);
 
   const handleDelete = async (id) => {
+    setSelectedCliente(clientes.find(cliente => cliente._id === id));
+    setDeleteModalVisible(true);
+  };
+
+  const confirmDelete = async () => {
     try {
-      const confirmar = window.confirm(
-        "Vas a eliminar a un cliente. ¿Estás seguro de realizar esta acción?"
-      );
-      if (confirmar) {
-        const token = localStorage.getItem("token");
-        const url = `${
-          import.meta.env.VITE_BACKEND_URL
-        }/cliente/eliminar/${id}`;
-        const headers = {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        };
-        await axios.delete(url, { headers });
-        listarClientes();
-      }
+      const token = localStorage.getItem("token");
+      const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/eliminar/${selectedCliente._id}`;
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+      await axios.delete(url, { headers });
+      listarClientes();
+      setDeleteModalVisible(false);
+      setSelectedCliente(null);
     } catch (error) {
       setMensaje({
-        respuesta: error.response.data?.errors[0].msg,
+        respuesta: error.response.data.msg,
         tipo: false,
       });
     }
@@ -67,7 +69,6 @@ const Tabla = () => {
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
-    // Validar que solo se ingresen números
     const onlyNums = value.replace(/[^0-9]/g, "");
     setSearchTerm(onlyNums);
   };
@@ -203,6 +204,13 @@ const Tabla = () => {
             <ModalVerCliente
               cliente={selectedCliente}
               onCancel={handleCloseClienteModal}
+            />
+          )}
+          {deleteModalVisible && (
+            <BorrarCliente
+              cliente={selectedCliente}
+              onConfirm={confirmDelete}
+              onCancel={() => setDeleteModalVisible(false)}
             />
           )}
         </div>
