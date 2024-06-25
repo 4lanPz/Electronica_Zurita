@@ -10,6 +10,7 @@ import AuthContext from "../../context/AuthProvider";
 import OrdenProceso from "../Modals/OrdenProceso";
 import ModalVerProforma from "../Modals/ModalVerProforma";
 import ModalVerOrden from "../Modals/ModalVerOrden";
+import FinalizarOrden from "../Modals/FinalizarOrden";
 
 const TablaOrdenes = () => {
   const { auth } = useContext(AuthContext);
@@ -18,6 +19,7 @@ const TablaOrdenes = () => {
   const [selectedOrden, setSelectedOrden] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [proformaModalVisible, setProformaModalVisible] = useState(false);
+  const [finalizarOrdenVisible, setFinalizarOrdenVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [verOrdenModalVisible, setVerOrdenModalVisible] = useState(false);
   const [selectedOrdenVer, setSelectedOrdenVer] = useState(null);
@@ -49,6 +51,15 @@ const TablaOrdenes = () => {
     setProformaModalVisible(false);
   };
 
+  const handleOpenFinalizarOrden = (orden) => {
+    setSelectedOrden(orden);
+    setFinalizarOrdenVisible(true);
+  };
+
+  const handleCloseFinalizarOrden = () => {
+    setFinalizarOrdenVisible(false);
+  };
+
   const listarOrdenes = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -72,24 +83,17 @@ const TablaOrdenes = () => {
 
   const handleDelete = async (id) => {
     try {
-      const confirmar = window.confirm(
-        "Vas a finalizar la orden ¿Estás seguro de realizar esta acción?"
-      );
-      if (confirmar) {
-        const token = localStorage.getItem("token");
-        const url = `${
-          import.meta.env.VITE_BACKEND_URL
-        }/ordenes/finalizar/${id}`;
-        const headers = {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        };
-        const data = {
-          id,
-        };
-        await axios.put(url, data, { headers });
-        listarOrdenes();
-      }
+      const token = localStorage.getItem("token");
+      const url = `${import.meta.env.VITE_BACKEND_URL}/ordenes/finalizar/${id}`;
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+      const data = { id };
+      await axios.put(url, data, { headers });
+      listarOrdenes();
+      setSelectedOrden(null)
+      setFinalizarOrdenVisible(false)
     } catch (error) {
       console.log(error);
     }
@@ -173,9 +177,7 @@ const TablaOrdenes = () => {
                   )}
                   <AiOutlineCheckCircle
                     className="h-7 w-7 text-green-700 cursor-pointer inline-block"
-                    onClick={() => {
-                      handleDelete(orden._id);
-                    }}
+                    onClick={() => handleOpenFinalizarOrden(orden)}
                   />
                 </td>
               )}
@@ -207,7 +209,7 @@ const TablaOrdenes = () => {
           <input
             type="text"
             placeholder="Buscar por cédula"
-            value={searchTerm || ""} // Evitar undefined
+            value={searchTerm || ""}
             onChange={handleSearchChange}
             className="p-2 border border-black bg-white placeholder:text-black text-black rounded-xl w-2/3"
           />
@@ -253,6 +255,13 @@ const TablaOrdenes = () => {
         <ModalVerOrden
           orden={selectedOrdenVer}
           onCancel={handleCloseVerOrdenModal}
+        />
+      )}
+      {finalizarOrdenVisible && (
+        <FinalizarOrden
+          orden={selectedOrden}
+          onCancel={handleCloseFinalizarOrden}
+          onConfirm={handleDelete}
         />
       )}
     </div>
