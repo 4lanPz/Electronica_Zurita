@@ -249,7 +249,7 @@ export const FormularioCliente = ({ cliente }) => {
             ) : null}
           </div>
 
-          <GoogleMaps setDireccion={setDireccion} />
+          <GoogleMaps direccion={formik.values.direccion} setDireccion={setDireccion} />
 
           {Object.keys(mensaje).length > 0 && (
             <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>

@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import {
   Link,
   Navigate,
@@ -15,6 +15,7 @@ const Dashboard = () => {
   const urlActual = location.pathname;
   const { auth } = useContext(AuthContext);
   const autenticado = localStorage.getItem("token");
+  const sidebarRef = useRef(null);
 
   useEffect(() => {
     if (!auth && !autenticado) {
@@ -22,13 +23,26 @@ const Dashboard = () => {
     }
   }, [auth, autenticado, navigate]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
   return (
     <div className="md:flex md:min-h-screen">
-      <div className="w-auto bg-[#3D53A0]">
+      <div ref={sidebarRef} className="w-auto bg-[#3D53A0]">
         <button onClick={toggleMenu} className="my-2 mx-4 text-white">
           <svg
             xmlns="http://www.w3.org/2000/svg"

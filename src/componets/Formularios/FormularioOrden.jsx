@@ -181,7 +181,7 @@ export const FormularioOrden = ({ orden }) => {
             <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
           )}
           <div className="flex flex-wrap max-[640px]:flex max-[640px]:flex-col">
-            <div className="w-1/2 pr-10 pl-5 max-[640px]:w-full max-[640px]:px-0">
+            <div className="w-1/2 pr-5 max-[640px]:w-full max-[640px]:px-0">
               <label htmlFor="cedula" className="block">
                 <span className="poppins-semibold text-black uppercase">
                   Número de cédula Cliente:
@@ -214,7 +214,7 @@ export const FormularioOrden = ({ orden }) => {
                 </button>
               </div>
             </div>
-            <div className="w-1/2 pl-10 pr-5 max-[640px]:w-full max-[640px]:px-0 max-[640px]:mb-3">
+            <div className="w-1/2 pr-5 max-[640px]:w-full max-[640px]:px-0 max-[640px]:mb-3">
               <div className="  bg-white border border-slate-200 p-3 flex flex-col shadow-lg rounded-xl">
                 <div className="flex items-center justify-center flex-wrap max-[800px]:flex max-[800px]:flex-col">
                   <div className="w-1/2 max-[800px]:w-full">
