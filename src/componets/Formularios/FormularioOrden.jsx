@@ -201,11 +201,11 @@ export const FormularioOrden = ({ orden }) => {
                   {formik.errors.cedula}
                 </div>
               ) : null}
-              <div className="flex justify-center p-3">
+              <div className="flex justify-center p-3 w-full">
                 <button
                   type="button"
                   onClick={handleBuscarCliente}
-                  className={`poppins-regular bg-[#5B72C3] green p-2 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all w-2/3 ${
+                  className={`poppins-regular bg-[#5B72C3] green p-2 px-4 text-white uppercase rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all ${
                     loading ? "opacity-50 cursor-not-allowed" : ""
                   }`}
                   disabled={loading}
@@ -216,24 +216,22 @@ export const FormularioOrden = ({ orden }) => {
             </div>
             <div className="w-1/2 pl-10 pr-5 max-[640px]:w-full max-[640px]:px-0 max-[640px]:mb-3">
               <div className="  bg-white border border-slate-200 p-3 flex flex-col shadow-lg rounded-xl">
-                <div className="">
-                  <div className="flex items-center justify-center flex-wrap md:flex-nowrap ">
-                    <div className="w-1/2">
-                      <b className="poppins-semibold">Cliente:</b>
-                      <br />
-                      <p className="poppins-regular">{clienteInfo.nombre}</p>
-                    </div>
-                    <div className="w-1/2 pl-2">
-                      <b className="poppins-semibold">Télefono:</b>
-                      <br />
-                      <p className="poppins-regular">{clienteInfo.telefono}</p>
-                    </div>
-                  </div>
-                  <div>
-                    <b className="poppins-semibold">Correo electrónico:</b>
+                <div className="flex items-center justify-center flex-wrap max-[800px]:flex max-[800px]:flex-col">
+                  <div className="w-1/2 max-[800px]:w-full">
+                    <b className="poppins-semibold">Cliente:</b>
                     <br />
-                    <p className="poppins-regular">{clienteInfo.correo}</p>
+                    <p className="poppins-regular">{clienteInfo.nombre}</p>
                   </div>
+                  <div className="w-1/2 max-[800px]:w-full">
+                    <b className="poppins-semibold">Télefono:</b>
+                    <br />
+                    <p className="poppins-regular">{clienteInfo.telefono}</p>
+                  </div>
+                </div>
+                <div>
+                  <b className="poppins-semibold">Correo electrónico:</b>
+                  <br />
+                  <p className="poppins-regular">{clienteInfo.correo}</p>
                 </div>
               </div>
             </div>

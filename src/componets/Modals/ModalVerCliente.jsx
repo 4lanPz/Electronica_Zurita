@@ -1,21 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import GoogleMaps from "../GoogleMaps";
 
 const ModalVerCliente = ({ cliente, onCancel }) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
       <div className="bg-white w-5/6 sm:w-3/5 p-10 rounded-xl flex flex-col overflow-y-scroll sm:h-5/6 h-5/6">
-        {loading && (
-          <p className="poppins-semibold">Cargando datos del cliente...</p>
-        )}
-        {error && <p>{error}</p>}
-        {!loading && !cliente && (
-          <p className="poppins-semibold">No hay datos del cliente</p>
-        )}
-        {cliente && (
+        {/* Contenido del modal */}
+        {cliente ? (
           <>
             <h2 className="poppins-bold w-full text-center mb-3">
               Datos del cliente
@@ -51,12 +42,18 @@ const ModalVerCliente = ({ cliente, onCancel }) => {
               </div>
             </div>
             <div className="w-full h-auto">
+              {/* Aquí mostramos el mapa con la dirección del cliente */}
               <div>
                 <GoogleMaps direccion={cliente.direccion} />
               </div>
             </div>
           </>
+        ) : (
+          // Mostrar mensaje o componente de carga si no hay cliente
+          <p className="poppins-semibold">No hay datos del cliente</p>
         )}
+
+        {/* Botón de cerrar modal */}
         <div className="flex justify-center gap-5 mt-5">
           <button
             className="poppins-regular bg-[#5B72C3] text-white p-3 rounded-xl hover:bg-[#3D53A0] w-2/3"

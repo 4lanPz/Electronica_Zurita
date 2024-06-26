@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 
 const containerStyle = {
@@ -12,18 +12,32 @@ const center = {
   lng: -78.467834,
 };
 
-// Definir libraries como una constante
 const libraries = ["places"];
 
-const GoogleMaps = ({ setDireccion }) => {
+const GoogleMaps = ({ direccion, setDireccion }) => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_MAPS_API_KEY,
-    libraries: libraries, // Pasar la constante libraries aquí
+    libraries: libraries,
   });
 
   const [map, setMap] = useState(null);
   const [markerPosition, setMarkerPosition] = useState(center);
+
+  useEffect(() => {
+    if (direccion) {
+      // Geocode the provided address to get the coordinates
+      const geocoder = new window.google.maps.Geocoder();
+      geocoder.geocode({ address: direccion }, (results, status) => {
+        if (status === "OK" && results[0]) {
+          const location = results[0].geometry.location;
+          setMarkerPosition({ lat: location.lat(), lng: location.lng() });
+        } else {
+          console.error("No se pudo geocodificar la dirección:", status);
+        }
+      });
+    }
+  }, [direccion]);
 
   const onLoad = useCallback((mapInstance) => {
     setMap(mapInstance);
@@ -35,16 +49,16 @@ const GoogleMaps = ({ setDireccion }) => {
 
   const handleMapClick = useCallback(
     (event) => {
-      setMarkerPosition({
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng(),
-      });
+      const clickedLat = event.latLng.lat();
+      const clickedLng = event.latLng.lng();
+      setMarkerPosition({ lat: clickedLat, lng: clickedLng });
+
       const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ location: markerPosition }, (results, status) => {
+      geocoder.geocode({ location: { lat: clickedLat, lng: clickedLng } }, (results, status) => {
         if (status === "OK") {
           if (results[0]) {
             const address = results[0].formatted_address;
-            setDireccion(address);
+            setDireccion(address); // Update the address in the parent component
           } else {
             console.error("No se encontraron resultados de geocodificación");
           }
@@ -53,7 +67,7 @@ const GoogleMaps = ({ setDireccion }) => {
         }
       });
     },
-    [markerPosition, setDireccion]
+    [setDireccion]
   );
 
   return (
@@ -62,7 +76,7 @@ const GoogleMaps = ({ setDireccion }) => {
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
-          zoom={13}
+          zoom={12}
           onLoad={onLoad}
           onUnmount={onUnmount}
           onClick={handleMapClick}

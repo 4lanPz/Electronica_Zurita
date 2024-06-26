@@ -47,7 +47,7 @@ const Dashboard = () => {
         </button>
         {menuOpen && (
           <div className="mx-10">
-            <div className="mx-4 xl:flex xl:flex-col items-center justify-center max-[767px]:flex max-[767px]:flex-row">
+            <div className="mx-4 flex flex-col xl:flex-col md:flex-col sm:flex-row items-center justify-center max-[767px]:flex max-[767px]:flex-row">
               <img
                 src="/images/logo_bw.jpg"
                 alt="logo Electrónica Zurita"
@@ -155,14 +155,8 @@ const Dashboard = () => {
           </div>
         )}
       </div>
-      <div className="flex-1 flex flex-col h-screen bg-gray-100">
-        <div className="bg-[#3D53A0] flex md:justify-end items-center gap-5 justify-center"></div>
-        <div className="overflow-y-scroll p-8 bg-gray-100">
-          <div className="">
-            {autenticado ? <Outlet /> : <Navigate to="/" />}
-          </div>
-        </div>
-        <div className="bg-gray-100"></div>
+      <div className="flex-1 flex flex-col h-screen overflow-y-scroll bg-gray-100 p-8">
+        {autenticado ? <Outlet /> : <Navigate to="/" />}
       </div>
     </div>
   );

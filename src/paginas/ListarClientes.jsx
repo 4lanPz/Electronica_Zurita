@@ -1,7 +1,7 @@
 import React from "react";
 import TablaClientes from "../componets/Tablas/TablaClientes";
 
-const Listar = () => {
+const ListarClientes = () => {
   return (
     <div>
       <h1 className="poppins-bold text-center font-black text-4xl text-black">
@@ -13,4 +13,4 @@ const Listar = () => {
   );
 };
 
-export default Listar;
+export default ListarClientes;
