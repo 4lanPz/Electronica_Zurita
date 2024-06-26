@@ -106,7 +106,9 @@ const TablaTecnicos = () => {
           </div>
         </div>
       </div>
-      <div>
+
+      {/* Tabla completa visible en pantallas medianas y grandes */}
+      <div className="hidden sm:block">
         <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
           <thead className="bg-[#3D53A0] text-white">
             <tr className="poppins-regular">
@@ -114,17 +116,17 @@ const TablaTecnicos = () => {
               <th className="p-2">Nombre</th>
               <th className="p-2">RUC</th>
               <th className="p-2">Correo electrónico</th>
-              <th className="p-2">teléfono</th>
+              <th className="p-2">Teléfono</th>
               <th className="p-2">Acción</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="">
             {filteredTecnicos.map((tecnico, index) => (
               <tr
                 className="poppins-regular border-b hover:bg-gray-300 text-center"
                 key={tecnico._id}
               >
-                <td className="p-2">{index + 1 } </td>
+                <td className="p-2">{index + 1} </td>
                 <td className="p-2">
                   {tecnico.nombre} {tecnico.apellido}
                 </td>
@@ -142,15 +144,53 @@ const TablaTecnicos = () => {
             ))}
           </tbody>
         </table>
-        <div className="text-center">
-          <button
-            className="w-1/3 poppins-regular bg-[#5267b4] mt-10 text-white border py-2 rounded-xl duration-300 hover:bg-[#3D53A0] hover:text-white mb-0 "
-            onClick={handleOpenTecnicoModal}
-          >
-            Agregar nuevo técnico
-          </button>
-        </div>
       </div>
+
+      {/* Tabla simplificada visible en pantallas pequeñas */}
+      <div className="block sm:hidden">
+        {filteredTecnicos.map((tecnico, index) => (
+          <div
+            className="p-4 mb-4 shadow-lg bg-white rounded-xl border border-black mt-2"
+            key={tecnico._id}
+          >
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">N°:</span> {index + 1}
+            </div>
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">Nombre:</span>{" "}
+              {tecnico.nombre} {tecnico.apellido}
+            </div>
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">RUC:</span>{" "}
+              {tecnico.ruc}
+            </div>
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">Correo:</span>{" "}
+              {tecnico.email}
+            </div>
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">Teléfono:</span>{" "}
+              {tecnico.telefono}
+            </div>
+            <div className="flex justify-center mt-2">
+              <AiOutlineDelete
+                className="h-7 w-7 text-red-900 cursor-pointer inline-block mr-2"
+                onClick={() => handleDelete(tecnico._id)}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="text-center w-full">
+        <button
+          className=" poppins-regular bg-[#5267b4] mt-10 text-white border py-2 px-5 rounded-xl duration-300 hover:bg-[#3D53A0] hover:text-white mb-0 "
+          onClick={handleOpenTecnicoModal}
+        >
+          Agregar nuevo técnico
+        </button>
+      </div>
+
       {tecnicoModalVisible && (
         <ModalNuevoTecnico
           handleCloseTecnicoModal={handleCloseTecnicoModal}

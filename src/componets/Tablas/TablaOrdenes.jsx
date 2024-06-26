@@ -92,8 +92,8 @@ const TablaOrdenes = () => {
       const data = { id };
       await axios.put(url, data, { headers });
       listarOrdenes();
-      setSelectedOrden(null)
-      setFinalizarOrdenVisible(false)
+      setSelectedOrden(null);
+      setFinalizarOrdenVisible(false);
     } catch (error) {
       console.log(error);
     }
@@ -114,77 +114,159 @@ const TablaOrdenes = () => {
   const Tabla = ({ titulo, data }) => (
     <div>
       <h2 className="poppins-semibold">{titulo}</h2>
-      <table className="w-full mt-2 table-auto shadow-lg bg-white rounded-xl">
-        <thead className="bg-[#3D53A0] text-white">
-          <tr className="poppins-regular">
-            <th className="p-2">N° Orden</th>
-            <th className="p-2">Cliente</th>
-            <th className="p-2">Cédula</th>
-            <th className="p-2">Equipo</th>
-            <th className="p-2">Fecha Ingreso</th>
-            {titulo === "Finalizado" && <th className="p-2">Fecha Salida</th>}
-            <th className="p-2">Estado</th>
-            {titulo !== "Finalizado" && <th className="1">Acciones</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((orden) => (
-            <tr
-              className="poppins-regular border-b hover:bg-gray-300 text-center"
-              key={orden._id}
-            >
-              <td className="p-2">{orden.numOrden}</td>
-              <td className="p-2">{orden.cliente?.nombre}</td>
-              <td className="p-2">{orden.cliente?.cedula}</td>
-              <td className="p-2">{orden.equipo}</td>
-              <td className="p-2">
-                {new Date(orden.ingreso).toLocaleDateString()}
-              </td>
-              {titulo === "Finalizado" && (
-                <td className="p-2">
-                  {orden.salida
-                    ? new Date(orden.salida).toLocaleDateString()
-                    : "N/A"}
-                </td>
-              )}
-              <td className="p-2">{orden.estado}</td>
-              {titulo !== "Finalizado" && (
-                <td className="py-2 text-center">
-                  {titulo === "Mantenimiento" || titulo === "Revisión" ? (
-                    <>
-                      <AiOutlineFileText
-                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-1"
-                        onClick={() => handleOpenModal(orden)}
-                      />
-                      <AiOutlineEye
-                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-1"
-                        onClick={() => handleOpenVerOrdenModal(orden)}
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <AiOutlineFileText
-                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-1"
-                        onClick={() =>
-                          navigate(`/dashboard/registrarProforma/${orden._id}`)
-                        }
-                      />
-                      <AiOutlineEye
-                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-1"
-                        onClick={() => handleOpenProformaModal(orden)}
-                      />
-                    </>
-                  )}
-                  <AiOutlineCheckCircle
-                    className="h-7 w-7 text-green-700 cursor-pointer inline-block"
-                    onClick={() => handleOpenFinalizarOrden(orden)}
-                  />
-                </td>
-              )}
+
+      {/* Tabla completa visible en pantallas medianas y grandes */}
+      <div className="hidden sm:block">
+        <table className="w-full mt-2 table-auto shadow-lg bg-white rounded-xl">
+          <thead className="bg-[#3D53A0] text-white">
+            <tr className="poppins-regular">
+              <th className="p-2">N° Orden</th>
+              <th className="p-2">Cliente</th>
+              <th className="p-2">Cédula</th>
+              <th className="p-2">Equipo</th>
+              <th className="p-2">Fecha Ingreso</th>
+              {titulo === "Finalizado" && <th className="p-2">Fecha Salida</th>}
+              <th className="p-2">Estado</th>
+              {titulo !== "Finalizado" && <th className="1">Acciones</th>}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.map((orden) => (
+              <tr
+                className="poppins-regular border-b hover:bg-gray-300 text-center"
+                key={orden._id}
+              >
+                <td className="p-2">{orden.numOrden}</td>
+                <td className="p-2">{orden.cliente?.nombre}</td>
+                <td className="p-2">{orden.cliente?.cedula}</td>
+                <td className="p-2">{orden.equipo}</td>
+                <td className="p-2">
+                  {new Date(orden.ingreso).toLocaleDateString()}
+                </td>
+                {titulo === "Finalizado" && (
+                  <td className="p-2">
+                    {orden.salida
+                      ? new Date(orden.salida).toLocaleDateString()
+                      : "N/A"}
+                  </td>
+                )}
+                <td className="p-2">{orden.estado}</td>
+                {titulo !== "Finalizado" && (
+                  <td className="py-2 text-center">
+                    {titulo === "Mantenimiento" || titulo === "Revisión" ? (
+                      <>
+                        <AiOutlineFileText
+                          className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-1"
+                          onClick={() => handleOpenModal(orden)}
+                        />
+                        <AiOutlineEye
+                          className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-1"
+                          onClick={() => handleOpenVerOrdenModal(orden)}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <AiOutlineFileText
+                          className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-1"
+                          onClick={() =>
+                            navigate(
+                              `/dashboard/registrarProforma/${orden._id}`
+                            )
+                          }
+                        />
+                        <AiOutlineEye
+                          className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-1"
+                          onClick={() => handleOpenProformaModal(orden)}
+                        />
+                      </>
+                    )}
+                    <AiOutlineCheckCircle
+                      className="h-7 w-7 text-green-700 cursor-pointer inline-block"
+                      onClick={() => handleOpenFinalizarOrden(orden)}
+                    />
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Tabla simplificada visible en pantallas pequeñas */}
+      <div className="block sm:hidden">
+        {data.map((orden) => (
+          <div
+            className="p-4 mb-4 mt-2 shadow-lg bg-white rounded-xl border border-black"
+            key={orden._id}
+          >
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">N° Orden:</span>{" "}
+              {orden.numOrden}
+            </div>
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">Cliente:</span>{" "}
+              {orden.cliente?.nombre}
+            </div>
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">Cédula:</span>{" "}
+              {orden.cliente?.cedula}
+            </div>
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">Equipo:</span>{" "}
+              {orden.equipo}
+            </div>
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">Fecha Ingreso:</span>{" "}
+              {new Date(orden.ingreso).toLocaleDateString()}
+            </div>
+            {titulo === "Finalizado" && (
+              <div className="mb-2">
+                <span className="poppins-regular font-bold">Fecha Salida:</span>{" "}
+                {orden.salida
+                  ? new Date(orden.salida).toLocaleDateString()
+                  : "N/A"}
+              </div>
+            )}
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">Estado:</span>{" "}
+              {orden.estado}
+            </div>
+            {titulo !== "Finalizado" && (
+              <div className="flex justify-center mt-2">
+                {titulo === "Mantenimiento" || titulo === "Revisión" ? (
+                  <>
+                    <AiOutlineFileText
+                      className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                      onClick={() => handleOpenModal(orden)}
+                    />
+                    <AiOutlineEye
+                      className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                      onClick={() => handleOpenVerOrdenModal(orden)}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <AiOutlineFileText
+                      className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                      onClick={() =>
+                        navigate(`/dashboard/registrarProforma/${orden._id}`)
+                      }
+                    />
+                    <AiOutlineEye
+                      className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                      onClick={() => handleOpenProformaModal(orden)}
+                    />
+                  </>
+                )}
+                <AiOutlineCheckCircle
+                  className="h-7 w-7 text-green-700 cursor-pointer inline-block"
+                  onClick={() => handleOpenFinalizarOrden(orden)}
+                />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 

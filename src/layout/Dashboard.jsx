@@ -47,11 +47,11 @@ const Dashboard = () => {
         </button>
         {menuOpen && (
           <div className="mx-10">
-            <div className="mx-4 xl:flex xl:flex-col items-center justify-center max-[640px]:flex max-[640px]:flex-row">
+            <div className="mx-4 xl:flex xl:flex-col items-center justify-center max-[767px]:flex max-[767px]:flex-row">
               <img
                 src="/images/logo_bw.jpg"
                 alt="logo Electrónica Zurita"
-                className="m-auto mt-3 p-1 mb-3"
+                className="m-auto mt-3 p-1 mb-3 max-[767px]:mx-0"
                 width={125}
                 height={125}
               />
@@ -65,7 +65,7 @@ const Dashboard = () => {
             </p> */}
             <hr className="my-5 border-slate-500" />
 
-            <ul className="poppins-regular">
+            <ul className="poppins-regular max-[769px]:flex max-[520px]:flex-col max-[520px]:flex-col">
               <li className="text-center">
                 <Link
                   to="/dashboard/registrarCliente"

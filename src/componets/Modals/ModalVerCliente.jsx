@@ -7,7 +7,7 @@ const ModalVerCliente = ({ cliente, onCancel }) => {
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white w-2/4 p-10 rounded-xl flex flex-col overflow-y-scroll h-3/4">
+      <div className="bg-white w-5/6 sm:w-3/5 p-10 rounded-xl flex flex-col overflow-y-scroll sm:h-5/6 h-5/6">
         {loading && (
           <p className="poppins-semibold">Cargando datos del cliente...</p>
         )}
@@ -20,7 +20,7 @@ const ModalVerCliente = ({ cliente, onCancel }) => {
             <h2 className="poppins-bold w-full text-center mb-3">
               Datos del cliente
             </h2>
-            <div className="flex flex-wrap mb-3">
+            <div className="flex flex-wrap mb-3 max-[500px]:flex-col max-[500px]:flex">
               <div className="w-1/2 pr-5">
                 <div className="mb-2">
                   <b className="poppins-semibold">Nombre:</b>

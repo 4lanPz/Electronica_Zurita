@@ -98,34 +98,34 @@ const Tabla = () => {
   );
 
   const TablaClientes = ({ titulo, data }) => (
-    <div className="">
+    <div>
       <h2 className="poppins-semibold">{titulo}</h2>
-      <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
-        <thead className="bg-[#3D53A0] text-white">
-          <tr className="poppins-regular">
-            <th className="p-2">N°</th>
-            <th className="p-2">Nombre</th>
-            <th className="p-2">Email</th>
-            <th className="p-2">Celular</th>
-            <th className="p-2">Cédula</th>
-            <th className="p-2">Dirección</th>
-            <th className="p-2">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((cliente, index) => (
-            <tr
-              className="poppins-regular border-b hover:bg-gray-300 text-center "
-              key={cliente._id}
-            >
-              <td className="p-2">{index + 1}</td>
-              <td className="p-2">{cliente.nombre}</td>
-              <td className="p-2">{cliente.correo}</td>
-              <td className="p-2">{cliente.telefono}</td>
-              <td className="p-2">{cliente.cedula}</td>
-              <td className="p-2">{cleanAddress(cliente.direccion)}</td>
-              <td className="py-2 text-center">
-                <>
+      <div className="hidden sm:block">
+        <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
+          <thead className="bg-[#3D53A0] text-white">
+            <tr className="poppins-regular">
+              <th className="p-2">N°</th>
+              <th className="p-2">Nombre</th>
+              <th className="p-2">Email</th>
+              <th className="p-2">Celular</th>
+              <th className="p-2">Cédula</th>
+              <th className="p-2">Dirección</th>
+              <th className="p-2">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((cliente, index) => (
+              <tr
+                className="poppins-regular border-b hover:bg-gray-300 text-center"
+                key={cliente._id}
+              >
+                <td className="p-2">{index + 1}</td>
+                <td className="p-2">{cliente.nombre}</td>
+                <td className="p-2">{cliente.correo}</td>
+                <td className="p-2">{cliente.telefono}</td>
+                <td className="p-2">{cliente.cedula}</td>
+                <td className="p-2">{cleanAddress(cliente.direccion)}</td>
+                <td className="py-2 text-center">
                   <AiOutlineFileText
                     className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
                     onClick={() =>
@@ -140,12 +140,63 @@ const Tabla = () => {
                     className="h-7 w-7 text-red-900 cursor-pointer inline-block"
                     onClick={() => handleDelete(cliente._id)}
                   />
-                </>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="block sm:hidden poppins-regular">
+        {data.map((cliente, index) => (
+          <div
+            className="p-4 my-2 shadow-lg bg-white rounded-xl border border-black hover:bg-gray-300 "
+            key={cliente._id}
+          >
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">
+                Cliente N°{index + 1}:{" "}
+              </span>{" "}
+              {cliente.nombre}
+            </div>
+            <div className="w-full flex flex-row">
+              <div className="mb-2 w-1/2 pr-2">
+                <span className="poppins-regular font-bold">Celular:</span>{" "}
+                {cliente.telefono}
+              </div>
+              <div className="mb-2 w-1/2 pl-2">
+                <span className="poppins-regular font-bold">Cédula:</span>{" "}
+                {cliente.cedula}
+              </div>
+            </div>
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">Email:</span>{" "}
+              {cliente.correo}
+            </div>
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">Dirección:</span>{" "}
+              {cleanAddress(cliente.direccion)}
+            </div>
+
+            <div className="flex justify-center">
+              <AiOutlineFileText
+                className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                onClick={() =>
+                  navigate(`/dashboard/actualizarCliente/${cliente._id}`)
+                }
+              />
+              <AiOutlineEye
+                className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                onClick={() => handleOpenClienteModal(cliente)}
+              />
+              <AiOutlineDelete
+                className="h-7 w-7 text-red-900 cursor-pointer inline-block"
+                onClick={() => handleDelete(cliente._id)}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 
@@ -195,7 +246,7 @@ const Tabla = () => {
           {clientesFrecuentes.length > 0 && (
             <TablaClientes titulo="" data={clientesFrecuentes} />
           )}
-          <hr className="mt-4 border-black" />
+          <hr className="mt-4 border-black mb-2" />
           {clientesNoFrecuentes.length > 0 && (
             <TablaClientes
               titulo="Clientes no Frecuentes"
