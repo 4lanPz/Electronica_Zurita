@@ -18,71 +18,68 @@ import { AuthProvider } from "./context/AuthProvider";
 import { PrivateRoute } from "./routes/PrivateRoutes";
 import { OrdenesProvider } from "./context/OrdenesProvider";
 import { RecuperarContrasena } from "./paginas/RecuperarContrasena";
-import { APIProvider } from "@vis.gl/react-google-maps";
 
 function App() {
   return (
     <>
-      <APIProvider apiKey={import.meta.env.VITE_MAPS_API_KEY}>
-        <BrowserRouter>
-          <AuthProvider>
-            <OrdenesProvider>
-              <Routes>
-                <Route index element={<Login />} />
-                <Route path="/" element={<Auth />}>
-                  <Route path="recuperar" element={<RecuperarContrasena />} />
+      <BrowserRouter>
+        <AuthProvider>
+          <OrdenesProvider>
+            <Routes>
+              <Route index element={<Login />} />
+              <Route path="/" element={<Auth />}>
+                <Route path="recuperar" element={<RecuperarContrasena />} />
 
-                  <Route path="*" element={<NotFound />} />
-                </Route>
-                <Route path="confirmar/:token" element={<Confirmar />} />
-                <Route
-                  path="recuperar-password/:token"
-                  element={<Restablecer />}
-                />
-                <Route
-                  path="dashboard/*"
-                  element={
-                    <PrivateRoute>
-                      <Routes>
-                        <Route element={<Dashboard />}>
-                          <Route index element={<RegistrarCliente />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+              <Route path="confirmar/:token" element={<Confirmar />} />
+              <Route
+                path="recuperar-password/:token"
+                element={<Restablecer />}
+              />
+              <Route
+                path="dashboard/*"
+                element={
+                  <PrivateRoute>
+                    <Routes>
+                      <Route element={<Dashboard />}>
+                        <Route index element={<RegistrarCliente />} />
 
-                          <Route
-                            path="listarClientes"
-                            element={<ListarClientes />}
-                          />
-                          <Route
-                            path="registrarproforma/:id"
-                            element={<RegistrarProforma />}
-                          />
-                          <Route path="perfil" element={<Perfil />} />
-                          <Route path="tecnicos" element={<Tecnicos />} />
-                          <Route
-                            path="listarOrdenes"
-                            element={<ListarOrdenes />}
-                          />
-                          <Route
-                            path="registrarCliente"
-                            element={<RegistrarCliente />}
-                          />
-                          <Route
-                            path="registrarOrden"
-                            element={<RegistrarOrden />}
-                          />
-                          <Route
-                            path="actualizarCliente/:id"
-                            element={<Actualizar />}
-                          />
-                        </Route>
-                      </Routes>
-                    </PrivateRoute>
-                  }
-                />
-              </Routes>
-            </OrdenesProvider>
-          </AuthProvider>
-        </BrowserRouter>
-      </APIProvider>
+                        <Route
+                          path="listarClientes"
+                          element={<ListarClientes />}
+                        />
+                        <Route
+                          path="registrarproforma/:id"
+                          element={<RegistrarProforma />}
+                        />
+                        <Route path="perfil" element={<Perfil />} />
+                        <Route path="tecnicos" element={<Tecnicos />} />
+                        <Route
+                          path="listarOrdenes"
+                          element={<ListarOrdenes />}
+                        />
+                        <Route
+                          path="registrarCliente"
+                          element={<RegistrarCliente />}
+                        />
+                        <Route
+                          path="registrarOrden"
+                          element={<RegistrarOrden />}
+                        />
+                        <Route
+                          path="actualizarCliente/:id"
+                          element={<Actualizar />}
+                        />
+                      </Route>
+                    </Routes>
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+          </OrdenesProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </>
   );
 }
