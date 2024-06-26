@@ -89,14 +89,14 @@ const TablaTecnicos = () => {
 
   return (
     <>
-      <div className="flex justify-between mb-5">
-        <div className="poppins-regular flex items-center w-full">
+      <div className="flex justify-between max-[640px]:flex max-[640px]:flex-col">
+        <div className="poppins-regular flex items-center w-full pr-5 max-[640px]:mb-3">
           <input
             type="text"
             placeholder="Buscar por nombre"
             value={searchTerm}
             onChange={handleSearchChange}
-            className="p-2 border border-black bg-white placeholder:text-black text-black rounded-xl w-2/3"
+            className="p-2 border border-black bg-white placeholder:text-black text-black rounded-xl w-full"
           />
         </div>
         <div className="poppins-regular flex space-x-4 items-center">

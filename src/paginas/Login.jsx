@@ -60,7 +60,7 @@ export const Login = () => {
         <div className="absolute inset-0 flex justify-center items-center">
           <div className="w-auto lg:w-2/5 bg-white p-10 rounded-xl max-w-2xl">
             {/* Encabezado */}
-            <div className="flex items-center justify-center mb-8">
+            <div className="flex items-center justify-center mb-8 max-[640px]:flex max-[640px]:flex-col">
               {/* Imagen */}
               <img
                 src="/images/logopag.jpg"

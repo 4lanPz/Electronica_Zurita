@@ -120,8 +120,8 @@ export const FormularioCliente = ({ cliente }) => {
             ) : null}
           </div>
 
-          <div className="flex flex-wrap mt-3">
-            <div className="w-1/2 pr-2">
+          <div className="flex flex-wrap mt-3 max-[640px]:flex max-[640px]:flex-col">
+            <div className="w-1/2 pr-2 max-[640px]:w-full max-[640px]:px-0">
               <label
                 htmlFor="telefono"
                 className="poppins-semibold text-black uppercase"
@@ -144,7 +144,7 @@ export const FormularioCliente = ({ cliente }) => {
                 </div>
               ) : null}
             </div>
-            <div className="w-1/2 pl-2">
+            <div className="w-1/2 pl-2 max-[640px]:w-full max-[640px]:px-0">
               <label
                 htmlFor="cedula"
                 className="poppins-semibold text-black uppercase"

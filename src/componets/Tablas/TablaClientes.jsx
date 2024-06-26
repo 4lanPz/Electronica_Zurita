@@ -43,14 +43,16 @@ const Tabla = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    setSelectedCliente(clientes.find(cliente => cliente._id === id));
+    setSelectedCliente(clientes.find((cliente) => cliente._id === id));
     setDeleteModalVisible(true);
   };
 
   const confirmDelete = async () => {
     try {
       const token = localStorage.getItem("token");
-      const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/eliminar/${selectedCliente._id}`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/eliminar/${
+        selectedCliente._id
+      }`;
       const headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -96,7 +98,7 @@ const Tabla = () => {
   );
 
   const TablaClientes = ({ titulo, data }) => (
-    <div>
+    <div className="">
       <h2 className="poppins-semibold">{titulo}</h2>
       <table className="w-full mt-3 table-auto shadow-lg bg-white rounded-xl">
         <thead className="bg-[#3D53A0] text-white">
@@ -113,7 +115,7 @@ const Tabla = () => {
         <tbody>
           {data.map((cliente, index) => (
             <tr
-              className="poppins-regular border-b hover:bg-gray-300 text-center"
+              className="poppins-regular border-b hover:bg-gray-300 text-center "
               key={cliente._id}
             >
               <td className="p-2">{index + 1}</td>
@@ -156,18 +158,18 @@ const Tabla = () => {
 
   return (
     <>
-      <div className="flex flex-col mb-5">
-        <div className="flex justify-between items-center">
-          <div className="poppins-regular flex items-center w-full">
+      <div className="flex flex-col">
+        <div className="mt-3 flex justify-between min-[640px]:items-center mb-3 max-[640px]:flex max-[640px]:flex-col">
+          <div className="poppins-regular flex items-center w-full pr-5 max-[640px]:mb-3">
             <input
               type="text"
               placeholder="Buscar por cédula"
               value={searchTerm}
               onChange={handleSearchChange}
-              className="p-2 border border-black bg-white placeholder:text-black text-black rounded-xl w-2/3"
+              className="p-2 border border-black bg-white placeholder:text-black text-black rounded-xl w-full"
             />
           </div>
-          <div className="poppins-regular flex space-x-4 items-center">
+          <div className="poppins-regular flex space-x-4">
             <div className="flex items-center space-x-2">
               <AiOutlineFileText className="h-6 w-6 text-slate-800" />
               <span>Actualizar</span>

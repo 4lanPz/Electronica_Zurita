@@ -204,14 +204,14 @@ const TablaOrdenes = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between items-center mb-3">
-        <div className="poppins-regular flex items-center w-full">
+      <div className="mt-3 flex justify-between min-[640px]:items-center mb-3 max-[640px]:flex max-[640px]:flex-col">
+        <div className="poppins-regular flex items-center w-full pr-5 max-[640px]:mb-3">
           <input
             type="text"
             placeholder="Buscar por cédula"
             value={searchTerm || ""}
             onChange={handleSearchChange}
-            className="p-2 border border-black bg-white placeholder:text-black text-black rounded-xl w-2/3"
+            className="p-2 border border-black bg-white placeholder:text-black text-black rounded-xl w-full"
           />
         </div>
         <div className="poppins-regular flex space-x-4 items-center">
