@@ -33,13 +33,21 @@ export const FormularioCliente = ({ cliente }) => {
         .min(5, "El teléfono debe tener al menos 5 números")
         .max(10, "El teléfono debe tener de 10 números")
         .required("El teléfono es obligatorio")
-        .test("is-positive", "El teléfono no puede ser negativo", value => parseInt(value) >= 0),
+        .test(
+          "is-positive",
+          "El teléfono no puede ser negativo",
+          (value) => parseInt(value) >= 0
+        ),
       cedula: Yup.string()
         .matches(/^[0-9]*$/, "La cédula solo puede contener números")
         .min(10, "La cédula debe contener al menos 10 números")
         .max(13, "El número de cédula debe tener como máximo 13 números")
         .required("El número de cédula es obligatorio")
-        .test("is-positive", "El número no puede ser negativo", value => parseInt(value) >= 0),
+        .test(
+          "is-positive",
+          "El número no puede ser negativo",
+          (value) => parseInt(value) >= 0
+        ),
       frecuente: Yup.boolean().required(
         "La frecuencia del cliente es obligatoria"
       ),
@@ -242,6 +250,7 @@ export const FormularioCliente = ({ cliente }) => {
           </div>
 
           <GoogleMaps setDireccion={setDireccion} />
+
           {Object.keys(mensaje).length > 0 && (
             <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>
           )}

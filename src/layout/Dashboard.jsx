@@ -162,7 +162,7 @@ const Dashboard = () => {
             {autenticado ? <Outlet /> : <Navigate to="/" />}
           </div>
         </div>
-        <div className="bg-[#3D53A0]"></div>
+        <div className="bg-gray-100"></div>
       </div>
     </div>
   );

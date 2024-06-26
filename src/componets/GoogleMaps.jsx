@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from "react";
-import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+import React, { useCallback, useState } from "react";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { AdvancedMarker } from "@vis.gl/react-google-maps";
 
 const containerStyle = {
   width: "100%",
@@ -12,35 +13,23 @@ const center = {
   lng: -78.467834,
 };
 
-// Definir libraries como una constante
 const libraries = ["places"];
 
 const GoogleMaps = ({ setDireccion }) => {
-  const { isLoaded } = useJsApiLoader({
+  const { isLoaded, loadError } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_MAPS_API_KEY,
-    libraries: libraries, // Pasar la constante libraries aquí
+    libraries: libraries,
   });
 
-  const [map, setMap] = useState(null);
   const [markerPosition, setMarkerPosition] = useState(center);
-
-  const onLoad = useCallback((mapInstance) => {
-    setMap(mapInstance);
-  }, []);
-
-  const onUnmount = useCallback(() => {
-    setMap(null);
-  }, []);
 
   const handleMapClick = useCallback(
     (event) => {
-      setMarkerPosition({
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng(),
-      });
+      const { latLng } = event;
+
       const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ location: markerPosition }, (results, status) => {
+      geocoder.geocode({ location: latLng }, (results, status) => {
         if (status === "OK") {
           if (results[0]) {
             const address = results[0].formatted_address;
@@ -52,9 +41,17 @@ const GoogleMaps = ({ setDireccion }) => {
           console.error("Error en la geocodificación inversa:", status);
         }
       });
+
+      // Actualizar la posición del marcador
+      setMarkerPosition({
+        lat: latLng.lat(),
+        lng: latLng.lng(),
+      });
     },
-    [markerPosition, setDireccion]
+    [setDireccion]
   );
+
+  if (loadError) return <div>Error al cargar el mapa</div>;
 
   return (
     <div>
@@ -63,17 +60,20 @@ const GoogleMaps = ({ setDireccion }) => {
           mapContainerStyle={containerStyle}
           center={center}
           zoom={13}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
           onClick={handleMapClick}
-          options={{
-            disableStreetView: true, // Deshabilita la vista de StreetView
-          }}
         >
-          <Marker position={markerPosition} />
+          {/* AdvancedMarker con imagen personalizada */}
+          <AdvancedMarker position={markerPosition}>
+            {/* Asegúrate de que la ruta de la imagen sea correcta */}
+            <img
+              src="/images/marker.png" // Ruta relativa correcta desde la raíz del sitio
+              alt="Marker"
+              style={{ width: "32px", height: "32px" }}
+            />
+          </AdvancedMarker>
         </GoogleMap>
       ) : (
-        <div>Loading...</div>
+        <div>Cargando mapa...</div>
       )}
     </div>
   );
