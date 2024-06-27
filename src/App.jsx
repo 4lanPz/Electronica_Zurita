@@ -39,7 +39,7 @@ function App() {
                 element={<Restablecer />}
               />
               <Route
-                path="recuperar/cliente"
+                path="recuperar/cliente/:token"
                 element={<RecuperarCliente />}
               />
               <Route
