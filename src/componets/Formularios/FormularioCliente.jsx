@@ -30,24 +30,14 @@ export const FormularioCliente = ({ cliente }) => {
         .required("El correo electrónico es obligatorio"),
       telefono: Yup.string()
         .matches(/^[0-9]*$/, "El teléfono solo puede contener números")
-        .min(5, "El teléfono debe tener al menos 5 números")
-        .max(10, "El teléfono debe tener de 10 números")
-        .required("El teléfono es obligatorio")
-        .test(
-          "is-positive",
-          "El teléfono no puede ser negativo",
-          (value) => parseInt(value) >= 0
-        ),
+        .min(6, "El teléfono debe tener al menos 6 números")
+        .max(10, "El teléfono debe tener 10 números")
+        .required("El teléfono es obligatorio"),
       cedula: Yup.string()
         .matches(/^[0-9]*$/, "La cédula solo puede contener números")
         .min(10, "La cédula debe contener al menos 10 números")
         .max(13, "El número de cédula debe tener como máximo 13 números")
-        .required("El número de cédula es obligatorio")
-        .test(
-          "is-positive",
-          "El número no puede ser negativo",
-          (value) => parseInt(value) >= 0
-        ),
+        .required("El número de cédula es obligatorio"),
       frecuente: Yup.boolean().required(
         "La frecuencia del cliente es obligatoria"
       ),
@@ -249,7 +239,10 @@ export const FormularioCliente = ({ cliente }) => {
             ) : null}
           </div>
 
-          <GoogleMaps direccion={formik.values.direccion} setDireccion={setDireccion} />
+          <GoogleMaps
+            direccion={formik.values.direccion}
+            setDireccion={setDireccion}
+          />
 
           {Object.keys(mensaje).length > 0 && (
             <Mensaje tipo={mensaje.tipo}>{mensaje.respuesta}</Mensaje>

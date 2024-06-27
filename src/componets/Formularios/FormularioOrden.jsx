@@ -60,12 +60,7 @@ export const FormularioOrden = ({ orden }) => {
         .matches(/^[0-9]*$/, "La cédula solo puede contener números")
         .min(10, "La cédula debe contener al menos 10 números")
         .max(13, "El número de cédula debe tener como máximo 13 números")
-        .required("Número de cédula es obligatorio")
-        .test(
-          "is-positive",
-          "El número no puede ser negativo",
-          (value) => parseInt(value) >= 0
-        ),
+        .required("El número de cédula es obligatorio"),
     }),
     onSubmit: async (values) => {
       setLoading(true);
