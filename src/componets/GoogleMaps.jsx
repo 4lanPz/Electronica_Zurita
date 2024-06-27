@@ -7,6 +7,19 @@ const containerStyle = {
   marginTop: "25px",
 };
 
+const originalWarn = console.warn;
+
+console.warn = function (message, ...args) {
+  if (
+    typeof message === "string" &&
+    message.includes("google.maps.Marker is deprecated")
+  ) {
+    return;
+  }
+  // Llama al console.warn original para otros mensajes
+  originalWarn.call(console, message, ...args);
+};
+
 const center = {
   lat: -0.180653,
   lng: -78.467834,
@@ -54,21 +67,29 @@ const GoogleMaps = ({ direccion, setDireccion }) => {
       setMarkerPosition({ lat: clickedLat, lng: clickedLng });
 
       const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ location: { lat: clickedLat, lng: clickedLng } }, (results, status) => {
-        if (status === "OK") {
-          if (results[0]) {
-            const address = results[0].formatted_address;
-            setDireccion(address); // Update the address in the parent component
+      geocoder.geocode(
+        { location: { lat: clickedLat, lng: clickedLng } },
+        (results, status) => {
+          if (status === "OK") {
+            if (results[0]) {
+              const address = results[0].formatted_address;
+              setDireccion(address); // Update the address in the parent component
+            } else {
+              console.error("No se encontraron resultados de geocodificación");
+            }
           } else {
-            console.error("No se encontraron resultados de geocodificación");
+            console.error("Error en la geocodificación inversa:", status);
           }
-        } else {
-          console.error("Error en la geocodificación inversa:", status);
         }
-      });
+      );
     },
     [setDireccion]
   );
+  useEffect(() => {
+    return () => {
+      console.warn = originalWarn; // Restaura console.warn
+    };
+  }, []);
 
   return (
     <div>
