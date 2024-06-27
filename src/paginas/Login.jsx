@@ -151,14 +151,6 @@ export const Login = () => {
                 ¿Olvidaste tu contraseña?
               </Link>
             </div>
-            <div className="mb-1">
-              <Link
-                to="/recuperar/cliente/:token"
-                className="poppins-regular underline text-black hover:text-gray-700"
-              >
-                ¿Cambiar contrseña de cliente?
-              </Link>
-            </div>
           </div>
         </div>
       </div>

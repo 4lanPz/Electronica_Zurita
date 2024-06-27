@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef, useCallback } from "react";
 import {
   Link,
   Navigate,
@@ -16,6 +16,19 @@ const Dashboard = () => {
   const { auth } = useContext(AuthContext);
   const autenticado = localStorage.getItem("token");
   const sidebarRef = useRef(null);
+  const inactivityTimeoutRef = useRef(null);
+
+  const handleLogout = useCallback(() => {
+    localStorage.removeItem("token");
+    navigate("/");
+  }, [navigate]);
+
+  const resetInactivityTimeout = useCallback(() => {
+    if (inactivityTimeoutRef.current) {
+      clearTimeout(inactivityTimeoutRef.current);
+    }
+    inactivityTimeoutRef.current = setTimeout(handleLogout, 10 * 60 * 1000); // 10 minutos
+  }, [handleLogout]);
 
   useEffect(() => {
     if (!auth && !autenticado) {
@@ -35,6 +48,25 @@ const Dashboard = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    if (autenticado) {
+      const events = ["mousemove", "keydown", "scroll", "click"];
+      events.forEach((event) =>
+        document.addEventListener(event, resetInactivityTimeout)
+      );
+      resetInactivityTimeout(); // Inicializar el temporizador
+
+      return () => {
+        events.forEach((event) =>
+          document.removeEventListener(event, resetInactivityTimeout)
+        );
+        if (inactivityTimeoutRef.current) {
+          clearTimeout(inactivityTimeoutRef.current);
+        }
+      };
+    }
+  }, [autenticado, resetInactivityTimeout]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -79,7 +111,7 @@ const Dashboard = () => {
             </p> */}
             <hr className="my-5 border-slate-500" />
 
-            <ul className="poppins-regular max-[769px]:flex max-[520px]:flex-col max-[520px]:flex-col">
+            <ul className="poppins-regular max-[769px]:flex max-[520px]:flex-col">
               <li className="text-center">
                 <Link
                   to="/dashboard/registrarCliente"
@@ -159,9 +191,7 @@ const Dashboard = () => {
               <Link
                 to="/"
                 className="poppins-semibold text-white text-md block text-center bg-[#9b1746] hover:text-black px-3 py-1 rounded-xl"
-                onClick={() => {
-                  localStorage.removeItem("token");
-                }}
+                onClick={handleLogout}
               >
                 Salir
               </Link>
