@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Restablecer = () => {
+const RecuperarCliente = () => {
   const { token } = useParams();
   const navigate = useNavigate();
   const [mensaje, setMensaje] = useState({});
@@ -24,7 +24,7 @@ const Restablecer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = `${import.meta.env.VITE_BACKEND_URL}/nuevo-password/${token}`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/recuperar-passwordCli`;
       const respuesta = await axios.post(url, form);
       setForm({});
       setMensaje({ respuesta: respuesta.data.msg, tipo: true });
@@ -40,7 +40,7 @@ const Restablecer = () => {
     try {
       const url = `${
         import.meta.env.VITE_BACKEND_URL
-      }/recuperar-password/${token}`;
+      }/recuperar-passwordCli/${token}`;
       const respuesta = await axios.get(url);
       setTokenBack(true);
       setMensaje({ respuesta: respuesta.data.msg, tipo: true });
@@ -70,7 +70,7 @@ const Restablecer = () => {
               {/* Texto */}
               <div className="text-center">
                 <h1 className="poppins-bold uppercase text-black">
-                  Recuperar <br/> Contraseña
+                  Recuperar Contraseña <br /> Cliente
                 </h1>
               </div>
             </div>
@@ -117,4 +117,4 @@ const Restablecer = () => {
   );
 };
 
-export default Restablecer;
+export default RecuperarCliente;

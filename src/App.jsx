@@ -18,6 +18,7 @@ import { AuthProvider } from "./context/AuthProvider";
 import { PrivateRoute } from "./routes/PrivateRoutes";
 import { OrdenesProvider } from "./context/OrdenesProvider";
 import { RecuperarContrasena } from "./paginas/RecuperarContrasena";
+import RecuperarCliente from "./paginas/RecuperarCliente";
 
 function App() {
   return (
@@ -36,6 +37,10 @@ function App() {
               <Route
                 path="recuperar-password/:token"
                 element={<Restablecer />}
+              />
+              <Route
+                path="recuperar/cliente"
+                element={<RecuperarCliente />}
               />
               <Route
                 path="dashboard/*"
