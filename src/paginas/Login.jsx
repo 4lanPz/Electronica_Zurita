@@ -153,7 +153,7 @@ export const Login = () => {
             </div>
             <div className="mb-1">
               <Link
-                to="/recuperar/cliente"
+                to="/recuperar/cliente/:token"
                 className="poppins-regular underline text-black hover:text-gray-700"
               >
                 ¿Cambiar contrseña de cliente?

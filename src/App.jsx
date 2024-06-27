@@ -13,12 +13,12 @@ import Perfil from "./paginas/Perfil";
 import ListarClientes from "./paginas/ListarClientes";
 import ListarOrdenes from "./paginas/ListarOrdenes";
 import { Confirmar } from "./paginas/Confirmar";
-import Restablecer from "./paginas/Restablecer";
+import RestablecerTecnico from "./paginas/RestablecerTecnico";
 import { AuthProvider } from "./context/AuthProvider";
 import { PrivateRoute } from "./routes/PrivateRoutes";
 import { OrdenesProvider } from "./context/OrdenesProvider";
 import { RecuperarContrasena } from "./paginas/RecuperarContrasena";
-import RecuperarCliente from "./paginas/RecuperarCliente";
+import RestablecerCliente from "./paginas/RestablecerCliente";
 
 function App() {
   return (
@@ -36,11 +36,11 @@ function App() {
               <Route path="confirmar/:token" element={<Confirmar />} />
               <Route
                 path="recuperar-password/:token"
-                element={<Restablecer />}
+                element={<RestablecerTecnico />}
               />
               <Route
                 path="recuperar/cliente/:token"
-                element={<RecuperarCliente />}
+                element={<RestablecerCliente />}
               />
               <Route
                 path="dashboard/*"
