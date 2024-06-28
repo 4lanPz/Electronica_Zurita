@@ -75,10 +75,10 @@ const Dashboard = () => {
   return (
     <div className="md:flex md:min-h-screen">
       <div ref={sidebarRef} className="w-auto bg-[#3D53A0]">
-        <button onClick={toggleMenu} className="my-2 mx-4 text-white">
+        <button onClick={toggleMenu} className="my-2 mx-3 text-white">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
+            className="h-7 w-7"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -92,7 +92,7 @@ const Dashboard = () => {
           </svg>
         </button>
         {menuOpen && (
-          <div className="mx-10">
+          <div className="mx-8">
             <div className="mx-4 flex flex-col xl:flex-col md:flex-col sm:flex-row items-center justify-center max-[767px]:flex max-[767px]:flex-row">
               <img
                 src="/images/logo_bw.jpg"

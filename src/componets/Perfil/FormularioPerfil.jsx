@@ -27,20 +27,17 @@ const FormularioPerfil = () => {
         .required("El nombre es obligatorio")
         .matches(/^[a-zA-ZÀ-ÿ]+$/, "El nombre solo debe contener letras")
         .min(3, "El nombre debe tener al menos 3 caracteres")
-        .max(30, "El nombre debe tener máximo 30 caracteres"),
+        .max(20, "El nombre debe tener máximo 20 caracteres"),
       apellido: Yup.string()
         .required("El apellido es obligatorio")
         .matches(/^[a-zA-ZÀ-ÿ]+$/, "El apellido solo debe contener letras")
         .min(3, "El apellido debe tener al menos 3 caracteres")
-        .max(30, "El apellido debe tener máximo 30 caracteres"),
+        .max(20, "El apellido debe tener máximo 20 caracteres"),
       telefono: Yup.string()
-        .required("El teléfono es obligatorio")
-        .matches(
-          /^\d+$/,
-          "El teléfono debe ser un número y no debe contener letras"
-        )
-        .min(5, "El teléfono debe tener al menos 5 números")
-        .max(10, "El teléfono debe tener máximo 10 números"),
+        .matches(/^[0-9]*$/, "El teléfono solo puede contener números")
+        .min(5, "El teléfono debe tener al menos 6 números")
+        .max(10, "El teléfono debe tener 10 números")
+        .required("El teléfono es obligatorio"),
       email: Yup.string()
         .email("El correo electrónico no es válido")
         .required("El correo electrónico es obligatorio"),
@@ -129,13 +126,13 @@ const FormularioPerfil = () => {
 
         <div className="mb-3">
           <label htmlFor="email" className="poppins-semibold text-black">
-            Email:{" "}
+            Correo electrónico:{" "}
           </label>
           <input
             id="email"
             type="text"
             className="poppins-regular border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-xl"
-            placeholder="email"
+            placeholder="correo electrónico"
             name="email"
             value={formik.values.email}
             onChange={formik.handleChange}

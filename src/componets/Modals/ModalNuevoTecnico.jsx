@@ -29,33 +29,23 @@ const ModalNuevoTecnico = ({ onCancel }) => {
       nombre: Yup.string()
         .required("El nombre es obligatorio")
         .matches(/^[a-zA-Z]+$/, "El nombre solo puede contener letras")
-        .min(3, "El nombre debe tener al menos 3caracteres")
-        .max(30, "El nombre debe tener máximo 30 caracteres"),
+        .min(3, "El nombre debe tener al menos 3 caracteres")
+        .max(20, "El nombre debe tener máximo 20 caracteres"),
       apellido: Yup.string()
         .required("El apellido es obligatorio")
         .matches(/^[a-zA-Z]+$/, "El apellido solo puede contener letras")
         .min(3, "El apellido debe tener al menos 3 caracteres")
-        .max(30, "El apellido debe tener máximo 30 caracteres"),
+        .max(20, "El apellido debe tener máximo 20 caracteres"),
       ruc: Yup.string()
-        .matches(/^\d+$/, "El RUC debe ser un número")
+        .matches(/^[0-9]*$/, "El teléfono solo puede contener números")
         .min(10, "El RUC debe tener al menos 10 números")
         .max(13, "El RUC debe tener máximo 13 números")
-        .required("El RUC es obligatorio")
-        .test(
-          "is-positive",
-          "El número no puede ser negativo",
-          (value) => parseInt(value) >= 0
-        ),
+        .required("El RUC es obligatorio"),
       telefono: Yup.string()
-        .matches(/^\d+$/, "El teléfono debe ser un número")
-        .min(5, "El teléfono debe tener mínimo 5 dígitos")
-        .max(13, "El teléfono debe tener máximo 13 números")
-        .required("El teléfono es obligatorio")
-        .test(
-          "is-positive",
-          "El teléfono no puede ser negativo",
-          (value) => parseInt(value) >= 0
-        ),
+        .matches(/^[0-9]*$/, "El teléfono solo puede contener números")
+        .min(6, "El teléfono debe tener al menos 6 números")
+        .max(10, "El teléfono debe tener 10 números")
+        .required("El teléfono es obligatorio"),
       email: Yup.string()
         .email("El correo electrónico no es válido")
         .required("El correo electrónico es obligatorio"),

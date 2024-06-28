@@ -24,7 +24,7 @@ const RecuperarCliente = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = `${import.meta.env.VITE_BACKEND_URL}/nuevo-password/${token}`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/nuevo-passwordCli/${token}`;
       const respuesta = await axios.post(url, form);
       setForm({});
       setMensaje({ respuesta: respuesta.data.msg, tipo: true });
@@ -40,7 +40,7 @@ const RecuperarCliente = () => {
     try {
       const url = `${
         import.meta.env.VITE_BACKEND_URL
-      }/recuperar-password/${token}`;
+      }/recuperar-passwordCli/${token}`;
       const respuesta = await axios.get(url);
       setTokenBack(true);
       setMensaje({ respuesta: respuesta.data.msg, tipo: true });
