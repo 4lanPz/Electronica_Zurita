@@ -1,81 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/images/icon.svg" sizes="32x32" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  
-  <!-- Preload and asynchronously load Google Fonts -->
-  <link
-    rel="preload"
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600;700&display=swap"
-    as="style"
-    onload="this.onload=null;this.rel='stylesheet'"
-  />
-  <noscript>
+  <head>
+    <meta charset="UTF-8" />
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600;700&display=swap"
+      rel="icon"
+      type="image/svg+xml"
+      href="/images/icon.svg"
+      sizes="32x32"
     />
-  </noscript>
-  
-  <!-- Insertar aquí el CSS crítico necesario para el renderizado inicial -->
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-    }
-    .poppins-thin {
-      font-family: "Poppins", sans-serif;
-      font-weight: 100;
-      font-style: normal;
-      font-size: 12px;
-    }
-    .poppins-regular {
-      font-family: "Poppins", sans-serif;
-      font-weight: 400;
-      font-style: normal;
-      font-size: 14px;
-    }
-    .poppins-semibold {
-      font-family: "Poppins", sans-serif;
-      font-weight: 600;
-      font-style: normal;
-      font-size: 18px;
-    }
-    .poppins-bold {
-      font-family: "Poppins", sans-serif;
-      font-weight: 700;
-      font-style: normal;
-      font-size: 24px;
-    }
-    .white {
-      background-color: #FeF1EF;
-    }
-    .green {
-      background-color: #325247;
-    }
-    .blue {
-      background-color: #5B72C3;
-    }
-  </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <!-- Cargar App.css de manera asíncrona -->
-  <link
-    rel="preload"
-    href="src/App.css"
-    as="style"
-    onload="this.onload=null;this.rel='stylesheet'"
-  />
-  <noscript>
-    <link rel="stylesheet" href="src/App.css" />
-  </noscript>
+    <!-- Preload and asynchronously load Google Fonts -->
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600;700&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600;700&display=swap"
+      />
+    </noscript>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Electrónica Zurita</title>
-</head>
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
-</body>
+    <!-- Insertar aquí el CSS crítico necesario para el renderizado inicial -->
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+      .poppins-thin {
+        font-family: "Poppins", sans-serif;
+        font-weight: 100;
+        font-style: normal;
+        font-size: 12px;
+      }
+      .poppins-regular {
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 14px;
+      }
+      .poppins-semibold {
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-style: normal;
+        font-size: 18px;
+      }
+      .poppins-bold {
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 24px;
+      }
+      .white {
+        background-color: #fef1ef;
+      }
+      .green {
+        background-color: #325247;
+      }
+      .blue {
+        background-color: #5b72c3;
+      }
+    </style>
+
+    <!-- Cargar App.css de manera asíncrona -->
+    <link
+      rel="preload"
+      href="src/App.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="src/App.css" />
+    </noscript>
+    <link rel="preload" href="/images/logopag.jpg" as="image" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electrónica Zurita</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
