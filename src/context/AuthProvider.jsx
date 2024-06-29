@@ -43,6 +43,23 @@ const AuthProvider = ({ children }) => {
       return { respuesta: error.response.data.msg, tipo: false };
     }
   };
+  const verificarAdmin = async (datos) => {
+    const token = localStorage.getItem("token");
+    try {
+      const url = `${import.meta.env.VITE_BACKEND_URL}/tecnico/verificar-admin/${datos}`;
+      const options = {
+        headers: {
+          method: "get",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const respuesta = await axios.get(url, options);
+      return { respuesta: respuesta.data.msg, tipo: true };
+    } catch (error) {
+      return { respuesta: error.response.data.msg, tipo: false };
+    }
+  };
 
   const actualizarPassword = async (datos) => {
     const token = localStorage.getItem("token");
@@ -80,6 +97,7 @@ const AuthProvider = ({ children }) => {
         setAuth,
         actualizarPerfil,
         actualizarPassword,
+        verificarAdmin,
         loading,
       }}
     >

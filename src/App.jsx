@@ -35,7 +35,7 @@ function App() {
               </Route>
               <Route path="confirmar/:token" element={<Confirmar />} />
               <Route
-                path="recuperar-password/:token"
+                path="recuperar-contraseña/:token"
                 element={<RestablecerTecnico />}
               />
               <Route
