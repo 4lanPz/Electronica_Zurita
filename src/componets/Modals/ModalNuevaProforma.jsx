@@ -31,9 +31,7 @@ const ModalNuevaProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
         navigate("/dashboard/listarOrdenes");
       }, 3000);
     } catch (error) {
-      // Si hay un error en la petición
-      console.error("Hubo un error inesperado:", error);
-      setMensaje({ respuesta: "Hubo un error inesperado", tipo: false });
+      setMensaje({ respuesta: error.response.data.msg, tipo: false });
       setTimeout(() => {
         setMensaje({});
       }, 5000);
