@@ -113,11 +113,6 @@ export const Login = () => {
                       type="button"
                       onClick={toggleShowPassword}
                       className="flex items-center justify-center bg-[#5B72C3] rounded-full w-10 h-9 hover:scale-100 hover:bg-[#3D53A0]"
-                      aria-label={
-                        showPassword
-                          ? "Ocultar contraseña"
-                          : "Mostrar contraseña"
-                      }
                     >
                       {showPassword ? (
                         <AiOutlineEyeInvisible className="text-white text-xl" />
