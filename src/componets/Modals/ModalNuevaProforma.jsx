@@ -6,11 +6,21 @@ import axios from "axios";
 const ModalNuevaProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
   const [form, setForm] = useState({
     ...orden,
-    piezas,
+    piezas: piezas.map((p) => ({ ...p })), // Clonamos las piezas para evitar mutación directa
     total,
   });
   const [mensaje, setMensaje] = useState({});
   const navigate = useNavigate();
+
+  const handleChangePieza = (index, field, value) => {
+    const newPiezas = [...form.piezas]; // Clonamos el array de piezas
+    newPiezas[index] = { ...newPiezas[index], [field]: value }; // Actualizamos el campo específico
+
+    setForm({
+      ...form,
+      piezas: newPiezas,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,12 +57,6 @@ const ModalNuevaProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
               Proforma Orden {form.numOrden}
             </p>
 
-            <div className="mb-2">
-              <b className="poppins-semibold">Fecha de ingreso:</b>
-              <p className="poppins-regular">
-                {new Date(form.ingreso).toLocaleDateString()}
-              </p>
-            </div>
             <div className="flex flex-wrap">
               <div className="w-1/2 pr-2">
                 <div className="mb-2">
@@ -89,7 +93,7 @@ const ModalNuevaProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
               <p className="poppins-regular">{form.razon}</p>
             </div>
             <div className="mb-2">
-              <b className="poppins-semibold ">Datos de piezas:</b>
+              <b className="poppins-semibold">Datos de piezas:</b>
               <table className="mt-3 w-full border-collapse border border-gray-300">
                 <thead>
                   <tr>
@@ -102,49 +106,30 @@ const ModalNuevaProforma = ({ orden, piezas, total, handleClose, ordenId }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {form.piezas.map(
-                    (pieza, index) =>
-                      // Validar si tanto pieza como precio están definidos
-                      pieza.pieza.trim() !== "" &&
-                      pieza.precio.trim() !== "" && (
-                        <tr key={index}>
-                          <td className="pl-3 oppins-regular border border-gray-300">
-                            <input
-                              type="text"
-                              value={pieza.pieza}
-                              onChange={(e) =>
-                                setForm((prevForm) => ({
-                                  ...prevForm,
-                                  piezas: prevForm.piezas.map((p, idx) =>
-                                    idx === index
-                                      ? { ...p, pieza: e.target.value }
-                                      : p
-                                  ),
-                                }))
-                              }
-                              className="p-1 w-full"
-                            />
-                          </td>
-                          <td className="pl-3 poppins-regular border border-gray-300">
-                            <input
-                              type="text"
-                              value={pieza.precio}
-                              onChange={(e) =>
-                                setForm((prevForm) => ({
-                                  ...prevForm,
-                                  piezas: prevForm.piezas.map((p, idx) =>
-                                    idx === index
-                                      ? { ...p, precio: e.target.value }
-                                      : p
-                                  ),
-                                }))
-                              }
-                              className="p-1 w-full"
-                            />
-                          </td>
-                        </tr>
-                      )
-                  )}
+                  {form.piezas.map((pieza, index) => (
+                    <tr key={index}>
+                      <td className="pl-3 poppins-regular border border-gray-300">
+                        <input
+                          type="text"
+                          value={pieza.pieza}
+                          onChange={(e) =>
+                            handleChangePieza(index, "pieza", e.target.value)
+                          }
+                          className="p-1 w-full"
+                        />
+                      </td>
+                      <td className="pl-3 poppins-regular border border-gray-300">
+                        <input
+                          type="text"
+                          value={pieza.precio}
+                          onChange={(e) =>
+                            handleChangePieza(index, "precio", e.target.value)
+                          }
+                          className="p-1 w-full"
+                        />
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
