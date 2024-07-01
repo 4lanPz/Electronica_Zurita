@@ -16,7 +16,6 @@ export const FormularioProforma = () => {
   useEffect(() => {
     const consultarOrden = async () => {
       try {
-
         const token = localStorage.getItem("token");
         const url = `${
           import.meta.env.VITE_BACKEND_URL
@@ -108,11 +107,14 @@ export const FormularioProforma = () => {
       };
       const respuesta = await axios.post(url, datosProforma, options);
       setLoading(false);
-      setMensaje({ respuesta: "Proforma registrada correctamente", tipo: true });
+      setMensaje({
+        respuesta: "Proforma registrada correctamente",
+        tipo: true,
+      });
       setTimeout(() => {
         setMensaje({});
+        navigate("/dashboard/listarOrdenes");
       }, 40000);
-      navigate("/dashboard/listarOrdenes");
     } catch (error) {
       setLoading(false);
       setMensaje({ respuesta: error.response.data.msg, tipo: false });
@@ -287,11 +289,11 @@ export const FormularioProforma = () => {
               <button
                 onClick={mostrarModal}
                 className={`poppins-regular px-4 py-2 w-1/5 block text-center bg-[#5B72C3] text-white border rounded-xl hover:scale-100 duration-300 hover:bg-[#3D53A0] hover:text-white mb-2 ${
-                    loading ? "animate-pulse" : ""
-                  }`}
-                  disabled={loading} // Deshabilitar el botón mientras carga
-                >
-                  {loading ? "Cargando..." : "Registrar Proforma"}
+                  loading ? "animate-pulse" : ""
+                }`}
+                disabled={loading} // Deshabilitar el botón mientras carga
+              >
+                {loading ? "Cargando..." : "Registrar Proforma"}
               </button>
 
               {modalVisible && (

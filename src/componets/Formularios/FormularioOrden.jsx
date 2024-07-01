@@ -98,7 +98,7 @@ export const FormularioOrden = ({ orden }) => {
         }, 5000);
       } catch (error) {
         setMensaje({
-          respuesta: "Error al registrar o actualizar la orden",
+          respuesta: "error.response.data.msg",
           tipo: false,
         });
         setTimeout(() => {
