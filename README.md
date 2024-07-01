@@ -4,7 +4,7 @@
 En el presente repositorio se aloja el codigo desarrollado para el proyecto de la creacion del componente frontend para el centro de reparaciones "Electrónica Zurita"
 Este se a desarrollado para ser simple, con las acciones necesarias que necesita el técnico y capaz de cubrir las necesaidades del usuario en su entorno laboral.
 
-## Herramientas, librerías y frameworks
+## 🛠 Herramientas, librerías y frameworks
 - React
 - Tailwind CSS
 - React Hooks
@@ -23,7 +23,7 @@ https://electronica-zurita.vercel.app
 
 
 
-## Pasos para instalacion
+## ✏ Pasos para instalacion
 ### - Requisitos 
 Node
 
@@ -61,7 +61,7 @@ Para iniciar el proyecto ejecute el siguiente comando
 ```bash
 npm run dev
 ```
-## Autores
+## 👨‍🎓 Autores
 ### - Frontend:  Alan Pérez 
 https://github.com/4lanPz/Electronica_Zurita
 ### - Backend: Aldahir Lascano
