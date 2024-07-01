@@ -24,7 +24,7 @@ const RecuperarCliente = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/nuevo-password/${token}`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/cliente/nuevo-passwordCli/${token}`;
       const respuesta = await axios.post(url, form);
       setForm({});
       setMensaje({ respuesta: respuesta.data.msg, tipo: true });
