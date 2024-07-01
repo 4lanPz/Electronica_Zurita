@@ -8,6 +8,7 @@ import ModalProforma from "../Modals/ModalNuevaProforma";
 export const FormularioProforma = () => {
   const { id } = useParams();
   const [orden, setOrden] = useState({});
+  const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState({});
   const [piezas, setPiezas] = useState([{ pieza: "", precio: "" }]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -15,6 +16,7 @@ export const FormularioProforma = () => {
   useEffect(() => {
     const consultarOrden = async () => {
       try {
+
         const token = localStorage.getItem("token");
         const url = `${
           import.meta.env.VITE_BACKEND_URL
@@ -63,7 +65,6 @@ export const FormularioProforma = () => {
   };
 
   const mostrarModal = () => {
-    // Validar que todas las piezas tengan valores no vacíos y precio mayor que cero antes de mostrar el modal
     const piezasValidas = piezas.every(
       (pieza) =>
         pieza.pieza.trim() !== "" &&
@@ -87,6 +88,38 @@ export const FormularioProforma = () => {
 
   const cerrarModal = () => {
     setModalVisible(false);
+  };
+
+  const registrarProforma = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      const url = `${import.meta.env.VITE_BACKEND_URL}/proforma/registro/${id}`;
+      const datosProforma = {
+        ordenId: id,
+        piezas,
+        precioTotal: calcularTotal(),
+      };
+      const options = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const respuesta = await axios.post(url, datosProforma, options);
+      setLoading(false);
+      setMensaje({ respuesta: "Proforma registrada correctamente", tipo: true });
+      setTimeout(() => {
+        setMensaje({});
+      }, 40000);
+      navigate("/dashboard/listarOrdenes");
+    } catch (error) {
+      setLoading(false);
+      setMensaje({ respuesta: error.response.data.msg, tipo: false });
+      setTimeout(() => {
+        setMensaje({});
+      }, 70000);
+    }
   };
 
   return (
@@ -253,9 +286,12 @@ export const FormularioProforma = () => {
               )}
               <button
                 onClick={mostrarModal}
-                className="poppins-regular text-white px-4 py-2 rounded-xl w-1/5 bg-[#5267b4] hover:bg-[#3D53A0] mb-10 mt-3"
-              >
-                Registrar Proforma
+                className={`poppins-regular px-4 py-2 w-1/5 block text-center bg-[#5B72C3] text-white border rounded-xl hover:scale-100 duration-300 hover:bg-[#3D53A0] hover:text-white mb-2 ${
+                    loading ? "animate-pulse" : ""
+                  }`}
+                  disabled={loading} // Deshabilitar el botón mientras carga
+                >
+                  {loading ? "Cargando..." : "Registrar Proforma"}
               </button>
 
               {modalVisible && (
@@ -264,7 +300,7 @@ export const FormularioProforma = () => {
                   piezas={piezas}
                   total={calcularTotal()}
                   handleClose={cerrarModal}
-                  ordenId={id} // Pasar ordenId correctamente
+                  onConfirm={registrarProforma}
                 />
               )}
             </div>
