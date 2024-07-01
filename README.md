@@ -1,52 +1,69 @@
-# SISTEMA DE GESTIÓN DEL CENTRO DE REPARACIONES "ELECTRÓNICA ZURITA"
+# 🖥 SISTEMA DE GESTIÓN DEL CENTRO DE REPARACIONES "ELECTRÓNICA ZURITA"
 
-## Descripción
+## 📄 Descripción
 En el presente repositorio se aloja el codigo desarrollado para el proyecto de la creacion del componente frontend para el centro de reparaciones "Electrónica Zurita"
 Este se a desarrollado para ser simple, con las acciones necesarias que necesita el técnico y capaz de cubrir las necesaidades del usuario en su entorno laboral.
 
-## Deploy del componente frontend
+## Herramientas, librerías y frameworks
+- React
+- Tailwind CSS
+- React Hooks
+- React Icons
+- Formik
+- Yup
+- Google Maps API
+- Visual Studio Code
+- Git
+- Github
+
+## 📌 Deploy del componente frontend
 https://electronica-zurita.vercel.app
 
-## Manual de usuario
+## 📖 Manual de usuario
 
 
 
 ## Pasos para instalacion
+### - Requisitos 
+Node
 
-### Git / Clonar repositorio
-Ingrese el comando 
+Visual Studio Code
 
+Git
+
+
+### - Git / Clonar repositorio
+Ingrese el comando en got para clonar el repositorio en su pc
 ```bash
 git clone https://github.com/4lanPz/Electronica_Zurita/
 ```
-
-### Descargando archivo Zip
-Ingrese el comando 
-
+Ingrese a su IDE y ejecute el comando
 ```bash
-git clone https://github.com/4lanPz/Electronica_Zurita/
+npm i
 ```
 
-Para instalar el proyecto del componente frontend, se deben realizar los siguientes pasos:
+### - Descargando archivo Zip
+Descargue el repositorio
+Descomprima el archivo Zip y abra la carpeta en un IDE 
+Ejecute el siguiente comando
+```bash
+npm i
+```
+### - Variables de entorno
 
-Descargar el comprimido ZIP Desacargar ZIP
-
-Instalar las dependencias con el siguiente comando:
-
-composer install
-Copiar el contenido del archivo ".env.example" en un archivo nuevo llamado ".env".
-
-cp .env.example .env 
-Generar una clave única de aplicación para el archivo de configuración
-
-php artisan key:generate 
-🖥️ Iniciar el proyecto
-Para que el presente proyecto se inicio se debe ejecutar el siguiente comando:
-
-php artisan serve 
-📝 Autores
-Frontend Lesly Herrera Frontend
-Backend Jhon Torres Backend
-App Móvil Mayra Ñaupari App Móvil
-🖥 Lenguajes utilizados
-image
+Crear un archivo .env que debe contener las variables de entorno con sus datos
+```bash
+VITE_BACKEND_URL = "URL DEL BACKEND"
+VITE_MAPS_API_KEY = "API KEY DE GOOGLE MAPS"
+```
+### - Inciar el proyecto
+Para iniciar el proyecto ejecute el siguiente comando
+```bash
+npm run dev
+```
+## Autores
+### - Frontend:  Alan Pérez 
+https://github.com/4lanPz/Electronica_Zurita
+### - Backend: Aldahir Lascano
+https://github.com/LascanoAldahir/BackendTesis
+### - Aplicación móvil: Bryan Delgado
