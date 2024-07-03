@@ -68,6 +68,7 @@ export const FormularioCliente = ({ cliente }) => {
               : "Cliente registrado con éxito y correo enviado",
             tipo: true,
           });
+          setLoading(false);
           setTimeout(() => {}, 3000);
         } else {
           setLoading(false);
