@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Mensaje from "../Alertas/Mensaje";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 export const FormularioOrden = ({ orden }) => {
-  const navigate = useNavigate();
   const [mensaje, setMensaje] = useState({});
   const [clienteInfo, setClienteInfo] = useState({
     nombre: "",
@@ -97,7 +95,7 @@ export const FormularioOrden = ({ orden }) => {
         }, 5000);
       } catch (error) {
         setMensaje({
-          respuesta: "error.response.data.msg",
+          respuesta: error.response.data.msg, tipo: false,
           tipo: false,
         });
         setTimeout(() => {

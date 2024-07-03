@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Mensaje from "../Alertas/Mensaje";
 import GoogleMaps from "../GoogleMaps";
 
 export const FormularioCliente = ({ cliente }) => {
-  const navigate = useNavigate();
   const [mensaje, setMensaje] = useState({});
   const [loading, setLoading] = useState(false);
 

@@ -113,7 +113,6 @@ export const FormularioProforma = () => {
       });
       setTimeout(() => {
         setMensaje({});
-        navigate("/dashboard/listarOrdenes");
       }, 40000);
     } catch (error) {
       setLoading(false);
