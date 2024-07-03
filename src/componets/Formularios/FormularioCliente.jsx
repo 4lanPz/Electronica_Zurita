@@ -69,9 +69,7 @@ export const FormularioCliente = ({ cliente }) => {
               : "Cliente registrado con éxito y correo enviado",
             tipo: true,
           });
-          setTimeout(() => {
-            navigate("/dashboard/listarClientes");
-          }, 3000);
+          setTimeout(() => {}, 3000);
         } else {
           setLoading(false);
           console.error("La respuesta no contiene 'data'");

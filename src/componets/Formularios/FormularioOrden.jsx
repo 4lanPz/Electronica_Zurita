@@ -94,7 +94,6 @@ export const FormularioOrden = ({ orden }) => {
         });
         setTimeout(() => {
           setMensaje({});
-          navigate("/dashboard/listarOrdenes");
         }, 5000);
       } catch (error) {
         setMensaje({
