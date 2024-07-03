@@ -81,12 +81,6 @@ const ModalVerProforma = ({ orden, onCancel }) => {
                   <b className="poppins-semibold">Serie:</b>
                   <p className="poppins-regular">{orden.serie}</p>
                 </div>
-                <div className="mb-2">
-                  <b className="poppins-semibold">Aceptado:</b>
-                  <p className="poppins-regular">
-                    {proformaData.aceptado ? "SI" : "No"}
-                  </p>
-                </div>
               </div>
             </div>
             <div className="mb-2">
