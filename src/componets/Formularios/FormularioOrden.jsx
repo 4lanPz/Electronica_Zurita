@@ -83,7 +83,7 @@ export const FormularioOrden = ({ orden }) => {
           data: values,
           ...options,
         });
-
+        setLoading(false);
         setMensaje({
           respuesta: orden?._id
             ? "Orden Actualizada"
