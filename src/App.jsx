@@ -19,6 +19,7 @@ import { PrivateRoute } from "./routes/PrivateRoutes";
 import { OrdenesProvider } from "./context/OrdenesProvider";
 import { RecuperarContrasena } from "./paginas/RecuperarContrasena";
 import RestablecerCliente from "./paginas/RestablecerCliente";
+import { Prohibido } from "./paginas/Prohibido";
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
                           path="actualizarCliente/:id"
                           element={<Actualizar />}
                         />
+                        <Route path="Prohibido" element={<Prohibido />} />
                       </Route>
                     </Routes>
                   </PrivateRoute>

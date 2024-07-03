@@ -7,7 +7,7 @@ import Mensaje from "../Alertas/Mensaje";
 const FormularioPerfil = () => {
   const [mensaje, setMensaje] = useState({});
   const { auth, actualizarPerfil, loading } = useContext(AuthContext);
-
+  const [loading2, setLoading2] = useState(false);
   useEffect(() => {
     if (!loading && !auth._id) {
     }
@@ -43,8 +43,10 @@ const FormularioPerfil = () => {
         .required("El correo electrónico es obligatorio"),
     }),
     onSubmit: async (values) => {
+      setLoading2(true);
       const resultado = await actualizarPerfil(values);
       setMensaje(resultado);
+      setLoading2(false);
       setTimeout(() => {
         setMensaje({});
       }, 3000);
@@ -143,11 +145,15 @@ const FormularioPerfil = () => {
           ) : null}
         </div>
 
-        <input
+        <button
           type="submit"
-          className="poppins-regular bg-[#5B72C3] w-full p-3 text-white rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
-          value="Actualizar Datos"
-        />
+          className={`poppins-regular bg-[#5B72C3] w-full p-3 text-white rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all duration-300 ${
+            loading2 ? "animate-pulse" : ""
+          }`}
+          disabled={loading2}
+        >
+          {loading2 ? "Cargando..." : "Actualizar Datos"}
+        </button>
       </form>
     </>
   );

@@ -7,6 +7,7 @@ import Mensaje from "../Alertas/Mensaje";
 const ContrasenaPerfil = () => {
   const [mensaje, setMensaje] = useState({});
   const { actualizarPassword } = useContext(AuthContext);
+  const [loading2, setLoading2] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -26,8 +27,10 @@ const ContrasenaPerfil = () => {
         ),
     }),
     onSubmit: async (values, { resetForm }) => {
+      setLoading2(true);
       const resultado = await actualizarPassword(values);
       setMensaje(resultado);
+      setLoading2(false);
       setTimeout(() => {
         setMensaje({});
       }, 3000);
@@ -91,11 +94,15 @@ const ContrasenaPerfil = () => {
             ) : null}
           </div>
 
-          <input
+          <button
             type="submit"
-            className="poppins-regular bg-[#5B72C3] w-full p-3 text-white  rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all"
-            value="Actualizar Contraseña"
-          />
+            className={`poppins-regular bg-[#5B72C3] w-full p-3 text-white rounded-xl hover:bg-[#3D53A0] cursor-pointer transition-all duration-300 ${
+              loading2 ? "animate-pulse" : ""
+            }`}
+            disabled={loading2}
+          >
+            {loading2 ? "Cargando..." : "Actualizar Contraseña"}
+          </button>
         </form>
       </div>
     </>

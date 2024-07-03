@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import TablaTecnicos from "../componets/Tablas/TablaTecnicos";
 import AuthContext from "../context/AuthProvider";
+import { Prohibido } from "./Prohibido";
 
 const Tecnicos = () => {
   const [isValid, setIsValid] = useState(false);
@@ -37,12 +38,7 @@ const Tecnicos = () => {
 
   if (!isValid) {
     return (
-      <div className="text-center">
-        <h1 className="poppins-bold font-black text-4xl text-red-500">
-          Prohibido
-        </h1>
-        <p>No tienes permiso para acceder a esta página.</p>
-      </div>
+      <Prohibido />
     );
   }
 
