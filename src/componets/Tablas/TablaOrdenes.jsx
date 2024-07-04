@@ -11,9 +11,11 @@ import OrdenProceso from "../Modals/OrdenProceso";
 import ModalVerProforma from "../Modals/ModalVerProforma";
 import ModalVerOrden from "../Modals/ModalVerOrden";
 import FinalizarOrden from "../Modals/FinalizarOrden";
+import Mensaje from "../Alertas/Mensaje";
 
 const TablaOrdenes = () => {
   const { auth } = useContext(AuthContext);
+  const [mensaje, setMensaje] = useState({});
   const navigate = useNavigate();
   const [ordenes, setOrdenes] = useState([]);
   const [selectedOrden, setSelectedOrden] = useState(null);
@@ -80,6 +82,12 @@ const TablaOrdenes = () => {
   useEffect(() => {
     listarOrdenes();
   }, []);
+
+  const hayOrdenes =
+    ordenesMantenimiento.length > 0 ||
+    ordenesReparacion.length > 0 ||
+    ordenesRevision.length > 0 ||
+    ordenesFinalizado.length > 0;
 
   const handleDelete = async (id) => {
     try {
@@ -327,13 +335,19 @@ const TablaOrdenes = () => {
           </div>
         </div>
       </div>
-      <Tabla titulo="Mantenimiento" data={ordenesMantenimiento} />
-      <hr className="mt-4 mb-2 border-black" />
-      <Tabla titulo="Reparación" data={ordenesReparacion} />
-      <hr className="mt-4 mb-2 border-black" />
-      <Tabla titulo="Revisión" data={ordenesRevision} />
-      <hr className="mt-4 mb-2 border-black" />
-      <Tabla titulo="Finalizado" data={ordenesFinalizado} />
+      {!hayOrdenes ? (
+        <Mensaje tipo={"active"}>{"No existen órdenes registradas"}</Mensaje>
+      ) : (
+        <>
+          <Tabla titulo="Mantenimiento" data={ordenesMantenimiento} />
+          <hr className="mt-4 mb-2 border-black" />
+          <Tabla titulo="Reparación" data={ordenesReparacion} />
+          <hr className="mt-4 mb-2 border-black" />
+          <Tabla titulo="Revisión" data={ordenesRevision} />
+          <hr className="mt-4 mb-2 border-black" />
+          <Tabla titulo="Finalizado" data={ordenesFinalizado} />
+        </>
+      )}
       {modalVisible && (
         <OrdenProceso
           orden={selectedOrden}
