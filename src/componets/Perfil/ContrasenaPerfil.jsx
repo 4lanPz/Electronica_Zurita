@@ -3,11 +3,14 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import AuthContext from "../../context/AuthProvider";
 import Mensaje from "../Alertas/Mensaje";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const ContrasenaPerfil = () => {
   const [mensaje, setMensaje] = useState({});
   const { actualizarPassword } = useContext(AuthContext);
   const [loading2, setLoading2] = useState(false);
+  const [showPasswordActual, setShowPasswordActual] = useState(false);
+  const [showPasswordNuevo, setShowPasswordNuevo] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -34,10 +37,17 @@ const ContrasenaPerfil = () => {
       setTimeout(() => {
         setMensaje({});
       }, 3000);
-      // Limpiar los valores del formulario después de enviar
       resetForm();
     },
   });
+
+  const toggleShowPasswordActual = () => {
+    setShowPasswordActual((prev) => !prev);
+  };
+
+  const toggleShowPasswordNuevo = () => {
+    setShowPasswordNuevo((prev) => !prev);
+  };
 
   return (
     <>
@@ -57,16 +67,38 @@ const ContrasenaPerfil = () => {
             >
               Contraseña actual:{" "}
             </label>
-            <input
-              id="passwordactual"
-              type="password"
-              className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-xl mb-3"
-              placeholder="**************"
-              name="passwordactual"
-              value={formik.values.passwordactual}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
+            <div className="flex items-center mt-2">
+              <div className="flex-grow pr-1">
+                <input
+                  id="passwordactual"
+                  type={showPasswordActual ? "text" : "password"}
+                  className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-xl mb-3"
+                  placeholder="**************"
+                  name="passwordactual"
+                  value={formik.values.passwordactual}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+              </div>
+              <div className="flex-shrink-0">
+                <button
+                  type="button"
+                  onClick={toggleShowPasswordActual}
+                  className="flex items-center justify-center bg-[#5B72C3] rounded-full w-10 h-9 hover:scale-100 hover:bg-[#3D53A0]"
+                  aria-label={
+                    showPasswordActual
+                      ? "Ocultar contraseña"
+                      : "Mostrar contraseña"
+                  }
+                >
+                  {showPasswordActual ? (
+                    <AiOutlineEyeInvisible className="text-white text-xl" />
+                  ) : (
+                    <AiOutlineEye className="text-white text-xl" />
+                  )}
+                </button>
+              </div>
+            </div>
             {formik.touched.passwordactual && formik.errors.passwordactual ? (
               <div className="text-red-500">{formik.errors.passwordactual}</div>
             ) : null}
@@ -79,16 +111,38 @@ const ContrasenaPerfil = () => {
             >
               Nueva contraseña:{" "}
             </label>
-            <input
-              id="passwordnuevo"
-              type="password"
-              className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-xl mb-3"
-              placeholder="**************"
-              name="passwordnuevo"
-              value={formik.values.passwordnuevo}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
+            <div className="flex items-center mt-2">
+              <div className="flex-grow pr-1">
+                <input
+                  id="passwordnuevo"
+                  type={showPasswordNuevo ? "text" : "password"}
+                  className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-xl mb-3"
+                  placeholder="**************"
+                  name="passwordnuevo"
+                  value={formik.values.passwordnuevo}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+              </div>
+              <div className="flex-shrink-0">
+                <button
+                  type="button"
+                  onClick={toggleShowPasswordNuevo}
+                  className="flex items-center justify-center bg-[#5B72C3] rounded-full w-10 h-9 hover:scale-100 hover:bg-[#3D53A0]"
+                  aria-label={
+                    showPasswordNuevo
+                      ? "Ocultar contraseña"
+                      : "Mostrar contraseña"
+                  }
+                >
+                  {showPasswordNuevo ? (
+                    <AiOutlineEyeInvisible className="text-white text-xl" />
+                  ) : (
+                    <AiOutlineEye className="text-white text-xl" />
+                  )}
+                </button>
+              </div>
+            </div>
             {formik.touched.passwordnuevo && formik.errors.passwordnuevo ? (
               <div className="text-red-500">{formik.errors.passwordnuevo}</div>
             ) : null}

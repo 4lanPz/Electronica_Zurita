@@ -117,6 +117,7 @@ const TablaTecnicos = () => {
               <th className="p-2">RUC</th>
               <th className="p-2">Correo electrónico</th>
               <th className="p-2">Teléfono</th>
+              <th className="p-2">Estado</th>
               <th className="p-2">Acción</th>
             </tr>
           </thead>
@@ -133,6 +134,7 @@ const TablaTecnicos = () => {
                 <td className="p-2">{tecnico.ruc}</td>
                 <td className="p-2">{tecnico.email}</td>
                 <td className="p-2">{tecnico.telefono}</td>
+                <td className="p-2">{tecnico.confirmEmail ? "Activo" : "Por confirmar" }</td>
 
                 <td className="py-2 text-center">
                   <AiOutlineDelete

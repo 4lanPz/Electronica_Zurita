@@ -124,7 +124,7 @@ const Dashboard = () => {
               </h2>
             </div>
 
-            <hr className="my-5 border-slate-500" />
+            <hr className="my-3 border-slate-500 max-md:my-2 max-md:mb-5" />
 
             <ul className="poppins-regular max-[769px]:flex max-[500px]:flex-col">
               {menuItems.map((item) => (

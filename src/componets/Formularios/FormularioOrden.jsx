@@ -25,6 +25,7 @@ export const FormularioOrden = ({ orden }) => {
       ingreso: orden?.ingreso || "",
       razon: orden?.razon || "",
       servicio: orden?.servicio || "Mantenimiento",
+      cedula: "",
     },
     validationSchema: Yup.object({
       clienteId: Yup.string().required("Cliente es obligatorio"),
@@ -93,14 +94,17 @@ export const FormularioOrden = ({ orden }) => {
         setTimeout(() => {
           setMensaje({});
         }, 5000);
+        formik.resetForm(); // Resetea los valores del formulario
       } catch (error) {
         setMensaje({
-          respuesta: error.response.data.msg, tipo: false,
+          respuesta: error.response.data.msg,
+          tipo: false,
         });
         setTimeout(() => {
           setMensaje({});
         }, 3000);
         setLoading(false);
+        formik.resetForm(); // Resetea los valores del formulario
       }
     },
   });
