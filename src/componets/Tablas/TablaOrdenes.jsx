@@ -83,12 +83,6 @@ const TablaOrdenes = () => {
     listarOrdenes();
   }, []);
 
-  const hayOrdenes =
-    ordenesMantenimiento.length > 0 ||
-    ordenesReparacion.length > 0 ||
-    ordenesRevision.length > 0 ||
-    ordenesFinalizado.length > 0;
-
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("token");
@@ -308,6 +302,12 @@ const TablaOrdenes = () => {
     (orden) => orden.estado === "Finalizado"
   );
 
+  const hayOrdenes =
+    ordenesMantenimiento.length > 0 ||
+    ordenesReparacion.length > 0 ||
+    ordenesRevision.length > 0 ||
+    ordenesFinalizado.length > 0;
+
   return (
     <div className="flex flex-col">
       <div className="mt-3 flex justify-between min-[640px]:items-center mb-3 max-[640px]:flex max-[640px]:flex-col">
@@ -323,7 +323,7 @@ const TablaOrdenes = () => {
         <div className="poppins-regular flex space-x-4 items-center">
           <div className="flex items-center space-x-2">
             <AiOutlineFileText className="h-6 w-6 text-black" />
-            <span>Actualizar Estado <br></br> Crear proforma</span>
+            <span>Actualizar Estado <br></br></span>
           </div>
           <div className="flex items-center space-x-2">
             <AiOutlineEye className="h-6 w-6 text-black" />
