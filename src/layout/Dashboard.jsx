@@ -1,28 +1,9 @@
-import React, {
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  cloneElement,
-} from "react";
-import {
-  Link,
-  Navigate,
-  Outlet,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
-import {
-  AiOutlineUser,
-  AiOutlineTeam,
-  AiOutlineFileAdd,
-  AiOutlineBars,
-  AiOutlineOrderedList,
-  AiOutlineProfile,
-} from "react-icons/ai";
+import React, { useContext, useState, useEffect, useRef, useCallback, cloneElement } from "react";
+import { Link, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { AiOutlineUser, AiOutlineTeam, AiOutlineFileAdd, AiOutlineBars, AiOutlineOrderedList, AiOutlineProfile } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
 import AuthContext from "../context/AuthProvider";
+import logo from "/images/logo_bw.jpg";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -132,7 +113,7 @@ const Dashboard = () => {
           <div className="mx-8">
             <div className="mx-4 flex flex-col xl:flex-col md:flex-col sm:flex-row items-center justify-center max-[767px]:flex max-[767px]:flex-row">
               <img
-                src="/images/logo_bw.jpg"
+                src={logo} // Usar la imagen importada
                 alt="logo Electrónica Zurita"
                 className="m-auto mt-3 p-1 mb-3 max-[767px]:mx-0"
                 width={125}
