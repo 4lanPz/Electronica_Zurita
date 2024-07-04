@@ -147,10 +147,7 @@ const Dashboard = () => {
 
             <ul className="poppins-regular max-[769px]:flex max-[500px]:flex-col">
               {menuItems.map((item) => (
-                <li
-                  key={item.to}
-                  className="text-center py-2 max-md:flex max-md:py-0 max-[500px]:justify-center"
-                >
+                <li key={item.to} className="text-center py-2 max-md:flex max-md:py-0 max-[500px]:justify-center">
                   <Link
                     to={item.to}
                     className={`${
@@ -161,8 +158,7 @@ const Dashboard = () => {
                   >
                     {menuOpen && (
                       <>
-                        {cloneElement(item.icon, { size: 20 })}{" "}
-                        {/* Aquí se muestra el ícono */}
+                        {cloneElement(item.icon, { size: 20 })} {/* Aquí se muestra el ícono */}
                         <span className="ml-2 max-md:ml-0">{item.text}</span>
                       </>
                     )}

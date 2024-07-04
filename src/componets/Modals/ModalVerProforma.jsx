@@ -128,7 +128,7 @@ const ModalVerProforma = ({ orden, onCancel }) => {
         )}
         <div className="flex justify-center gap-5 mt-5">
           <button
-            className="poppins-regular bg-[#5B72C3] text-white p-3 rounded-xl hover:bg-[#3D53A0] w-2/3"
+            className="poppins-regular bg-[#9b1746] hover:bg-[#af4369] text-white p-3 rounded-xl w-2/3"
             onClick={onCancel}
           >
             Cerrar
