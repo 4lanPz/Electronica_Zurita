@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const RecuperarCliente = () => {
   const { token } = useParams();
+  console.log(token)
   const navigate = useNavigate();
   const [mensaje, setMensaje] = useState({});
   const [tokenback, setTokenBack] = useState(false);

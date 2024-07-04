@@ -323,7 +323,7 @@ const TablaOrdenes = () => {
         <div className="poppins-regular flex space-x-4 items-center">
           <div className="flex items-center space-x-2">
             <AiOutlineFileText className="h-6 w-6 text-black" />
-            <span>Actualizar</span>
+            <span>Actualizar Estado <br></br> Crear proforma</span>
           </div>
           <div className="flex items-center space-x-2">
             <AiOutlineEye className="h-6 w-6 text-black" />
