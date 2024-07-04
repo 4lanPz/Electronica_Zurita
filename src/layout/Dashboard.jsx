@@ -145,21 +145,25 @@ const Dashboard = () => {
 
             <hr className="my-5 border-slate-500" />
 
-            <ul className="poppins-regular max-[769px]:flex max-[520px]:flex-col">
+            <ul className="poppins-regular max-[769px]:flex max-[500px]:flex-col">
               {menuItems.map((item) => (
-                <li key={item.to} className="text-center py-2">
+                <li
+                  key={item.to}
+                  className="text-center py-2 max-md:flex max-md:py-0 max-[500px]:justify-center"
+                >
                   <Link
                     to={item.to}
                     className={`${
                       urlActual === item.to
-                        ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl flex items-center"
+                        ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl flex items-center max-md:px-2 max-md:flex-col"
                         : "text-white flex items-center"
-                    } block hover:text-black`}
+                    } block hover:text-black max-md:flex-col`}
                   >
                     {menuOpen && (
                       <>
-                        {cloneElement(item.icon, { size: 20 })} {/* Aquí se muestra el ícono */}
-                        <span className="ml-2">{item.text}</span>
+                        {cloneElement(item.icon, { size: 20 })}{" "}
+                        {/* Aquí se muestra el ícono */}
+                        <span className="ml-2 max-md:ml-0">{item.text}</span>
                       </>
                     )}
                   </Link>
@@ -180,8 +184,8 @@ const Dashboard = () => {
         )}
 
         {!menuOpen && ( // Mostrar solo los íconos cuando el menú está cerrado
-          <div className="mx-2 mt-5">
-            <ul className="poppins-regular max-[769px]:flex max-[520px]:flex-col">
+          <div className="mx-2 mt-5 max-md:mt-0">
+            <ul className="poppins-regular max-md:flex max-md:flex-row max-md:justify-center">
               {menuItems.map((item) => (
                 <li
                   key={item.to}
@@ -193,7 +197,6 @@ const Dashboard = () => {
                 >
                   <Link to={item.to} className={`text-white flex items-center`}>
                     {cloneElement(item.icon, { size: 20 })}{" "}
-                    {/* Aumentar el tamaño del ícono */}
                   </Link>
                 </li>
               ))}
