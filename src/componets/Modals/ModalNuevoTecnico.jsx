@@ -95,7 +95,7 @@ const ModalNuevoTecnico = ({ onCancel }) => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Ingresa tu nombre"
-                  className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-600 p-2 text-black"
+                  className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-700 p-2 text-black"
                 />
                 {formik.touched.nombre && formik.errors.nombre ? (
                   <div className="text-red-500 poppins-regular">
@@ -118,7 +118,7 @@ const ModalNuevoTecnico = ({ onCancel }) => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Ingresa tu apellido"
-                  className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-600 p-2 text-black"
+                  className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-700 p-2 text-black"
                 />
                 {formik.touched.apellido && formik.errors.apellido ? (
                   <div className="text-red-500 poppins-regular">
@@ -140,7 +140,7 @@ const ModalNuevoTecnico = ({ onCancel }) => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Ingresa tu número de RUC"
-                  className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-600 p-2 text-black"
+                  className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-700 p-2 text-black"
                 />
                 {formik.touched.ruc && formik.errors.ruc ? (
                   <div className="text-red-500 poppins-regular">
@@ -163,7 +163,7 @@ const ModalNuevoTecnico = ({ onCancel }) => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Ingresa tu teléfono o celular"
-                  className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-600 p-2 text-black"
+                  className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-700 p-2 text-black"
                 />
                 {formik.touched.telefono && formik.errors.telefono ? (
                   <div className="text-red-500 poppins-regular">
@@ -184,7 +184,7 @@ const ModalNuevoTecnico = ({ onCancel }) => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 placeholder="Ingresa tu correo"
-                className=" poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-600 p-2 text-black"
+                className=" poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-700 p-2 text-black"
               />
               {formik.touched.email && formik.errors.email ? (
                 <div className="text-red-500 poppins-regular">
@@ -206,7 +206,7 @@ const ModalNuevoTecnico = ({ onCancel }) => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     placeholder="********************"
-                    className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-600 p-2 text-black"
+                    className="poppins-regular block w-full rounded-xl border border-gray-300 placeholder:text-gray-700 p-2 text-black"
                   />
                 </div>
                 <div className="flex-shrink-0 ">

@@ -111,6 +111,11 @@ const TablaOrdenes = () => {
       orden.cliente.cedula.toString().includes(searchTerm)
   );
 
+  // Filtrar ordenes sin cedula
+  const ordenesConCedula = filteredOrdenes.filter(
+    (orden) => orden.cliente?.cedula
+  );
+
   const Tabla = ({ titulo, data }) => {
     if (data.length === 0) {
       return null; // No renderizar la tabla si no hay datos
@@ -129,7 +134,9 @@ const TablaOrdenes = () => {
                 <th className="p-2">Cédula</th>
                 <th className="p-2">Equipo</th>
                 <th className="p-2">Fecha Ingreso</th>
-                {titulo === "Finalizado" && <th className="p-2">Fecha Salida</th>}
+                {titulo === "Finalizado" && (
+                  <th className="p-2">Fecha Salida</th>
+                )}
                 <th className="p-2">Estado</th>
                 {titulo !== "Finalizado" && <th className="1">Acciones</th>}
               </tr>
@@ -220,12 +227,16 @@ const TablaOrdenes = () => {
                 {orden.equipo}
               </div>
               <div className="mb-2">
-                <span className="poppins-regular font-bold">Fecha Ingreso:</span>{" "}
+                <span className="poppins-regular font-bold">
+                  Fecha Ingreso:
+                </span>{" "}
                 {new Date(orden.ingreso).toLocaleDateString()}
               </div>
               {titulo === "Finalizado" && (
                 <div className="mb-2">
-                  <span className="poppins-regular font-bold">Fecha Salida:</span>{" "}
+                  <span className="poppins-regular font-bold">
+                    Fecha Salida:
+                  </span>{" "}
                   {orden.salida
                     ? new Date(orden.salida).toLocaleDateString()
                     : "N/A"}
@@ -275,17 +286,17 @@ const TablaOrdenes = () => {
     );
   };
 
-  const ordenesMantenimiento = filteredOrdenes.filter(
+  const ordenesMantenimiento = ordenesConCedula.filter(
     (orden) =>
       orden.servicio === "Mantenimiento" && orden.estado !== "Finalizado"
   );
-  const ordenesReparacion = filteredOrdenes.filter(
+  const ordenesReparacion = ordenesConCedula.filter(
     (orden) => orden.servicio === "Reparación" && orden.estado !== "Finalizado"
   );
-  const ordenesRevision = filteredOrdenes.filter(
+  const ordenesRevision = ordenesConCedula.filter(
     (orden) => orden.servicio === "Revisión" && orden.estado !== "Finalizado"
   );
-  const ordenesFinalizado = filteredOrdenes.filter(
+  const ordenesFinalizado = ordenesConCedula.filter(
     (orden) => orden.estado === "Finalizado"
   );
 

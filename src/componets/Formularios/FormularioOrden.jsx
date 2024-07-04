@@ -179,7 +179,7 @@ export const FormularioOrden = ({ orden }) => {
                 </span>
                 <input
                   id="cedula"
-                  className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
+                  className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-700"
                   placeholder="Número de cédula del cliente"
                   name="cedula"
                   value={formik.values.cedula}
@@ -233,7 +233,7 @@ export const FormularioOrden = ({ orden }) => {
             <input
               id="equipo"
               type="text"
-              className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
+              className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-700"
               placeholder="Tipo de equipo"
               name="equipo"
               value={formik.values.equipo}
@@ -251,7 +251,7 @@ export const FormularioOrden = ({ orden }) => {
               <input
                 id="modelo"
                 type="text"
-                className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
+                className="poppins-regular border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-700"
                 placeholder="Modelo del equipo"
                 name="modelo"
                 value={formik.values.modelo}
@@ -272,7 +272,7 @@ export const FormularioOrden = ({ orden }) => {
               <input
                 id="marca"
                 type="text"
-                className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
+                className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-700"
                 placeholder="Marca del equipo"
                 name="marca"
                 value={formik.values.marca}
@@ -292,7 +292,7 @@ export const FormularioOrden = ({ orden }) => {
             <input
               id="serie"
               type="text"
-              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
+              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-700"
               placeholder="Número de serie del equipo"
               name="serie"
               value={formik.values.serie}
@@ -312,7 +312,7 @@ export const FormularioOrden = ({ orden }) => {
             <input
               id="color"
               type="text"
-              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
+              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-700"
               placeholder="Color del equipo"
               name="color"
               value={formik.values.color}
@@ -332,7 +332,7 @@ export const FormularioOrden = ({ orden }) => {
             <input
               id="ingreso"
               type="date"
-              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
+              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-700"
               placeholder="Fecha de ingreso del equipo"
               name="ingreso"
               value={formik.values.ingreso}
@@ -351,7 +351,7 @@ export const FormularioOrden = ({ orden }) => {
             </span>
             <textarea
               id="razon"
-              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
+              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-700"
               placeholder="Razones de ingreso del equipo"
               name="razon"
               value={formik.values.razon}
@@ -370,7 +370,7 @@ export const FormularioOrden = ({ orden }) => {
             </span>
             <select
               id="servicio"
-              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-600"
+              className="poppins-regular block w-full border-2 rounded-xl p-2 mt-2 placeholder-gray-700"
               name="servicio"
               value={formik.values.servicio}
               onChange={formik.handleChange}

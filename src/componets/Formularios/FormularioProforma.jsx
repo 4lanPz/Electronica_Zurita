@@ -222,7 +222,7 @@ export const FormularioProforma = () => {
                           placeholder="Nombre de la pieza"
                           value={pieza.pieza}
                           onChange={(event) => handlePiezaChange(index, event)}
-                          className="poppins-regular w-full p-2 border rounded-xl placeholder:text-gray-600"
+                          className="poppins-regular w-full p-2 border rounded-xl placeholder:text-gray-700"
                         />
                       </div>
                       <div className="col-span-2">
@@ -240,7 +240,7 @@ export const FormularioProforma = () => {
                           placeholder="$"
                           value={pieza.precio}
                           onChange={(event) => handlePiezaChange(index, event)}
-                          className="poppins-regular w-full p-2 border rounded-xl placeholder:text-gray-600"
+                          className="poppins-regular w-full p-2 border rounded-xl placeholder:text-gray-700"
                         />
                       </div>
                       <div className="col-span-1 flex items-center justify-center">

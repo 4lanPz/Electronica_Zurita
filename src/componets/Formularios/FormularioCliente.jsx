@@ -91,7 +91,6 @@ export const FormularioCliente = ({ cliente }) => {
   return (
     <div className="p-8 w-full flex justify-center">
       <div className="xl:w-2/3 justify-center items-center">
-      <h2 className="poppins-regular text-gray-600">Ingrese los datos del nuevo cliente</h2>
         <form onSubmit={formik.handleSubmit}>
           <div className="poppins-regular">
             <label
@@ -103,7 +102,7 @@ export const FormularioCliente = ({ cliente }) => {
             <input
               id="nombre"
               type="text"
-              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 "
+              className="border-2 rounded-xl w-full p-2 mt-2 placeholder:text-gray-700"
               placeholder="Nombre y apellido del cliente"
               name="nombre"
               value={formik.values.nombre}
@@ -128,7 +127,7 @@ export const FormularioCliente = ({ cliente }) => {
               <input
                 id="telefono"
                 type="tel"
-                className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
+                className="border-2 rounded-xl w-full p-2 mt-2 placeholder:text-gray-700"
                 placeholder="Teléfono / celular del cliente"
                 name="telefono"
                 value={formik.values.telefono}
@@ -151,7 +150,7 @@ export const FormularioCliente = ({ cliente }) => {
               <input
                 id="cedula"
                 type="tel"
-                className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
+                className="border-2 rounded-xl w-full p-2 mt-2 placeholder:text-gray-700"
                 placeholder="Cédula del cliente"
                 name="cedula"
                 value={formik.values.cedula}
@@ -175,7 +174,7 @@ export const FormularioCliente = ({ cliente }) => {
             <input
               id="correo"
               type="email"
-              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
+              className="border-2 rounded-xl w-full p-2 mt-2 placeholder:text-gray-700"
               placeholder="Correo electrónico del cliente"
               name="correo"
               value={formik.values.correo}
@@ -197,7 +196,7 @@ export const FormularioCliente = ({ cliente }) => {
             </label>
             <select
               id="frecuente"
-              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
+              className="border-2 rounded-xl w-full p-2 mt-2 placeholder:text-gray-700"
               name="frecuente"
               value={formik.values.frecuente}
               onChange={formik.handleChange}
@@ -224,8 +223,8 @@ export const FormularioCliente = ({ cliente }) => {
             <input
               id="direccion"
               type="text"
-              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600"
-              placeholder="Dirección"
+              className="border-2 rounded-xl w-full p-2 mt-2 placeholder-gray-600 placeholder:text-gray-700"
+              placeholder="Clic en el mapa para ingresar la dirección"
               name="direccion"
               value={formik.values.direccion}
               onChange={formik.handleChange}
