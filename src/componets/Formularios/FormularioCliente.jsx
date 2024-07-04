@@ -91,6 +91,7 @@ export const FormularioCliente = ({ cliente }) => {
   return (
     <div className="p-8 w-full flex justify-center">
       <div className="xl:w-2/3 justify-center items-center">
+      <h2 className="poppins-regular text-gray-600">Ingrese los datos del nuevo cliente</h2>
         <form onSubmit={formik.handleSubmit}>
           <div className="poppins-regular">
             <label

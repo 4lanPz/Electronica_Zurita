@@ -96,7 +96,6 @@ export const FormularioOrden = ({ orden }) => {
       } catch (error) {
         setMensaje({
           respuesta: error.response.data.msg, tipo: false,
-          tipo: false,
         });
         setTimeout(() => {
           setMensaje({});
