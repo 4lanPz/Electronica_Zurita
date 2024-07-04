@@ -13,7 +13,7 @@ export const NotFound = () => {
                 PÁGINA NO ENCONTRADA
               </p>
               <img
-                class="object-cover h-80 w-80 rounded-full border-4 border-solid border-black"
+                className="object-cover h-80 w-80 rounded-full border-4 border-solid border-black"
                 src={logoProblem}
                 alt="image description"
               />
