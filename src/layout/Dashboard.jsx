@@ -1,4 +1,11 @@
-import { useContext, useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  cloneElement,
+} from "react";
 import {
   Link,
   Navigate,
@@ -6,6 +13,15 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import {
+  AiOutlineUser,
+  AiOutlineTeam,
+  AiOutlineFileAdd,
+  AiOutlineBars,
+  AiOutlineOrderedList,
+  AiOutlineProfile,
+} from "react-icons/ai";
+import { BiLogOut } from "react-icons/bi";
 import AuthContext from "../context/AuthProvider";
 
 const Dashboard = () => {
@@ -72,24 +88,45 @@ const Dashboard = () => {
     setMenuOpen(!menuOpen);
   };
 
+  // Definir los íconos asociados a cada ruta
+  const menuItems = [
+    {
+      text: "Ingresar Cliente",
+      icon: <AiOutlineUser size={24} />,
+      to: "/dashboard/registrarCliente",
+    },
+    {
+      text: "Listar Clientes",
+      icon: <AiOutlineOrderedList size={24} />,
+      to: "/dashboard/listarClientes",
+    },
+    {
+      text: "Orden de trabajo",
+      icon: <AiOutlineFileAdd size={24} />,
+      to: "/dashboard/registrarOrden",
+    },
+    {
+      text: "Lista de Trabajos",
+      icon: <AiOutlineOrderedList size={24} />,
+      to: "/dashboard/listarOrdenes",
+    },
+    {
+      text: "Gestión Técnicos",
+      icon: <AiOutlineTeam size={24} />,
+      to: "/dashboard/tecnicos",
+    },
+    {
+      text: "Perfil Técnico",
+      icon: <AiOutlineProfile size={24} />,
+      to: "/dashboard/perfil",
+    },
+  ];
+
   return (
     <div className="md:flex md:min-h-screen">
       <div ref={sidebarRef} className="w-auto bg-[#3D53A0]">
         <button onClick={toggleMenu} className="my-2 mx-3 text-white">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-7 w-7"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
+          <AiOutlineBars size={24} />
         </button>
         {menuOpen && (
           <div className="mx-8">
@@ -106,96 +143,61 @@ const Dashboard = () => {
               </h2>
             </div>
 
-            {/* <p className="poppins-regular text-white text-center mt-2">
-              Técnico: {`${auth?.nombre}`}
-            </p> */}
             <hr className="my-5 border-slate-500" />
 
             <ul className="poppins-regular max-[769px]:flex max-[520px]:flex-col">
-              <li className="text-center">
-                <Link
-                  to="/dashboard/registrarCliente"
-                  className={`${
-                    urlActual === "/dashboard/registrarCliente"
-                      ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
-                      : "text-white"
-                  } block mt-2 hover:text-black`}
-                >
-                  Ingresar Cliente
-                </Link>
-              </li>
-              <li className="text-center">
-                <Link
-                  to="/dashboard/listarClientes"
-                  className={`${
-                    urlActual === "/dashboard/listarClientes"
-                      ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
-                      : "text-white"
-                  }  block mt-2 hover:text-black`}
-                >
-                  Listar Clientes
-                </Link>
-              </li>
-              <li className="text-center">
-                <Link
-                  to="/dashboard/registrarOrden"
-                  className={`${
-                    urlActual === "/dashboard/registrarOrden"
-                      ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
-                      : "text-white"
-                  }  block mt-2 hover:text-black`}
-                >
-                  Orden de trabajo
-                </Link>
-              </li>
-              <li className="text-center">
-                <Link
-                  to="/dashboard/listarOrdenes"
-                  className={`${
-                    urlActual === "/dashboard/listarOrdenes"
-                      ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
-                      : "text-white"
-                  }  block mt-2 hover:text-black`}
-                >
-                  Lista de Trabajos
-                </Link>
-              </li>
-
-              <li className="text-center">
-                <Link
-                  to="/dashboard/tecnicos"
-                  className={`${
-                    urlActual === "/dashboard/tecnicos"
-                      ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
-                      : "text-white"
-                  }  block mt-2 hover:text-black`}
-                >
-                  Gestión Técnicos
-                </Link>
-              </li>
-
-              <li className="text-center">
-                <Link
-                  to="/dashboard/perfil"
-                  className={`${
-                    urlActual === "/dashboard/perfil"
-                      ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl text-center"
-                      : "text-white"
-                  }  block mt-2 hover:text-black`}
-                >
-                  Perfil Técnico
-                </Link>
-              </li>
+              {menuItems.map((item) => (
+                <li key={item.to} className="text-center py-2">
+                  <Link
+                    to={item.to}
+                    className={`${
+                      urlActual === item.to
+                        ? "text-white bg-[#9b1746] px-3 py-2 rounded-xl flex items-center"
+                        : "text-white flex items-center"
+                    } block hover:text-black`}
+                  >
+                    {menuOpen && (
+                      <>
+                        {cloneElement(item.icon, { size: 20 })} {/* Aquí se muestra el ícono */}
+                        <span className="ml-2">{item.text}</span>
+                      </>
+                    )}
+                  </Link>
+                </li>
+              ))}
             </ul>
-            <div className="p-4">
+            <div className="p-6">
               <Link
                 to="/"
                 className="poppins-semibold text-white text-md block text-center bg-[#9b1746] hover:text-black px-3 py-1 rounded-xl"
                 onClick={handleLogout}
               >
+                <BiLogOut size={20} className="inline-block mr-2" />
                 Salir
               </Link>
             </div>
+          </div>
+        )}
+
+        {!menuOpen && ( // Mostrar solo los íconos cuando el menú está cerrado
+          <div className="mx-2 mt-5">
+            <ul className="poppins-regular max-[769px]:flex max-[520px]:flex-col">
+              {menuItems.map((item) => (
+                <li
+                  key={item.to}
+                  className={`text-center py-2 my-2 ${
+                    urlActual === item.to
+                      ? "bg-[#9b1746] rounded-xl px-2"
+                      : "bg-[#3D53A0] px-2"
+                  }`}
+                >
+                  <Link to={item.to} className={`text-white flex items-center`}>
+                    {cloneElement(item.icon, { size: 20 })}{" "}
+                    {/* Aumentar el tamaño del ícono */}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>

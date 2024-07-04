@@ -180,7 +180,7 @@ const TablaOrdenes = () => {
                       ) : (
                         <>
                           <AiOutlineFileText
-                            className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-1"
+                            className="h-7 w-7 text-[#9b1746] cursor-pointer inline-block mr-1"
                             onClick={() =>
                               navigate(
                                 `/dashboard/registrarProforma/${orden._id}`
@@ -264,7 +264,7 @@ const TablaOrdenes = () => {
                   ) : (
                     <>
                       <AiOutlineFileText
-                        className="h-7 w-7 text-slate-800 cursor-pointer inline-block mr-2"
+                        className="h-7 w-7 text-[#9b1746] cursor-pointer inline-block mr-2"
                         onClick={() =>
                           navigate(`/dashboard/registrarProforma/${orden._id}`)
                         }
@@ -320,10 +320,14 @@ const TablaOrdenes = () => {
             className="p-2 border border-black bg-white placeholder:text-black text-black rounded-xl w-full"
           />
         </div>
-        <div className="poppins-regular flex space-x-4 items-center">
+        <div className="poppins-regular flex space-x-6 items-center">
           <div className="flex items-center space-x-2">
-            <AiOutlineFileText className="h-6 w-6 text-black" />
-            <span>Actualizar Estado <br></br></span>
+            <AiOutlineFileText className="h-8 w-8 text-black max-md:h-6 max-md:w-6" />
+            <span>Actualizar Estado</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <AiOutlineFileText className="h-8 w-8 text-[#9b1746] max-md:h-6 max-md:w-6" />
+            <span>Crear Proforma</span>
           </div>
           <div className="flex items-center space-x-2">
             <AiOutlineEye className="h-6 w-6 text-black" />
