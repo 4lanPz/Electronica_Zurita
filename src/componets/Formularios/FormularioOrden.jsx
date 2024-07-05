@@ -104,7 +104,6 @@ export const FormularioOrden = ({ orden }) => {
           setMensaje({});
         }, 3000);
         setLoading(false);
-        formik.resetForm(); // Resetea los valores del formulario
       }
     },
   });
