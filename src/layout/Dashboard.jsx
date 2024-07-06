@@ -1,8 +1,31 @@
-import React, { useContext, useState, useEffect, useRef, useCallback, cloneElement } from "react";
-import { Link, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { AiOutlineUser, AiOutlineTeam, AiOutlineFileAdd, AiOutlineBars, AiOutlineOrderedList, AiOutlineProfile } from "react-icons/ai";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  cloneElement,
+  useMemo,
+} from "react";
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import {
+  AiOutlineUser,
+  AiOutlineTeam,
+  AiOutlineFileAdd,
+  AiOutlineBars,
+  AiOutlineOrderedList,
+  AiOutlineProfile,
+} from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
 import AuthContext from "../context/AuthProvider";
+
+// Importa la imagen del logo fuera del componente
 import logo from "/images/logo_bw.jpg";
 
 const Dashboard = () => {
@@ -103,6 +126,25 @@ const Dashboard = () => {
     },
   ];
 
+  const logoSection = useMemo(
+    () => (
+      <div className="mx-4 flex flex-col xl:flex-col md:flex-col sm:flex-row items-center justify-center max-[767px]:flex max-[767px]:flex-row">
+        <img
+          src={logo} // Usar la imagen importada
+          alt="logo Electrónica Zurita"
+          className="m-auto mt-3 p-1 mb-3 max-[767px]:mx-0"
+          width={125}
+          height={125}
+          loading="lazy" // Carga diferida
+        />
+        <h2 className="poppins-bold text-2xl text-white text-center">
+          Electrónica <br /> Zurita
+        </h2>
+      </div>
+    ),
+    []
+  );
+
   return (
     <div className="md:flex md:min-h-screen">
       <div ref={sidebarRef} className="w-auto bg-[#3D53A0]">
@@ -111,24 +153,16 @@ const Dashboard = () => {
         </button>
         {menuOpen && (
           <div className="mx-8">
-            <div className="mx-4 flex flex-col xl:flex-col md:flex-col sm:flex-row items-center justify-center max-[767px]:flex max-[767px]:flex-row">
-              <img
-                src={logo} // Usar la imagen importada
-                alt="logo Electrónica Zurita"
-                className="m-auto mt-3 p-1 mb-3 max-[767px]:mx-0"
-                width={125}
-                height={125}
-              />
-              <h2 className="poppins-bold text-2xl text-white text-center">
-                Electrónica <br /> Zurita
-              </h2>
-            </div>
+            {logoSection}
 
-            <hr className="my-3 border-slate-500 max-md:my-2 max-md:mb-5" />
+            <hr className="my-5 border-slate-500" />
 
             <ul className="poppins-regular max-[769px]:flex max-[500px]:flex-col">
               {menuItems.map((item) => (
-                <li key={item.to} className="text-center py-2 max-md:flex max-md:py-0 max-[500px]:justify-center">
+                <li
+                  key={item.to}
+                  className="text-center py-2 max-md:flex max-md:py-0 max-[500px]:justify-center"
+                >
                   <Link
                     to={item.to}
                     className={`${
@@ -139,7 +173,8 @@ const Dashboard = () => {
                   >
                     {menuOpen && (
                       <>
-                        {cloneElement(item.icon, { size: 20 })} {/* Aquí se muestra el ícono */}
+                        {cloneElement(item.icon, { size: 20 })}{" "}
+                        {/* Aquí se muestra el ícono */}
                         <span className="ml-2 max-md:ml-0">{item.text}</span>
                       </>
                     )}
