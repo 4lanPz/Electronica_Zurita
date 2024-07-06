@@ -69,6 +69,7 @@ export const FormularioCliente = ({ cliente }) => {
             tipo: true,
           });
           setLoading(false);
+          formik.resetForm();
           setTimeout(() => {}, 3000);
         } else {
           setLoading(false);
