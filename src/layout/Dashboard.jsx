@@ -25,7 +25,6 @@ import {
 import { BiLogOut } from "react-icons/bi";
 import AuthContext from "../context/AuthProvider";
 
-// Importa la imagen del logo fuera del componente
 import logo from "/images/logo_bw.jpg";
 
 const Dashboard = () => {
@@ -47,7 +46,7 @@ const Dashboard = () => {
     if (inactivityTimeoutRef.current) {
       clearTimeout(inactivityTimeoutRef.current);
     }
-    inactivityTimeoutRef.current = setTimeout(handleLogout, 10 * 60 * 1000); // 10 minutos
+    inactivityTimeoutRef.current = setTimeout(handleLogout, 10 * 60 * 1000);
   }, [handleLogout]);
 
   useEffect(() => {
@@ -75,7 +74,7 @@ const Dashboard = () => {
       events.forEach((event) =>
         document.addEventListener(event, resetInactivityTimeout)
       );
-      resetInactivityTimeout(); // Inicializar el temporizador
+      resetInactivityTimeout();
 
       return () => {
         events.forEach((event) =>
@@ -92,7 +91,6 @@ const Dashboard = () => {
     setMenuOpen(!menuOpen);
   };
 
-  // Definir los íconos asociados a cada ruta
   const menuItems = [
     {
       text: "Ingresar Cliente",
@@ -126,25 +124,6 @@ const Dashboard = () => {
     },
   ];
 
-  const logoSection = useMemo(
-    () => (
-      <div className="mx-4 flex flex-col xl:flex-col md:flex-col sm:flex-row items-center justify-center max-[767px]:flex max-[767px]:flex-row">
-        <img
-          src={logo} // Usar la imagen importada
-          alt="logo Electrónica Zurita"
-          className="m-auto mt-3 p-1 mb-3 max-[767px]:mx-0"
-          width={125}
-          height={125}
-          loading="lazy" // Carga diferida
-        />
-        <h2 className="poppins-bold text-2xl text-white text-center">
-          Electrónica <br /> Zurita
-        </h2>
-      </div>
-    ),
-    []
-  );
-
   return (
     <div className="md:flex md:min-h-screen">
       <div ref={sidebarRef} className="w-auto bg-[#3D53A0]">
@@ -152,12 +131,24 @@ const Dashboard = () => {
           <AiOutlineBars size={24} />
         </button>
         {menuOpen && (
-          <div className="mx-8">
-            {logoSection}
+          <div className="mx-7">
+            <div className="mx-4 flex flex-col xl:flex-col md:flex-col sm:flex-row items-center justify-center max-[767px]:flex max-[767px]:flex-row">
+              <img
+                src={logo} // Usar la imagen importada
+                alt="logo Electrónica Zurita"
+                className="m-auto mt-3 p-1 mb-3 max-[767px]:mx-0"
+                width={125}
+                height={125}
+                loading="lazy" // Carga diferida
+              />
+              <h2 className="poppins-bold text-2xl text-white text-center">
+                Electrónica <br /> Zurita
+              </h2>
+            </div>
 
             <hr className="my-5 border-slate-500" />
 
-            <ul className="poppins-regular max-[769px]:flex max-[500px]:flex-col">
+            <ul className="poppins-regular max-[769px]:flex max-[450px]:flex-col max-[767px]:my-0">
               {menuItems.map((item) => (
                 <li
                   key={item.to}
@@ -175,7 +166,7 @@ const Dashboard = () => {
                       <>
                         {cloneElement(item.icon, { size: 20 })}{" "}
                         {/* Aquí se muestra el ícono */}
-                        <span className="ml-2 max-md:ml-0">{item.text}</span>
+                        <span className="ml-2 max-md:ml-0 ">{item.text}</span>
                       </>
                     )}
                   </Link>
@@ -197,11 +188,11 @@ const Dashboard = () => {
 
         {!menuOpen && ( // Mostrar solo los íconos cuando el menú está cerrado
           <div className="mx-2 mt-5 max-md:mt-0">
-            <ul className="poppins-regular max-md:flex max-md:flex-row max-md:justify-center">
+            <ul className="poppins-regular max-md:flex max-md:flex-row max-md:justify-center max-[767px]:mt-[-35px] max-[300px]:mt-0">
               {menuItems.map((item) => (
                 <li
                   key={item.to}
-                  className={`text-center py-2 my-2 ${
+                  className={`text-center py-2 my-2 max-[767px]:my-0 max-[767px]:mb-2  ${
                     urlActual === item.to
                       ? "bg-[#9b1746] rounded-xl px-2"
                       : "bg-[#3D53A0] px-2"
