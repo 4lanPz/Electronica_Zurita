@@ -44,7 +44,11 @@ npm i
 
 ### - Descargando archivo Zip
 Descargue el repositorio
+
+
 Descomprima el archivo Zip y abra la carpeta en un IDE 
+
+
 Ejecute el siguiente comando
 ```bash
 npm i
@@ -67,3 +71,4 @@ https://github.com/4lanPz/Electronica_Zurita
 ### - Backend: Aldahir Lascano
 https://github.com/LascanoAldahir/BackendTesis
 ### - Aplicación móvil: Bryan Delgado
+https://github.com/bryandelgado99/Electronica-Zurita--Mobile-App
