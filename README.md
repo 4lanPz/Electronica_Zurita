@@ -4,7 +4,7 @@
 En el presente repositorio se aloja el codigo desarrollado para el proyecto de la creacion del componente frontend para el centro de reparaciones "Electrónica Zurita"
 
 
-Este se a desarrollado para ser simple, con las acciones necesarias que necesita el técnico y capaz de cubrir las necesidades del usuario en su entorno laboral.
+Este se a desarrollado para ser simple, con las funcionalidades capaces de cubrir las necesidades del usuario en su entorno laboral.
 
 ## 🛠 Herramientas, librerías y frameworks
 - React
