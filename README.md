@@ -2,7 +2,9 @@
 
 ## 📄 Descripción
 En el presente repositorio se aloja el codigo desarrollado para el proyecto de la creacion del componente frontend para el centro de reparaciones "Electrónica Zurita"
-Este se a desarrollado para ser simple, con las acciones necesarias que necesita el técnico y capaz de cubrir las necesaidades del usuario en su entorno laboral.
+
+
+Este se a desarrollado para ser simple, con las funcionalidades capaces de cubrir las necesidades del usuario en su entorno laboral.
 
 ## 🛠 Herramientas, librerías y frameworks
 - React
@@ -44,7 +46,11 @@ npm i
 
 ### - Descargando archivo Zip
 Descargue el repositorio
+
+
 Descomprima el archivo Zip y abra la carpeta en un IDE 
+
+
 Ejecute el siguiente comando
 ```bash
 npm i
@@ -67,3 +73,4 @@ https://github.com/4lanPz/Electronica_Zurita
 ### - Backend: Aldahir Lascano
 https://github.com/LascanoAldahir/BackendTesis
 ### - Aplicación móvil: Bryan Delgado
+https://github.com/bryandelgado99/Electronica-Zurita--Mobile-App
