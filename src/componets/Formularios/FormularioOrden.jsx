@@ -49,7 +49,6 @@ export const FormularioOrden = ({ orden }) => {
         .max(20, "No puede tener más de 30 caracteres")
         .required("Color es obligatorio"),
       ingreso: Yup.date()
-        .nullable()
         .required("Fecha de ingreso es obligatoria"),
       razon: Yup.string()
         .min(3, "Debe tener al menos 10 caracteres")
