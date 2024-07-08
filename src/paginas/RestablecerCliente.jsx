@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 const RecuperarCliente = () => {
   const { token } = useParams();
-  console.log(token);
   const navigate = useNavigate();
   const [mensaje, setMensaje] = useState({});
   const [tokenback, setTokenBack] = useState(false);
@@ -44,11 +43,7 @@ const RecuperarCliente = () => {
       const url = `${
         import.meta.env.VITE_BACKEND_URL
       }/cliente/recuperar-password/${token}`;
-      const respuesta = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const respuesta = await axios.get(url);
       setTokenBack(true);
       setMensaje({ respuesta: respuesta.data.msg, tipo: true });
     } catch (error) {
