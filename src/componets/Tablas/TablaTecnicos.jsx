@@ -134,7 +134,9 @@ const TablaTecnicos = () => {
                 <td className="p-2">{tecnico.ruc}</td>
                 <td className="p-2">{tecnico.email}</td>
                 <td className="p-2">{tecnico.telefono}</td>
-                <td className="p-2">{tecnico.confirmEmail ? "Activo" : "Por confirmar" }</td>
+                <td className="p-2">
+                  {tecnico.confirmEmail ? "Activo" : "Por confirmar"}
+                </td>
 
                 <td className="py-2 text-center">
                   <AiOutlineDelete
@@ -155,13 +157,12 @@ const TablaTecnicos = () => {
             className="p-4 mb-4 shadow-lg bg-white rounded-xl border border-black mt-2"
             key={tecnico._id}
           >
-            <div className="mb-2">
-              <span className="poppins-regular font-bold">N°:</span> {index + 1}
-            </div>
-            <div className="mb-2">
-              <span className="poppins-regular font-bold">Nombre:</span>{" "}
+            <div className="mb-2 text-center">
+              <span className="poppins-regular font-bold">Técnico N°: {index + 1}</span>
+               <br></br>
               {tecnico.nombre} {tecnico.apellido}
             </div>
+
             <div className="mb-2">
               <span className="poppins-regular font-bold">RUC:</span>{" "}
               {tecnico.ruc}
@@ -173,6 +174,10 @@ const TablaTecnicos = () => {
             <div className="mb-2">
               <span className="poppins-regular font-bold">Teléfono:</span>{" "}
               {tecnico.telefono}
+            </div>
+            <div className="mb-2">
+              <span className="poppins-regular font-bold">Estado:</span>{" "}
+              {tecnico.confirmEmail ? "Activo" : "Por confirmar"}
             </div>
             <div className="flex justify-center mt-2">
               <AiOutlineDelete

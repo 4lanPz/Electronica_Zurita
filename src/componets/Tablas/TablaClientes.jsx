@@ -153,12 +153,13 @@ const Tabla = () => {
             className="p-4 my-2 shadow-lg bg-white rounded-xl border border-black hover:bg-gray-300 "
             key={cliente._id}
           >
-            <div className="mb-2">
+            <div className="mb-2 text-center">
               <span className="poppins-regular font-bold">
-                Cliente N°{index + 1}:{" "}
-              </span>{" "}
+                Cliente N°{index + 1}
+              </span><br></br>
               {cliente.nombre}
             </div>
+            
             <div className="w-full flex flex-row">
               <div className="mb-2 w-1/2 pr-2">
                 <span className="poppins-regular font-bold">Celular:</span>{" "}

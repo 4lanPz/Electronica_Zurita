@@ -212,11 +212,11 @@ const TablaOrdenes = () => {
               className="p-4 mb-4 mt-2 shadow-lg bg-white rounded-xl border border-black"
               key={orden._id}
             >
-              <div className="mb-2">
-                <span className="poppins-regular font-bold">N° Orden:</span>{" "}
+              <div className="mb-2 text-center">
+                <span className="poppins-regular font-bold">N° Orden</span><br></br>
                 {orden.numOrden}
               </div>
-              <div className="mb-2">
+              <div className="mb-2 ">
                 <span className="poppins-regular font-bold">Cliente:</span>{" "}
                 {orden.cliente?.nombre}
               </div>

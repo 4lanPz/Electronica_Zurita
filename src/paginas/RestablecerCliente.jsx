@@ -29,6 +29,7 @@ const RecuperarCliente = () => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     setLoading(true);
+    console.log(values)
     try {
       const url = `${
         import.meta.env.VITE_BACKEND_URL
