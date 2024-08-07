@@ -39,7 +39,7 @@ const GoogleMaps = ({ direccion, setDireccion }) => {
 
   useEffect(() => {
     if (direccion) {
-      // Geocode the provided address to get the coordinates
+      // Uso de Geocoder para dar las coordenadas
       const geocoder = new window.google.maps.Geocoder();
       geocoder.geocode({ address: direccion }, (results, status) => {
         if (status === "OK" && results[0]) {
@@ -73,7 +73,8 @@ const GoogleMaps = ({ direccion, setDireccion }) => {
           if (status === "OK") {
             if (results[0]) {
               const address = results[0].formatted_address;
-              setDireccion(address); // Update the address in the parent component
+              // actualiza a la nueva dirección
+              setDireccion(address); 
             } else {
               console.error("No se encontraron resultados de geocodificación");
             }
