@@ -146,12 +146,12 @@ const Dashboard = () => {
           <div className="mx-7">
             <div className="mx-4 flex flex-col xl:flex-col md:flex-col sm:flex-row items-center justify-center max-[767px]:flex max-[767px]:flex-row">
               <img
-                src={logo} // Usar la imagen importada
+                src={logo}
                 alt="logo Electrónica Zurita"
                 className="m-auto mt-3 p-1 mb-3 max-[767px]:mx-0"
                 width={125}
                 height={125}
-                loading="lazy" // Carga diferida
+                loading="lazy"
               />
               <h2 className="poppins-bold text-2xl text-white text-center">
                 Electrónica <br /> Zurita
@@ -160,7 +160,7 @@ const Dashboard = () => {
 
             <hr className="my-5 border-slate-500" />
 
-            <ul className="poppins-regular max-[769px]:flex max-[450px]:flex-col max-[767px]:my-0">
+            <ul className="poppins-regular max-[769px]:flex max-[430px]:flex-col max-[767px]:my-0">
               {menuItems.map((item) => (
                 <li
                   key={item.to}
