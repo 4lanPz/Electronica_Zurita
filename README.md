@@ -1,5 +1,6 @@
 # 🖥 SISTEMA DE GESTIÓN DEL CENTRO DE REPARACIONES "ELECTRÓNICA ZURITA"
 
+
 ## 📄 Descripción
 En el presente repositorio se aloja el codigo desarrollado para el proyecto de la creacion del componente frontend para el centro de reparaciones "Electrónica Zurita"
 
